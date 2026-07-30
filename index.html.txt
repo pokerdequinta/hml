@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Gerador Código | Poker de Quinta - Rebuys & Add-ons</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Anton', Roboto, system-ui, sans-serif; background: linear-gradient(135deg, #0a2a1a 0%, #051a0e 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1500px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 30px; padding: 20px 0; }
+        .logo { display: flex; justify-content: center; align-items: center; margin-bottom: 15px; }
+        .logo img { max-width: 180px; height: auto; filter: drop-shadow(0 0 10px rgba(0,0,0,0.3)); }
+        .title { text-align: center; color: #ffd700; font-size: 2em; margin-top: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); letter-spacing: 2px; }
+        .subtitle { text-align: center; color: #aaa; font-size: 0.85em; margin-top: 8px; }
+        .main-content { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+        .card { background: rgba(0,0,0,0.85); border-radius: 20px; padding: 22px; border: 1px solid #ffd700; box-shadow: 0 12px 28px rgba(0,0,0,0.5); backdrop-filter: blur(2px); }
+        .card-title { font-size: 1.3rem; color: #ffd700; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #ffd700; display: flex; justify-content: space-between; align-items: center; letter-spacing: 0.5px; }
+        .btn { background: #ffd700; color: #1a1a2e; border: none; padding: 10px 20px; border-radius: 40px; cursor: pointer; font-weight: bold; margin-right: 10px; margin-top: 10px; transition: all 0.2s ease; font-size: 13px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
+        .btn:hover { transform: translateY(-2px); background: #ffed4a; box-shadow: 0 6px 12px rgba(0,0,0,0.4); }
+        .btn-primary { background: #ffd700; color: #1a1a2e; }
+        .btn-success { background: #2e7d32; color: white; }
+        .btn-danger { background: #c62828; color: white; }
+        .btn-info { background: #0d47a1; color: white; }
+        .csv-area textarea { width: 100%; height: 200px; background: #0a0a0a; border: 1px solid #ffd700; color: #b9ffb9; padding: 12px; font-family: 'Courier New', monospace; font-size: 12px; border-radius: 14px; resize: vertical; }
+        .rake-config { background: rgba(0,0,0,0.6); border-radius: 16px; padding: 15px 18px; margin-top: 20px; margin-bottom: 10px; }
+        .rake-config label { color: #ffd700; font-weight: bold; display: block; margin-bottom: 8px; }
+        .rake-config input { width: 100%; padding: 12px; background: #0a0a0a; border: 1px solid #ffd700; color: #fff; border-radius: 12px; font-size: 16px; }
+        .players-list { max-height: 420px; overflow-y: auto; margin-top: 15px; padding-right: 5px; }
+        .player-card { background: rgba(255,255,255,0.05); border-radius: 14px; padding: 12px 16px; margin-bottom: 10px; transition: all 0.2s; border-left: 4px solid #ffd700; }
+        .player-card.best-hand { border-left-color: #ff44cc; background: rgba(255, 68, 204, 0.12); box-shadow: 0 0 8px rgba(255,68,204,0.4); }
+        .player-name { font-weight: bold; color: #ffd700; font-size: 1.05rem; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+        .profile-badge { font-size: 0.7rem; background: #ffd700; color: #000; padding: 3px 12px; border-radius: 30px; margin-left: 12px; }
+        .profile-badge.best-hand { background: #ff44cc; color: white; animation: pulseGlow 1.6s infinite; }
+        @keyframes pulseGlow { 0% { opacity: 0.7; text-shadow: 0 0 0px white; } 100% { opacity: 1; text-shadow: 0 0 4px magenta; } }
+        .player-controls { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+        .control-group { display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.6); padding: 5px 14px; border-radius: 40px; }
+        .control-group label { color: #ddd; font-size: 13px; font-weight: 500; }
+        .control-group button { background: #2c7a47; color: white; border: none; width: 28px; height: 28px; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.1s; }
+        .control-group button.minus { background: #b33; }
+        .control-group span { color: #ffd966; font-weight: bold; min-width: 32px; text-align: center; font-size: 16px; }
+        .total-summary { margin-bottom: 15px; padding: 10px 15px; background: linear-gradient(90deg, #00000066, #1f3b1f66); border-radius: 40px; text-align: center; font-weight: bold; font-size: 0.9rem; }
+        pre { background: #0b0f0b; padding: 18px; border-radius: 16px; overflow-x: auto; font-size: 9.5px; max-height: 600px; overflow-y: auto; color: #b7ffb7; font-family: 'Consolas', 'Courier New', monospace; margin-top: 20px; border: 1px solid #ffd70055; white-space: pre-wrap; word-wrap: break-word; word-break: break-all; }
+        .status { margin-top: 12px; padding: 10px; border-radius: 40px; text-align: center; font-size: 13px; font-weight: 500; }
+        .status.success { background: #1f5f2c; color: white; }
+        .status.error { background: #a12222; color: white; }
+        .status.info { background: #0a4c6e; color: white; }
+        .btn-group { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+        .best-hand-selector { background: rgba(255,68,204,0.18); border: 1px solid #ff44cc; border-radius: 20px; padding: 16px; margin-bottom: 20px; }
+        .best-hand-selector label { color: #ff99ee; font-weight: bold; display: block; margin-bottom: 8px; }
+        .best-hand-selector select { width: 100%; padding: 12px; background: #111; border: 1px solid #ff44cc; color: #ffd966; border-radius: 30px; font-weight: bold; cursor: pointer; }
+        @media (max-width: 780px) { .main-content { grid-template-columns: 1fr; } .card { padding: 18px; } }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #1e2a1a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #ffd700; border-radius: 4px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <img src="logo pdq.png" alt="PDQ Poker" onerror="this.style.display='none'">
+        </div>
+        <div class="title">📜 POKER DE QUINTA 📜</div>
+        <div class="subtitle">Gerador de código Poker de Quinta | Rebuys · Add-ons </div>
+    </div>
+
+    <div class="main-content">
+        <div class="card">
+            <div class="card-title">
+                📋 DADOS DO TORNEIO
+            </div>
+            <div class="csv-area">
+                <textarea id="csvInput" placeholder="Cole os dados (CSV)&#10;Formato: Nome;Rebuys;Addons;UUID (opcional)&#10;&#10;Exemplo:&#10;Gaspar;0;2;1806768e-837c-485a-8e96-f1a12a5286d0&#10;Matheus;1;1;5bb1108a-0930-4dec-bb10-7af73f10b43f&#10;Diego;0;1;dfc69d93-a845-4e62-8fe2-0b058ff7e144"></textarea>
+            </div>
+            <div class="btn-group">
+                <button class="btn-info" onclick="importCSV()">📥 IMPORTAR CSV</button>
+                <button class="btn-danger" onclick="clearAll()">🗑️ LIMPAR</button>
+                <button class="btn-success" onclick="fetchOnlineData()">🌐 BUSCAR DADOS</button>
+            </div>
+            <div class="rake-config">
+                <label>💰 Rake:</label>
+                <input type="number" id="rakeValue" value="0,00" step="10" min="0" placeholder="Rake em R$">
+                <small style="color:#aaa;">Valor para despesas (Janta, Luck, Dealer, etc...) ([valor])</small>
+            </div>
+            <div id="status" class="status"></div>
+
+            <div class="card-title" style="margin-top:20px;">🏆 MELHOR MÃO (ADD-ON GRÁTIS)</div>
+            <div class="best-hand-selector" id="bestHandSelector" style="display: none;">
+                <label>⭐ Selecione quem ganhou add-on grátis (</label>
+                <select id="bestHandPlayer" onchange="updateBestHand()">
+                    <option value="">-- Nenhum --</option>
+                </select>
+            </div>
+
+            <div class="card-title" style="margin-top:10px;">👥 LISTA DE JOGADORES</div>
+            <div id="previewList" class="players-list">
+                <div style="text-align:center; color:#aaa; padding:40px;">Nenhum jogador carregado</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">📜 CÓDIGO FINAL (SOBREPOR)</div>
+            <div class="btn-group">
+                <button class="btn-primary" id="generateBtn" disabled onclick="generateFinalCode()">⚙️ GERAR CÓDIGO</button>
+                <button class="btn-success" id="copyBtn" disabled onclick="copyFinalCode()">📋 COPIAR CÓDIGO</button>
+            </div>
+            <pre id="codeOutput">Aguardando importação de jogadores...</pre>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // CONSTANTES FIXAS
+    // --------------------------------------------------------------
+    const BUYIN_FEE = 100;
+    const REBUY_FEE = 30;
+    const ADDON_FEE_NORMAL = 50;
+    const ADDON_FEE_ZERO = 0;
+    const CHIPS_PER_BUYIN = 15000;
+    const CHIPS_PER_ADDON = 50000;
+    const ADDON_ROUND_LAST = 10;   // add-on disponível até round 10
+    const REBUY_LAST_ROUND = 10;    // rebuys até round 10
+
+    const BUYIN_TIMESTAMP = 1776803009249;
+    const REBUY_TIMESTAMP = 1776803010000;
+    const ADDON_TIMESTAMP = 1776803020000;
+
+    const ORGANIZACAO_LIST = ['Gaspar', 'Matheus', 'Ricardo Linhares', 'Diego'];
+    const REMOTE_CSV_URL = 'https://pokerdequinta.github.io/siteversao2/';
+
+    // --------------------------------------------------------------
+    // TEMPLATE BASE COM ESTRUTURA COMPLETA (incluindo layout e níveis)
+    // --------------------------------------------------------------
+    const BASE_TEMPLATE = `{ V: "3.7.2", T: new Tournament({UUID: "1806768e-837c-485a-8e96-f1a12a5286d0", Title: "POKER DE QUINTA TEMPORADA 2026", Description: "", Notes: "POKER DE QUINTA TEMPORADA 2026", Financials: new FinancialConfig({Buyins: new BuyConfig({Allow: false, Profiles: [new FeeProfile({Name: "Master", Enabled: true, AllowChange: true, Fee: 100, Rake: new PerPlayerRake([0]), Chips: 15000, Points: 0, BountyChipCost: 0})], DefIndex: 0, LastRound: 0, MaxPerPlayer: 0, MaxTotal: 0, MinPlayers: 0}), AddOns: new BuyConfig({Allow: true, Profiles: [new FeeProfile({Name: "Master", Enabled: true, AllowChange: true, Fee: 50, Rake: new PerPlayerRake([0]), Chips: 50000, Points: 0, BountyChipCost: 0}), new FeeProfile({Name: "ORGANIZACAO", Enabled: true, AllowChange: true, Fee: 0, Rake: new PerPlayerRake([0]), Chips: 50000, Points: 0, BountyChipCost: 0})], DefIndex: 0, LastRound: 10, MaxPerPlayer: 0, MaxTotal: 0, MinPlayers: 0}), Rebuys: new BuyConfig({Allow: true, Profiles: [new FeeProfile({Name: "Master", Enabled: true, AllowChange: true, Fee: 30, Rake: new PerPlayerRake([0]), Chips: 15000, Points: 0, BountyChipCost: 0})], DefIndex: 0, LastRound: 10, MaxPerPlayer: 0, MaxTotal: 0, MinPlayers: 0}), FixedRake: new FixedRakeConfig({Type: 0, Real: new PerPlayerRake([RAKE_VALUE_PLACEHOLDER]), Percent: new PerPlayerRake([0]), Round: 0, RoundToNearest: 1}), HouseContribution: 0, GuaranteedPot: 0, TotalChipsAdjustment: 0, PointsForHit: 0, PointsForPlaying: new UserFormula({Text: "", Strict: false}), UseBounties: false, RestrictedBounty: false, AllowInTourneyRebuys: true, AllowRebuyOverrideAfterBustout: true}), Players: new GamePlayers({Players: Map.from([PLAYERS_PLACEHOLDER]), Chops: new GameChops({Chops: []}), Config: new GamePlayersConfig({TrackPlayers: true, NumberOfEntries: 0, NumberOfPlayers: 0, NumberOfRebuys: 0, NumberOfAddOns: 0, FullCreditHit: false})}), Levels: new GameLevels({Levels: [new GameRound({Minutes: 15, SmallBlind: 100, BigBlind: 200, Ante: 0, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [100,200,0,0,0,0,0,0], Notes: ""}), new GameRound({Minutes: 15, SmallBlind: 100, BigBlind: 300, Ante: 0, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [200,400,0,0,0,0,0,0], Notes: ""}), new GameRound({Minutes: 15, SmallBlind: 200, BigBlind: 400, Ante: 0, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [400,800,0,0,0,0,0,0], Notes: ""}), new GameRound({Minutes: 15, SmallBlind: 300, BigBlind: 600, Ante: 0, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [800,1600,0,0,0,0,0,0], Notes: ""}), new GameRound({Minutes: 15, SmallBlind: 400, BigBlind: 800, Ante: 0, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [1600,3200,0,0,0,0,0,0], Notes: ""}), new GameRound({Minutes: 15, SmallBlind: 500, BigBlind: 1000, Ante: 0, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [3200,6400,0,0,0,0,0,0], Notes: ""}), new GameRound({Minutes: 15, SmallBlind: 600, BigBlind: 1200, Ante: 0, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [6400,12800,0,0,0,0,0,0], Notes: ""}), new GameRound({Minutes: 15, SmallBlind: 700, BigBlind: 1400, Ante: 0, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [12800,25600,0,0,0,0,0,0], Notes: ""}), new GameRound({Minutes: 15, SmallBlind: 800, BigBlind: 1600, Ante: 0, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [25600,51200,0,0,0,0,0,0], Notes: ""}), new GameRound({Minutes: 15, SmallBlind: 1000, BigBlind: 2000, Ante: 0, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [51200,102400,0,0,0,0,0,0], Notes: ""}), new GameBreak({Minutes: 90, Tokens: new TokenOverrides({Tokens: Map.from([])}), ChipUp: false, Notes: ""}), new GameRound({Minutes: 12, SmallBlind: 1500, BigBlind: 3000, Ante: 3000, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [102400,204800,0,0,0,0,0,0], Notes: ""}), new GameRound({Minutes: 12, SmallBlind: 2000, BigBlind: 4000, Ante: 4000, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [204800,409600,0,0,0,0,0,0], Notes: ""}), new GameRound({Minutes: 12, SmallBlind: 2500, BigBlind: 5000, Ante: 5000, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [409600,819200,0,0,0,0,0,0], Notes: ""}), new GameRound({Minutes: 12, SmallBlind: 3000, BigBlind: 6000, Ante: 6000, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [819200,1638400,0,0,0,0,0,0], Notes: ""}), new GameRound({Minutes: 12, SmallBlind: 4000, BigBlind: 8000, Ante: 8000, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [1638400,3276800,0,0,0,0,0,0], Notes: ""}), new GameRound({Minutes: 12, SmallBlind: 5000, BigBlind: 10000, Ante: 10000, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [3276800,6553600,0,0,0,0,0,0], Notes: ""}), new GameRound({Minutes: 12, SmallBlind: 6000, BigBlind: 12000, Ante: 12000, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [6553600,13107200,0,0,0,0,0,0], Notes: ""}), new GameRound({Minutes: 12, SmallBlind: 7000, BigBlind: 14000, Ante: 14000, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [13107200,26214400,0,0,0,0,0,0], Notes: ""}), new GameRound({Minutes: 10, SmallBlind: 10000, BigBlind: 20000, Ante: 20000, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [26214400,52428800,0,0,0,0,0,0], Notes: ""}), new GameRound({Minutes: 10, SmallBlind: 15000, BigBlind: 30000, Ante: 30000, GameType: 2, GameName: "Texas Hold 'Em", Tokens: new TokenOverrides({Tokens: Map.from([])}), Limits: [52428800,104857600,0,0,0,0,0,0], Notes: ""}) ]}), Prizes: new GamePrizes({Prizes: [new GamePrize({Description: "1° LUGAR", Type: 0, Recipient: 1, AmountType: 0, Amount: 36, Adjustment: 0, ShareRemainder: true, Points: 0, AwardedToPlayers: [], SharedRemainder: 0, CalculatedAmount: 0, CalculatedPoints: 0, EstimatedAmount: 0, EstimatedSharedRemainder: 0, Display: true, Lock: false}), new GamePrize({Description: "2° LUGAR", Type: 0, Recipient: 2, AmountType: 0, Amount: 26, Adjustment: 0, ShareRemainder: false, Points: 0, AwardedToPlayers: [], SharedRemainder: 0, CalculatedAmount: 0, CalculatedPoints: 0, EstimatedAmount: 0, EstimatedSharedRemainder: 0, Display: true, Lock: false}), new GamePrize({Description: "3° LUGAR", Type: 0, Recipient: 3, AmountType: 0, Amount: 19, Adjustment: 0, ShareRemainder: false, Points: 0, AwardedToPlayers: [], SharedRemainder: 0, CalculatedAmount: 0, CalculatedPoints: 0, EstimatedAmount: 0, EstimatedSharedRemainder: 0, Display: true, Lock: false}), new GamePrize({Description: "4° LUGAR", Type: 0, Recipient: 4, AmountType: 0, Amount: 12, Adjustment: 0, ShareRemainder: false, Points: 0, AwardedToPlayers: [], SharedRemainder: 0, CalculatedAmount: 0, CalculatedPoints: 0, EstimatedAmount: 0, EstimatedSharedRemainder: 0, Display: true, Lock: false}), new GamePrize({Description: "5° LUGAR", Type: 0, Recipient: 5, AmountType: 0, Amount: 7, Adjustment: 0, ShareRemainder: false, Points: 0, AwardedToPlayers: [], SharedRemainder: 0, CalculatedAmount: 0, CalculatedPoints: 0, EstimatedAmount: 0, EstimatedSharedRemainder: 0, Display: true, Lock: false})], RoundPrizes: 3, RoundToNearest: 5, EstimatedPotInfo: new EstimatedPotData({UseEstimatedPot: false, EstimatedPot: 0, CalculateEstimatedPot: false, NumberOfBuyins: 0, NumberOfRebuys: 0, NumberOfAddOns: 0, CalculatedPot: 0, ShowEstimatedPot: false}), Automatic: false, AutomaticAtTop: true}), Chips: new GameChips({Chips: [new GameChip({ChipID: "1", Label: "White", ImagePath: "images\\\\chip_white.gif", Value: 100, Use: true, PerPlayer: 0}), new GameChip({ChipID: "2", Label: "Red", ImagePath: "images\\\\chip_red.gif", Value: 500, Use: true, PerPlayer: 0}), new GameChip({ChipID: "3", Label: "Blue", ImagePath: "images\\\\chip_blue.gif", Value: 1000, Use: true, PerPlayer: 0}), new GameChip({ChipID: "4", Label: "Black", ImagePath: "images\\\\chip_black.gif", Value: 5000, Use: true, PerPlayer: 0})], ChipSets: [new ChipSet({Name: "Main Set", ChipCounts: Map.from([["1", 120], ["2", 180], ["3", 120], ["4", 80]])})]}), Tables: new GameTables({AutoSuggestMovements: true, MaxPlayerDisparity: 1, Tables: [new GameTable({Name: "MESA PRETA", NumberOfSeats: SEATS_PLACEHOLDER, Seats: [SEATS_ARRAY_PLACEHOLDER], Locks: [LOCKS_ARRAY_PLACEHOLDER], DealerButtonSeat: 0, UUID: "dfc69d93-a845-4e62-8fe2-0b058ff7e144"})], BalanceAlgorithm: 0, RandomizeFinalTable: true, LastPlayerMove: new PlayerMovement({Time: 1776803079458, Moves: []}), UnavailableSeats: Map.from([]), CollapseFirstTables: [], CollapseLastTables: [], CollapseFirstInOrder: false, CollapseLastInOrder: false, SeatPlayersCloseToHome: false, CanSeatUnpaidPlayers: false, AutoAcceptMovementSuggestions: false}), History: new GameHistory({History: []}), StartTime: 1776778018114, EndTime: 1777081306713, CurrentPeriodDuration: 900, AccumulatedSeconds: 0, ClockRunning: false, Countdown: 0, CountdownSeconds: 0, CountdownTime: 0, CurrentLevel: 0, Events: new GameEvents({Sounds: [], Events: [], MsgPropSets: Map.from([]), DefMsgDuration: 7}), LastModified: 0, Rules: new GameRules({Tokens: new TokenOverrides({Tokens: Map.from([])})})}), L: { V: "3.7.2", L: new LO.Layout({ScreenBox: new LO.ScreenBox({Contents: Map.from([])}), ScreenSets: new LO.ScreenSets({Sets: []}), GlobalProps: new LO.GlobalProps({Contents: Map.from([])}), CellBox: new LO.CellBox({Contents: Map.from([])}), BannerSets: new LO.BannerSets({Contents: Map.from([])}), OtherProps: new LO.OtherProps({Properties: Map.from([])}), Tokens: new TokenOverrides({Tokens: Map.from([])}), Settings: new LO.LayoutSettings({OptimalRes: new Dimension({Width: 1024, Height: 768})})}) } }`;
+
+    // Script para forçar o torneio a começar no nível 11 e preservar a estrutura de blinds
+    const SCRIPT_INJECTION = `
+// --- SCRIPT DE INJEÇÃO PARA REINICIAR NO NÍVEL 11 E PRESERVAR BLINDS ---
+(function() {
+    try {
+        // Espera o torneio ser carregado
+        var checkTournament = setInterval(function() {
+            if (typeof tournament !== 'undefined' && tournament) {
+                clearInterval(checkTournament);
+                // Força o nível atual para 11 (índice 10, pois começa em 0)
+                tournament.setCurrentLevel(10);
+                // Reinicia o cronômetro do nível
+                tournament.resetLevelTimer();
+                // Garante que as estruturas de blinds não sejam alteradas
+                tournament.getLevels().recalcChipValues();
+                console.log("✅ Torneio reiniciado no Nível 11 com estrutura de blinds preservada!");
+            }
+        }, 100);
+    } catch(e) {
+        console.error("Erro ao tentar reiniciar no nível 11:", e);
+    }
+})();`;
+
+    let importedPlayers = [];
+    let bestHandUUID = null;
+
+    function showStatus(msg, type) {
+        const div = document.getElementById('status');
+        div.textContent = msg;
+        div.className = `status ${type}`;
+        setTimeout(() => { if(div) div.className = 'status'; }, 4000);
+    }
+
+    function generateUUID() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+            const r = Math.random() * 16 | 0;
+            const v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    function isOrganizacao(name) {
+        return ORGANIZACAO_LIST.some(n => n.toLowerCase() === name.trim().toLowerCase());
+    }
+
+    function updateBestHand() {
+        const sel = document.getElementById('bestHandPlayer');
+        bestHandUUID = sel.value || null;
+        displayPreview();
+    }
+
+    function displayPreview() {
+        const container = document.getElementById('previewList');
+        if(!importedPlayers.length) {
+            container.innerHTML = '<div style="text-align:center;color:#aaa;padding:20px;">Nenhum jogador</div>';
+            document.getElementById('bestHandSelector').style.display = 'none';
+            return;
+        }
+        document.getElementById('bestHandSelector').style.display = 'block';
+        const totalEntries = importedPlayers.length;
+        const totalRebuys = importedPlayers.reduce((s,p)=>s+p.rebuys,0);
+        const totalAddons = importedPlayers.reduce((s,p)=>s+p.addons,0);
+        container.innerHTML = `<div class="total-summary">🎯 ${totalEntries} jogadores | 🔁 ${totalRebuys} rebuys | 💰 ${totalAddons} add-ons</div>`;
+        importedPlayers.forEach(p => {
+            const isBest = (bestHandUUID === p.uuid);
+            container.innerHTML += `
+            <div class="player-card ${isBest ? 'best-hand' : ''}">
+                <div class="player-name">${escapeHtml(p.nickname)} ${isBest ? '<span class="profile-badge best-hand">🏆 MELHOR MÃO 🏆</span>' : ''}</div>
+                <div class="player-controls">
+                    <div class="control-group"><label>🔁 Rebuys</label><button class="minus" onclick="modRebuys('${p.uuid}', -1)">-</button><span id="reb-${p.uuid}">${p.rebuys}</span><button onclick="modRebuys('${p.uuid}', 1)">+</button></div>
+                    <div class="control-group"><label>💰 Add-ons</label><button class="minus" onclick="modAddons('${p.uuid}', -1)">-</button><span id="ad-${p.uuid}">${p.addons}</span><button onclick="modAddons('${p.uuid}', 1)">+</button></div>
+                </div>
+            </div>`;
+        });
+        const select = document.getElementById('bestHandPlayer');
+        select.innerHTML = '<option value="">-- Nenhum --</option>';
+        importedPlayers.forEach(p => {
+            const opt = document.createElement('option');
+            opt.value = p.uuid;
+            opt.textContent = p.nickname;
+            if(bestHandUUID === p.uuid) opt.selected = true;
+            select.appendChild(opt);
+        });
+    }
+
+    window.modRebuys = (uuid, delta) => {
+        const p = importedPlayers.find(x=>x.uuid===uuid);
+        if(p) { p.rebuys = Math.max(0, p.rebuys+delta); displayPreview(); }
+    };
+    window.modAddons = (uuid, delta) => {
+        const p = importedPlayers.find(x=>x.uuid===uuid);
+        if(p) { p.addons = Math.max(0, p.addons+delta); displayPreview(); }
+    };
+
+    function importCSV() {
+        const raw = document.getElementById('csvInput').value;
+        if(!raw.trim()) { showStatus("Cole os dados CSV primeiro", "error"); return; }
+        const lines = raw.split(/\r?\n/);
+        const players = [];
+        for(let line of lines) {
+            if(!line.trim()) continue;
+            let sep = line.includes(';') ? ';' : ',';
+            const parts = line.split(sep);
+            if(parts.length<3) continue;
+            const nickname = parts[0].trim();
+            const rebuys = parseInt(parts[1])||0;
+            const addons = parseInt(parts[2])||0;
+            let uuid = (parts.length>3 && parts[3].trim())? parts[3].trim() : generateUUID();
+            if(nickname) players.push({ uuid, nickname, rebuys, addons, isOrganizacao: isOrganizacao(nickname) });
+        }
+        if(!players.length) { showStatus("Nenhum jogador válido", "error"); return; }
+        importedPlayers = players;
+        bestHandUUID = null;
+        showStatus(`✅ ${players.length} jogadores importados.`, "success");
+        displayPreview();
+        document.getElementById('generateBtn').disabled = false;
+        document.getElementById('copyBtn').disabled = false;
+    }
+
+    async function fetchOnlineData() {
+        showStatus("🔄 Buscando dados remotos...", "info");
+        try {
+            const resp = await fetch(REMOTE_CSV_URL, { mode: 'cors', cache: 'no-cache' });
+            if(!resp.ok) throw new Error("Falha fetch");
+            const data = await resp.text();
+            document.getElementById('csvInput').value = data;
+            importCSV();
+            showStatus("✅ Dados importados do servidor", "success");
+        } catch(e) {
+            showStatus("⚠️ Servidor offline, insira manualmente", "error");
+        }
+    }
+
+    function clearAll() {
+        document.getElementById('csvInput').value = '';
+        importedPlayers = [];
+        bestHandUUID = null;
+        displayPreview();
+        document.getElementById('codeOutput').innerText = "Importe um CSV para gerar código...";
+        document.getElementById('generateBtn').disabled = true;
+        document.getElementById('copyBtn').disabled = true;
+        showStatus("Dados limpos", "success");
+    }
+
+    function generateFinalCode() {
+        if(!importedPlayers.length) { showStatus("Importe jogadores primeiro", "error"); return; }
+        const rake = parseInt(document.getElementById('rakeValue').value) || 0;
+        const playersEntries = [];
+        for(const p of importedPlayers) {
+            const isOrg = p.isOrganizacao;
+            const hasFreeAddon = isOrg || (bestHandUUID === p.uuid);
+            const addonProfile = hasFreeAddon ? "ORGANIZACAO" : "Master";
+            const addonFee = hasFreeAddon ? ADDON_FEE_ZERO : ADDON_FEE_NORMAL;
+            let buysArr = [`new GameBuyin({Time: ${BUYIN_TIMESTAMP}, Round: 1, Amount: ${BUYIN_FEE}, PersonalBounty: 0, Rake: new PerPlayerRake([0]), Chips: ${CHIPS_PER_BUYIN}, Points: 0, ProfileName: "Master"})`];
+            for(let i=0;i<p.rebuys;i++) buysArr.push(`new GameBuyin({Time: ${REBUY_TIMESTAMP}, Round: 1, Amount: ${REBUY_FEE}, PersonalBounty: 0, Rake: new PerPlayerRake([0]), Chips: ${CHIPS_PER_BUYIN}, Points: 0, ProfileName: "Master"})`);
+            let addonsArr = [];
+            for(let i=0;i<p.addons;i++) addonsArr.push(`new GameAddOn({Time: ${ADDON_TIMESTAMP}, Round: ${ADDON_ROUND_LAST}, Amount: ${addonFee}, Rake: new PerPlayerRake([0]), Chips: ${CHIPS_PER_ADDON}, Points: 0, ProfileName: "${addonProfile}"})`);
+            const totalChips = CHIPS_PER_BUYIN + (p.rebuys * CHIPS_PER_BUYIN) + (p.addons * CHIPS_PER_ADDON);
+            playersEntries.push(`["${p.uuid}", new GamePlayer({ UUID: "${p.uuid}", Name: new PlayerName({UUID: "${p.uuid}", Nickname: "${escapeJson(p.nickname)}", Firstname: "", Lastname: "", LastModified: 1776802998912}), Info: new PlayerInfo({UUID: "${p.uuid}", StreetAddress: "", City: "", State: "", Zipcode: "", Country: "", Phone1: "", Phone2: "", Email1: "", Email2: "", Notes: "", LastModified: 1776802998916, OptID: ""}), Buyins: [${buysArr.join(', ')}], AddOns: [${addonsArr.join(', ')}], CashAdjustment: 0, PointsAdjustment: 0, ChipCount: ${totalChips}, NumberOfTableMoves: 1, PaidInFull: true, HitsAdjustment: 0 })]`);
+        }
+        const seatsArray = importedPlayers.map(p => `"${p.uuid}"`).join(', ');
+        const locksArray = Array(importedPlayers.length).fill('undefined').join(', ');
+        let full = BASE_TEMPLATE
+            .replace(/RAKE_VALUE_PLACEHOLDER/g, rake)
+            .replace('PLAYERS_PLACEHOLDER', playersEntries.join(', '))
+            .replace('SEATS_PLACEHOLDER', importedPlayers.length)
+            .replace('SEATS_ARRAY_PLACEHOLDER', seatsArray)
+            .replace('LOCKS_ARRAY_PLACEHOLDER', locksArray);
+
+        // Adiciona o script de injeção ao final do código
+        full += SCRIPT_INJECTION;
+
+        document.getElementById('codeOutput').innerText = full;
+        showStatus(`✅ Código gerado! Rake: R$ ${rake}. O torneio iniciará no nível 11.`, "success");
+    }
+
+    function copyFinalCode() {
+        const codeElem = document.getElementById('codeOutput');
+        if(!codeElem.innerText || codeElem.innerText.includes("Aguardando")){
+            showStatus("Gere o código primeiro", "error"); return;
+        }
+        navigator.clipboard.writeText(codeElem.innerText);
+        showStatus("📋 Código copiado para área de transferência", "success");
+    }
+
+    function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+    function escapeJson(str) { return str.replace(/"/g, '\\"'); }
+</script>
+</body>
+</html>
