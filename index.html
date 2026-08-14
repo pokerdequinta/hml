@@ -11,9 +11,9 @@
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 
         :root {
-            --bg: #0d1b14;
-            --panel: rgba(21, 40, 30, 0.92);
-            --panel2: #1c3326;
+            --bg: #0a0f0d;
+            --panel: rgba(13, 27, 20, 0.92);
+            --panel2: #1a2e22;
             --gold: #d4a843;
             --gold2: #c99730;
             --gold-light: #f0d78c;
@@ -25,13 +25,13 @@
             --border: #2a4032;
             --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
             --radius: 10px;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: #0a1510;
+            background: #0a0f0d;
             color: var(--text);
             font-family: var(--font);
             min-height: 100vh;
@@ -41,7 +41,7 @@
             overflow-x: hidden;
         }
 
-        /* Fundo com cartas e fichas */
+        /* Fundo com cartas e fichas - Versão mais intensa para TV */
         body::before {
             content: '';
             position: fixed;
@@ -50,33 +50,33 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(ellipse at 20% 50%, rgba(212, 168, 67, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 50%, rgba(212, 168, 67, 0.06) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 100%, rgba(39, 174, 96, 0.05) 0%, transparent 40%),
-                radial-gradient(ellipse at 50% 0%, rgba(41, 128, 185, 0.05) 0%, transparent 40%),
-                linear-gradient(135deg, #0a1510 0%, #1a3022 30%, #0d1b14 60%, #1a2e1f 100%);
+                radial-gradient(ellipse at 15% 50%, rgba(212, 168, 67, 0.12) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 50%, rgba(212, 168, 67, 0.08) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 100%, rgba(39, 174, 96, 0.06) 0%, transparent 45%),
+                radial-gradient(ellipse at 50% 0%, rgba(41, 128, 185, 0.06) 0%, transparent 45%),
+                linear-gradient(135deg, #0a0f0d 0%, #1a3022 35%, #0d1b14 65%, #1a2e1f 100%);
             z-index: -2;
         }
 
         body::after {
-            content: '♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏';
+            content: '♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏';
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            font-size: 80px;
-            color: rgba(212, 168, 67, 0.04);
+            font-size: 120px;
+            color: rgba(212, 168, 67, 0.03);
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
             align-content: space-around;
-            letter-spacing: 40px;
-            word-spacing: 60px;
+            letter-spacing: 60px;
+            word-spacing: 80px;
             z-index: -1;
             pointer-events: none;
-            line-height: 1.8;
-            opacity: 0.5;
+            line-height: 2;
+            opacity: 0.6;
         }
 
         .chip-pattern {
@@ -87,100 +87,223 @@
             height: 100%;
             z-index: -1;
             pointer-events: none;
-            opacity: 0.06;
+            opacity: 0.08;
             background-image: 
-                radial-gradient(circle at 10% 20%, var(--gold) 1px, transparent 1px),
-                radial-gradient(circle at 30% 60%, var(--gold) 1px, transparent 1px),
-                radial-gradient(circle at 50% 10%, var(--gold) 1px, transparent 1px),
-                radial-gradient(circle at 70% 70%, var(--gold) 1px, transparent 1px),
-                radial-gradient(circle at 90% 30%, var(--gold) 1px, transparent 1px),
-                radial-gradient(circle at 45% 85%, var(--gold) 1px, transparent 1px);
-            background-size: 150px 150px;
+                radial-gradient(circle at 10% 20%, var(--gold) 2px, transparent 2px),
+                radial-gradient(circle at 30% 60%, var(--gold) 2px, transparent 2px),
+                radial-gradient(circle at 50% 10%, var(--gold) 2px, transparent 2px),
+                radial-gradient(circle at 70% 70%, var(--gold) 2px, transparent 2px),
+                radial-gradient(circle at 90% 30%, var(--gold) 2px, transparent 2px),
+                radial-gradient(circle at 45% 85%, var(--gold) 2px, transparent 2px);
+            background-size: 180px 180px;
             background-repeat: repeat;
         }
 
-        /* Modo Projeção */
+        /* === MODO PROJEÇÃO TV === */
         body.projection-mode {
-            background: #0a1510 !important;
+            background: #0a0f0d !important;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
         body.projection-mode::before {
             background: 
-                radial-gradient(ellipse at 20% 50%, rgba(212, 168, 67, 0.15) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 50%, rgba(212, 168, 67, 0.10) 0%, transparent 60%),
-                radial-gradient(ellipse at 50% 100%, rgba(39, 174, 96, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 0%, rgba(41, 128, 185, 0.08) 0%, transparent 50%),
-                linear-gradient(135deg, #0a1510 0%, #1a3022 40%, #0d1b14 60%, #1a2e1f 100%);
-            z-index: -2;
+                radial-gradient(ellipse at 20% 50%, rgba(212, 168, 67, 0.20) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(212, 168, 67, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(39, 174, 96, 0.10) 0%, transparent 45%),
+                radial-gradient(ellipse at 50% 0%, rgba(41, 128, 185, 0.10) 0%, transparent 45%),
+                linear-gradient(135deg, #0a0f0d 0%, #1a3022 40%, #0d1b14 60%, #1a2e1f 100%);
         }
         body.projection-mode::after {
-            content: '♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏';
-            font-size: 100px;
-            color: rgba(212, 168, 67, 0.06);
-            opacity: 0.8;
+            content: '♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏♠♥♦♣🃏';
+            font-size: 150px;
+            color: rgba(212, 168, 67, 0.05);
+            opacity: 0.9;
         }
         body.projection-mode .chip-pattern {
-            opacity: 0.10;
+            opacity: 0.12;
+            background-size: 200px 200px;
         }
         body.projection-mode #mainHeader,
         body.projection-mode #tabNav,
-        body.projection-mode .no-project {
+        body.projection-mode .no-project,
+        body.projection-mode .prize-sidebar {
             display: none !important;
         }
+        body.projection-mode main {
+            max-width: 100%;
+            padding: 0;
+            margin: 0;
+        }
         body.projection-mode #panel-dashboard {
-            max-width: 98vw;
+            display: block !important;
+            max-width: 100%;
             width: 100%;
-            padding: 1rem 2rem;
-            background: rgba(0,0,0,0.7);
+            padding: 30px 40px;
+            background: rgba(0,0,0,0.75);
             border-radius: 20px;
             border: 2px solid rgba(212, 168, 67, 0.3);
-            box-shadow: 0 0 60px rgba(212, 168, 67, 0.1);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 0 80px rgba(212, 168, 67, 0.08), inset 0 0 80px rgba(212, 168, 67, 0.02);
+            backdrop-filter: blur(15px);
         }
         body.projection-mode #panel-dashboard .card {
-            background: rgba(21, 40, 30, 0.5);
-            border: 1px solid rgba(212, 168, 67, 0.2);
+            background: rgba(21, 40, 30, 0.4);
+            border: 1px solid rgba(212, 168, 67, 0.15);
+            backdrop-filter: blur(5px);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        body.projection-mode #panel-dashboard .card h3 {
+            font-size: 1.6em;
+            border-bottom-width: 2px;
+            padding-bottom: 15px;
+        }
+        body.projection-mode .timer-container {
+            padding: 20px;
+        }
+        body.projection-mode .timer-level {
+            font-size: 2.8em;
+            color: var(--gold-light);
+            letter-spacing: 4px;
+            text-shadow: 0 0 30px rgba(212, 168, 67, 0.3);
         }
         body.projection-mode .timer-display {
-            font-size: 10em !important;
+            font-size: 12em !important;
             font-family: 'Orbitron', monospace !important;
-            background: rgba(0,0,0,0.5);
-            border: 2px solid rgba(212, 168, 67, 0.3);
+            background: rgba(0,0,0,0.6);
+            border: 2px solid rgba(212, 168, 67, 0.25);
+            border-radius: 20px;
+            padding: 25px 0;
+            margin: 15px 0;
+            text-shadow: 0 0 60px rgba(212, 168, 67, 0.2), 0 0 120px rgba(212, 168, 67, 0.1);
+        }
+        body.projection-mode .timer-break-info {
+            font-size: 1.8em;
+            margin-top: 10px;
+        }
+        body.projection-mode .timer-break-info strong {
+            font-size: 1.2em;
+        }
+        body.projection-mode .blind-info {
+            gap: 40px;
+            font-size: 2.2em;
+            margin: 20px 0;
         }
         body.projection-mode .blind-info span {
-            font-size: 2em;
-            padding: 12px 30px;
+            padding: 15px 35px;
+            border-radius: 30px;
+            border: 1px solid rgba(212, 168, 67, 0.2);
         }
-        body.projection-mode .stat-value {
-            font-size: 3em !important;
+        body.projection-mode .blind-info .sb { color: #85c1e9; }
+        body.projection-mode .blind-info .bb { color: #f0d78c; }
+        body.projection-mode .blind-info .ante { color: #e74c3c; }
+        body.projection-mode .badge {
+            font-size: 1.4em;
+            padding: 8px 20px;
+            border-radius: 20px;
         }
         body.projection-mode .king-display {
-            padding: 25px;
+            padding: 30px;
             border-width: 3px;
+            border-radius: 20px;
+            gap: 30px;
         }
         body.projection-mode .king-avatar {
-            width: 120px;
-            height: 120px;
-            font-size: 4em;
+            width: 150px;
+            height: 150px;
+            font-size: 5em;
+            border-width: 4px;
+        }
+        body.projection-mode .king-info .king-title {
+            font-size: 1.2em;
+            letter-spacing: 4px;
         }
         body.projection-mode .king-info .king-name {
-            font-size: 2.5em;
+            font-size: 3.2em;
+            text-shadow: 0 0 30px rgba(212, 168, 67, 0.3);
         }
         body.projection-mode .king-info .king-hand {
-            font-size: 1.5em;
+            font-size: 1.8em;
+        }
+        body.projection-mode .grid3 {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
         }
         body.projection-mode .stat-box {
             padding: 25px;
-            background: rgba(28, 51, 38, 0.7);
+            border-radius: 15px;
+            background: rgba(28, 51, 38, 0.6);
+            border: 1px solid rgba(212, 168, 67, 0.1);
         }
-        body.projection-mode .timer-level {
+        body.projection-mode .stat-box .stat-value {
+            font-size: 3.8em;
+            text-shadow: 0 0 30px rgba(212, 168, 67, 0.2);
+        }
+        body.projection-mode .stat-box .stat-label {
+            font-size: 1.2em;
+            letter-spacing: 2px;
+            margin-top: 8px;
+        }
+        body.projection-mode .stat-box .stat-icon {
             font-size: 2em;
         }
-        body.projection-mode .prize-sidebar {
-            display: none;
+
+        /* Responsivo para 42 polegadas (1920x1080) */
+        @media (min-width: 1920px) {
+            body.projection-mode #panel-dashboard {
+                padding: 40px 60px;
+            }
+            body.projection-mode .timer-display {
+                font-size: 14em !important;
+            }
+            body.projection-mode .timer-level {
+                font-size: 3.2em;
+            }
+            body.projection-mode .blind-info {
+                font-size: 2.8em;
+            }
+            body.projection-mode .king-info .king-name {
+                font-size: 3.8em;
+            }
+            body.projection-mode .stat-box .stat-value {
+                font-size: 4.2em;
+            }
+            body.projection-mode .grid3 {
+                grid-template-columns: repeat(4, 1fr);
+            }
         }
 
+        @media (max-width: 1366px) {
+            body.projection-mode #panel-dashboard {
+                padding: 20px 25px;
+            }
+            body.projection-mode .timer-display {
+                font-size: 8em !important;
+            }
+            body.projection-mode .timer-level {
+                font-size: 2em;
+            }
+            body.projection-mode .blind-info {
+                font-size: 1.6em;
+                gap: 20px;
+            }
+            body.projection-mode .king-info .king-name {
+                font-size: 2.2em;
+            }
+            body.projection-mode .stat-box .stat-value {
+                font-size: 2.8em;
+            }
+            body.projection-mode .grid3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            body.projection-mode .king-avatar {
+                width: 100px;
+                height: 100px;
+                font-size: 3.5em;
+            }
+        }
+
+        /* Header - visível apenas no modo admin */
         header {
             background: linear-gradient(180deg, rgba(26, 46, 31, 0.95) 0%, rgba(15, 31, 21, 0.95) 100%);
             border-bottom: 2px solid var(--gold);
@@ -213,6 +336,7 @@
             color: var(--gold-light);
         }
 
+        /* Navegação - visível apenas no modo admin */
         nav.tabs {
             display: flex;
             flex-wrap: wrap;
@@ -262,6 +386,7 @@
         .tab-panel.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* Cards - estilo padrão */
         .card {
             background: var(--panel);
             border-radius: var(--radius);
@@ -281,9 +406,12 @@
             border-bottom: 1px solid var(--border);
             padding-bottom: 10px;
         }
-        .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
-        .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
-        .grid4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+
+        .grid3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
 
         .stat-box {
             background: var(--panel2);
@@ -304,6 +432,7 @@
             opacity: 0.5;
         }
 
+        /* Timer */
         .timer-container {
             text-align: center;
             padding: 10px;
@@ -363,6 +492,7 @@
         .blind-info .bb { color: #f0d78c; }
         .blind-info .ante { color: #e74c3c; }
 
+        /* Rei da Mesa */
         .king-display {
             display: flex;
             align-items: center;
@@ -409,14 +539,22 @@
             color: var(--gold-light);
         }
 
-        table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
-        th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; }
-        th { background: var(--panel2); color: var(--gold); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.8em; }
-        tr:hover td { background: rgba(255,255,255,0.02); }
-        .table-wrap { overflow-x: auto; }
-        .rank-1 { color: var(--gold); font-weight: 900; }
-        .rank-2 { color: #c0c0c0; font-weight: 700; }
-        .rank-3 { color: #cd7f32; font-weight: 700; }
+        /* Botões */
+        .projection-btn {
+            background: #2c3e50;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            padding: 8px 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .projection-btn:hover { background: var(--gold); color: #1a2e1f; }
 
         button.btn {
             background: var(--gold);
@@ -443,68 +581,7 @@
         button.btn.outline { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
         button.btn.outline:hover { background: var(--gold); color: #1a2e1f; }
 
-        input[type="text"], input[type="number"], input[type="time"], select {
-            background: var(--panel2);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 10px 14px;
-            border-radius: 20px;
-            font-family: var(--font);
-            font-size: 0.9em;
-            width: 100%;
-            transition: border 0.2s;
-        }
-        input:focus, select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 8px rgba(212,168,67,0.3); }
-        label { display: block; font-size: 0.8em; color: var(--text2); margin-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .form-group { margin-bottom: 12px; }
-        .form-row { display: flex; gap: 10px; flex-wrap: wrap; }
-        .form-row>* { flex: 1; min-width: 100px; }
-
-        .input-with-icon {
-            position: relative;
-        }
-        .input-with-icon .input-icon {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.1em;
-            opacity: 0.6;
-            pointer-events: none;
-        }
-        .input-with-icon input,
-        .input-with-icon select {
-            padding-left: 36px;
-        }
-
-        .modal-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); z-index:200; justify-content:center; align-items:center; backdrop-filter: blur(5px); }
-        .modal-overlay.show { display: flex; }
-        .modal { background: var(--panel); border-radius: var(--radius); padding: 24px; max-width: 600px; width:90%; max-height:85vh; overflow-y:auto; border:2px solid var(--gold); box-shadow:0 0 40px rgba(0,0,0,0.7); }
-        .modal h3 { color: var(--gold); margin-bottom:16px; }
-        .modal-close { float:right; background:none; border:none; color:#fff; font-size:1.5em; cursor:pointer; }
-
-        .badge { display:inline-block; padding:4px 10px; border-radius:12px; font-size:0.75em; font-weight:700; letter-spacing:0.5px; }
-        .badge.gold { background:var(--gold); color:#1a2e1f; }
-        .badge.red { background:var(--danger); color:#fff; }
-        .badge.green { background:var(--success); color:#fff; }
-        .badge.blue { background:var(--info); color:#fff; }
-
-        .projection-btn {
-            background: #2c3e50;
-            border: 2px solid var(--gold);
-            color: var(--gold);
-            padding: 8px 18px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 0.9em;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .projection-btn:hover { background: var(--gold); color: #1a2e1f; }
-
+        /* Sidebar de premiações */
         .prize-sidebar {
             position: fixed;
             right: 0;
@@ -517,7 +594,6 @@
             box-shadow: -5px 0 30px rgba(0,0,0,0.5);
             backdrop-filter: blur(10px);
             z-index: 50;
-            transition: transform 0.3s ease;
         }
         .prize-sidebar h4 {
             color: var(--gold);
@@ -552,6 +628,7 @@
             }
         }
 
+        /* Toast */
         .toast {
             position:fixed;
             bottom:20px;
@@ -566,6 +643,56 @@
             box-shadow:0 6px 20px rgba(0,0,0,0.4);
         }
         @keyframes slideUp { from{transform:translateY(60px);opacity:0;} to{transform:translateY(0);opacity:1;} }
+
+        /* Outros estilos para o admin */
+        input[type="text"], input[type="number"], input[type="time"], select {
+            background: var(--panel2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px 14px;
+            border-radius: 20px;
+            font-family: var(--font);
+            font-size: 0.9em;
+            width: 100%;
+            transition: border 0.2s;
+        }
+        input:focus, select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 8px rgba(212,168,67,0.3); }
+        label { display: block; font-size: 0.8em; color: var(--text2); margin-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group { margin-bottom: 12px; }
+        .form-row { display: flex; gap: 10px; flex-wrap: wrap; }
+        .form-row>* { flex: 1; min-width: 100px; }
+
+        .input-with-icon {
+            position: relative;
+        }
+        .input-with-icon .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1em;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        .input-with-icon input,
+        .input-with-icon select {
+            padding-left: 36px;
+        }
+
+        table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; }
+        th { background: var(--panel2); color: var(--gold); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.8em; }
+        tr:hover td { background: rgba(255,255,255,0.02); }
+        .table-wrap { overflow-x: auto; }
+
+        .badge { display:inline-block; padding:4px 10px; border-radius:12px; font-size:0.75em; font-weight:700; letter-spacing:0.5px; }
+        .badge.gold { background:var(--gold); color:#1a2e1f; }
+        .badge.red { background:var(--danger); color:#fff; }
+        .badge.green { background:var(--success); color:#fff; }
+        .badge.blue { background:var(--info); color:#fff; }
+
+        .rebuy-box { background: var(--info); color: #fff; padding: 2px 8px; border-radius: 10px; font-weight: 700; font-size: 0.8em; }
+        .addon-box { background: var(--success); color: #fff; padding: 2px 8px; border-radius: 10px; font-weight: 700; font-size: 0.8em; }
 
         .ranking-list {
             display: grid;
@@ -591,17 +718,6 @@
         .ranking-item .rank.bronze { color: #cd7f32; }
         .ranking-item .name { flex: 1; }
         .ranking-item .stack { color: var(--gold-light); font-weight: 600; }
-
-        .rebuy-box, .addon-box {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.75em;
-            font-weight: 700;
-            margin: 0 2px;
-        }
-        .rebuy-box { background: var(--info); color: #fff; }
-        .addon-box { background: var(--success); color: #fff; }
     </style>
 </head>
 <body>
@@ -703,7 +819,7 @@
                 <div class="stat-box">
                     <span class="stat-icon">🪙</span>
                     <div class="stat-value" id="dashTotalFichas">0</div>
-                    <div class="stat-label">Total Fichas em Jogo</div>
+                    <div class="stat-label">Total Fichas</div>
                 </div>
                 <div class="stat-box">
                     <span class="stat-icon">🔄</span>
@@ -774,16 +890,16 @@
                 <div class="form-row">
                     <div class="form-group input-with-icon">
                         <span class="input-icon">👤</span>
-                        <label>Nome do Jogador</label>
+                        <label>Nome</label>
                         <input type="text" id="playerName" placeholder="Ex: João Silva">
                     </div>
                     <div class="form-group input-with-icon">
                         <span class="input-icon">🪙</span>
-                        <label>Fichas Iniciais</label>
+                        <label>Fichas</label>
                         <input type="number" id="playerStack" placeholder="10000" value="10000">
                     </div>
                 </div>
-                <button class="btn" onclick="app.addPlayer()">➕ Adicionar Jogador</button>
+                <button class="btn" onclick="app.addPlayer()">➕ Adicionar</button>
                 <div class="table-wrap" style="margin-top:12px;">
                     <table>
                         <thead><tr><th>#</th><th>Nome</th><th>Fichas</th><th>Buy-in</th><th>Rebuy</th><th>Addon</th><th>Eliminado</th><th>Ações</th></tr></thead>
@@ -791,8 +907,8 @@
                     </table>
                 </div>
                 <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
-                    <button class="btn info small" onclick="app.savePlayers()">💾 Salvar Jogadores</button>
-                    <button class="btn danger small" onclick="app.resetPlayers()">🗑️ Resetar Todos</button>
+                    <button class="btn info small" onclick="app.savePlayers()">💾 Salvar</button>
+                    <button class="btn danger small" onclick="app.resetPlayers()">🗑️ Resetar</button>
                 </div>
             </div>
         </div>
@@ -857,7 +973,7 @@
                 <div class="form-row">
                     <div class="form-group"><label>Número de Mesas</label><input type="number" id="numTables" value="2" min="1"></div>
                 </div>
-                <button class="btn" onclick="app.drawTables()">🎲 Sortear Mesas</button>
+                <button class="btn" onclick="app.drawTables()">🎲 Sortear</button>
                 <div id="tablesDisplay" style="margin-top:12px;"></div>
             </div>
         </div>
@@ -874,7 +990,7 @@
                     </div>
                     <div class="form-group input-with-icon">
                         <span class="input-icon">👤</span>
-                        <label>Nome do Beneficiário</label>
+                        <label>Beneficiário</label>
                         <input type="text" id="pixOrgName" placeholder="Poker de Quinta">
                     </div>
                     <div class="form-group input-with-icon">
@@ -883,18 +999,16 @@
                         <input type="text" id="pixOrgCity" placeholder="São Paulo">
                     </div>
                 </div>
-                <button class="btn" onclick="app.savePixConfig()">💾 Salvar Configurações</button>
+                <button class="btn" onclick="app.savePixConfig()">💾 Salvar</button>
                 <div style="margin-top:12px;">
-                    <h4>QR Code para Pagamento</h4>
+                    <h4>QR Code</h4>
                     <div id="qrcodeContainer" class="qrcode-container"></div>
-                    <button class="btn info small" onclick="app.generatePixQR()">🔄 Gerar QR Code</button>
+                    <button class="btn info small" onclick="app.generatePixQR()">🔄 Gerar QR</button>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- MODAL / TOAST -->
-    <div class="modal-overlay" id="modalOverlay"><div class="modal" id="modalContent"></div></div>
     <div id="toastContainer"></div>
 
     <script>
@@ -911,13 +1025,12 @@
 
         try {
             firebase.initializeApp(firebaseConfig);
-            console.log('Firebase inicializado com sucesso!');
         } catch (error) {
-            console.warn('Erro ao inicializar Firebase:', error);
+            console.warn('Firebase:', error);
         }
         const db = firebase.database();
 
-        // ==================== APP PRINCIPAL ====================
+        // ==================== APP ====================
         const app = {
             players: [],
             blindStructure: [],
@@ -966,6 +1079,7 @@
                 this.populateDealerSelects();
                 this.populateKingSelect();
                 this.populatePixSelects();
+                
                 const savedConfig = localStorage.getItem('pokerConfig');
                 if (savedConfig) {
                     const c = JSON.parse(savedConfig);
@@ -974,6 +1088,7 @@
                 document.getElementById('pixOrgKey').value = this.config.orgPixKey;
                 document.getElementById('pixOrgName').value = this.config.orgPixName;
                 document.getElementById('pixOrgCity').value = this.config.orgPixCity;
+                
                 this.updateHeaderInfo();
                 if (this.isRunning && this.timeRemaining > 0) {
                     this.runTimer();
@@ -981,22 +1096,14 @@
                 this.updateTimerDisplay();
                 this.updateKingDisplay();
                 this.startBreakTimer();
-
                 this.syncWithFirebase();
             },
 
             setupDashboardWindow() {
                 document.body.classList.add('projection-mode');
-                // Esconde todos os controles
                 document.querySelectorAll('.no-project').forEach(el => el.style.display = 'none');
                 document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
                 document.getElementById('panel-dashboard').classList.add('active');
-                
-                // Ajusta o dashboard para projeção
-                const dashboard = document.getElementById('panel-dashboard');
-                dashboard.style.maxWidth = '98vw';
-                dashboard.style.width = '100%';
-                dashboard.style.padding = '1rem 2rem';
                 
                 this.loadAllData();
                 this.updateDashboard();
@@ -1004,7 +1111,7 @@
                 this.updateKingDisplay();
                 this.updateTimerDisplay();
 
-                // Sincronização
+                // Sincronização automática
                 window.addEventListener('storage', (e) => {
                     if (e.key && e.key.startsWith('poker')) {
                         this.loadAllData();
@@ -1026,7 +1133,7 @@
 
             openDashboardWindow() {
                 const url = window.location.origin + window.location.pathname + '?dashboard=1';
-                window.open(url, 'pokerDashboard', 'width=1400,height=900,menubar=no,toolbar=no,status=no,resizable=yes');
+                window.open(url, 'pokerDashboard', 'width=1920,height=1080,menubar=no,toolbar=no,status=no,resizable=yes');
             },
 
             // === FIREBASE ===
@@ -1093,7 +1200,6 @@
                     db.ref('pokerState').set(state);
                     this.saveAllData();
                 } catch (error) {
-                    console.warn('Erro ao salvar no Firebase:', error);
                     this.saveAllData();
                 }
             },
@@ -1142,9 +1248,7 @@
                         this.kingHand = parsed.kingHand || '';
                         this.tables = parsed.tables || [];
                         this.breakTimer = parsed.breakTimer || 150;
-                    } catch (e) {
-                        console.warn('Erro ao carregar dados do localStorage:', e);
-                    }
+                    } catch (e) {}
                 }
             },
 
@@ -1674,7 +1778,7 @@
 
             rebuyPlayer(index) {
                 const player = this.players[index];
-                if (confirm(`Rebuy para ${player.name}? (R$ ${this.config.rebuyValue.toFixed(2)})`)) {
+                if (confirm(`Rebuy para ${player.name}?`)) {
                     player.stack += this.config.stackRebuy;
                     player.rebuy = (player.rebuy || 0) + 1;
                     this.rebuyCount++;
@@ -1687,7 +1791,7 @@
 
             addonPlayer(index) {
                 const player = this.players[index];
-                if (confirm(`Addon para ${player.name}? (R$ ${this.config.addonValue.toFixed(2)})`)) {
+                if (confirm(`Addon para ${player.name}?`)) {
                     player.stack += this.config.stackAddon;
                     player.addon = (player.addon || 0) + 1;
                     this.addonCount++;
