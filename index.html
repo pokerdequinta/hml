@@ -1,896 +1,1601 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Poker dos Amigos - Confirmação de Presença</title>
-    
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    
-    <!-- Google Fonts - Anton + Montserrat -->
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poker de Quinta 2027</title>
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #2c1810 50%, #1a1a1a 75%, #0a0a0a 100%);
-            min-height: 100vh;
-            padding: 16px;
-            color: #fff;
-            position: relative;
-        }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(204, 170, 0, 0.05) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 1;
-        }
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#1a2e1f;
+  --bg-2:#223a28;
+  --card:#2a4531;
+  --card-2:#33503a;
+  --border:rgba(212,161,33,0.35);
+  --border-soft:rgba(212,161,33,0.18);
+  --gold:#e0b13a;
+  --gold-2:#f5d472;
+  --green:#5fbf6f;
+  --red:#ff5a6a;
+  --blue:#5ba3ff;
+  --orange:#ff8a3d;
+  --text:#f8faf8;
+  --muted:#b8c4b8;
+  --shadow:0 10px 30px rgba(0,0,0,0.35);
+  --shadow-gold:0 8px 24px rgba(224,177,58,0.25);
+}
 
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
+body{
+  font-family:'Space Grotesk',sans-serif;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(224,177,58,0.10), transparent 45%),
+    radial-gradient(circle at 90% 100%, rgba(95,191,111,0.08), transparent 45%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  letter-spacing:-0.01em;
+}
 
-        .container-card {
-            background: rgba(30, 30, 30, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid rgba(204, 170, 0, 0.2);
-            margin-bottom: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
+.logo-top{text-align:center;padding:24px 20px 8px}
+.logo-top img{max-width:180px;filter:drop-shadow(0 4px 20px rgba(224,177,58,0.35))}
 
-        .header {
-            text-align: center;
-            margin-bottom: 24px;
-        }
+.container{max-width:1100px;margin:auto;padding:20px}
 
-        .header h1 {
-            font-size: 36px;
-            font-weight: 400;
-            color: #ccaa00;
-            margin-bottom: 8px;
-            letter-spacing: 2px;
-            font-family: 'Anton', sans-serif;
-            text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(204, 170, 0, 0.3);
-        }
+/* HEADER */
+header{
+  text-align:center;
+  background:linear-gradient(135deg, rgba(224,177,58,0.12), rgba(224,177,58,0.03));
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:36px 24px;
+  margin-bottom:24px;
+  backdrop-filter:blur(10px);
+  position:relative;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+header::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+h1{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;
+  color:var(--gold);
+  letter-spacing:-0.02em;
+  font-size:clamp(1.6em,4vw,2.4em);
+  line-height:1.1;
+  text-shadow:0 2px 20px rgba(224,177,58,0.25);
+}
+h1 .sub{display:block;font-size:0.55em;color:var(--muted);font-weight:400;letter-spacing:0.3em;margin-top:8px;text-transform:uppercase}
+.subtitle{margin-top:14px;font-size:1.1em;font-weight:500;color:var(--gold-2)}
 
-        .header .subtitle {
-            font-size: 13px;
-            color: #ccaa00;
-            font-weight: 500;
-            letter-spacing: 1px;
-            font-family: 'Montserrat', sans-serif;
-            text-transform: uppercase;
-        }
+/* COUNTDOWN */
+#countdownContainer{
+  background:linear-gradient(135deg, rgba(224,177,58,0.10), rgba(95,191,111,0.06));
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:24px;
+  text-align:center;
+  box-shadow:var(--shadow);
+}
+.timer-header{font-size:0.85em;color:var(--muted);text-transform:uppercase;letter-spacing:0.15em;display:block;margin-bottom:6px}
+#timer{font-weight:700;font-size:1.6em;color:var(--gold-2);letter-spacing:0.02em;text-shadow:0 0 20px rgba(245,212,114,0.3)}
 
-        .event-details {
-            margin-bottom: 20px;
-        }
+/* INFO CARDS */
+.info-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+.info-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:22px;
+  text-align:center;
+  transition:transform .2s, border-color .2s, box-shadow .2s;
+  box-shadow:var(--shadow);
+}
+.info-card:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:var(--shadow-gold)}
+.info-card h2{font-weight:700;font-size:2.4em;color:var(--gold);line-height:1;text-shadow:0 2px 15px rgba(224,177,58,0.2)}
+.info-card span{color:var(--muted);font-size:0.9em;display:block;margin-top:6px}
 
-        .event-details h2 {
-            font-size: 16px;
-            margin-bottom: 20px;
-            color: #ccaa00;
-            text-align: center;
-            letter-spacing: 1px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
+/* BUTTONS */
+.btn{
+  width:100%;padding:16px;border:none;border-radius:14px;
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1em;
+  cursor:pointer;transition:all .2s;letter-spacing:0.02em;
+}
+.btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#1a2e1f}
+.btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:var(--shadow-gold)}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;background:#3a4a3e;color:#8a9a8e}
+.btn-danger{background:rgba(255,90,106,0.15);color:var(--red);border:1px solid rgba(255,90,106,0.3)}
+.btn-danger:hover{background:rgba(255,90,106,0.25)}
+.btn-ghost{background:var(--card-2);color:var(--text);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
 
-        .detail-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 15px;
-            font-size: 14px;
-            line-height: 1.6;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 400;
-        }
+.btn-group{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
 
-        .detail-item .icon {
-            width: 30px;
-            height: 30px;
-            background: rgba(204, 170, 0, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 12px;
-            font-size: 16px;
-            flex-shrink: 0;
-        }
+/* SECTIONS */
+.section{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:24px;
+  margin-bottom:24px;
+  box-shadow:var(--shadow);
+}
+.section h3{
+  color:var(--gold);font-weight:600;margin-bottom:16px;
+  font-size:1.1em;letter-spacing:0.02em;
+  display:flex;align-items:center;gap:8px;
+}
 
-        .calendar-icon {
-            color: #ff6b6b;
-        }
+/* PLAYER LIST */
+.player-list{list-style:none}
+.player-item{
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(255,255,255,0.04);
+  padding:14px 16px;border-radius:12px;margin-bottom:8px;
+  gap:12px;flex-wrap:wrap;border:1px solid transparent;
+  transition:border-color .2s, background .2s;
+}
+.player-item:hover{border-color:var(--border);background:rgba(224,177,58,0.05)}
+.player-info{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.player-avatar{
+  width:42px;height:42px;border-radius:50%;object-fit:cover;
+  border:2px solid var(--gold);
+  box-shadow:0 0 12px rgba(224,177,58,0.25);
+}
+.player-number{font-weight:700;color:var(--gold);font-size:1.1em;min-width:32px}
+.player-details{display:flex;flex-direction:column}
+.player-details small{color:var(--muted);font-size:0.8em}
 
-        .location-icon {
-            color: #ff4444;
-        }
+.player-badge{padding:4px 10px;border-radius:20px;font-size:0.72em;font-weight:600;letter-spacing:0.05em;text-transform:uppercase}
+.badge-member{background:rgba(91,163,255,0.2);color:#a8c9ff;border:1px solid rgba(91,163,255,0.4)}
+.badge-guest{background:rgba(95,191,111,0.2);color:#a5e8b0;border:1px solid rgba(95,191,111,0.4)}
+.badge-wait{background:rgba(255,90,106,0.15);color:#ffb0b8;border:1px solid rgba(255,90,106,0.3)}
+.badge-penalized{background:rgba(255,138,61,0.2);color:#ffc4a0;border:1px solid rgba(255,138,61,0.4)}
 
-        .address-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
+.remove-btn{
+  background:rgba(255,90,106,0.15);color:var(--red);
+  border:1px solid rgba(255,90,106,0.3);
+  padding:6px 10px;border-radius:8px;cursor:pointer;
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.8em;
+  transition:background .2s;
+}
+.remove-btn:hover{background:rgba(255,90,106,0.3)}
 
-        .address-link:hover {
-            transform: translateY(-2px);
-        }
+.priority-tag{background:rgba(224,177,58,0.2);color:var(--gold-2);padding:3px 8px;border-radius:12px;font-size:0.7em;font-weight:600}
+.penalty-tag{background:rgba(255,138,61,0.2);color:#ffc4a0;padding:3px 8px;border-radius:12px;font-size:0.7em;font-weight:600}
 
-        .maps-icon {
-            color: #4285f4;
-            font-size: 24px;
-            filter: drop-shadow(0 2px 4px rgba(66, 133, 244, 0.3));
-        }
+.empty-state{text-align:center;color:var(--muted);padding:30px;font-style:italic}
 
-        .address-text {
-            color: #ccc;
-            font-size: 13px;
-            margin-top: 4px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 300;
-        }
+/* ENQUETES */
+.enquete-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:24px;
+  margin-bottom:20px;
+  position:relative;
+  transition:border-color .3s, box-shadow .3s;
+  box-shadow:var(--shadow);
+}
+.enquete-card.aberta{border-color:rgba(95,191,111,0.6);box-shadow:0 0 30px rgba(95,191,111,0.15)}
+.enquete-card.encerrada{border-color:rgba(255,90,106,0.4);opacity:0.9}
 
-        .values-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-        }
+.enquete-title{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:16px;flex-wrap:wrap;gap:10px;
+}
+.enquete-title h3{color:var(--gold);font-size:1.15em;font-weight:600;display:flex;align-items:center;gap:8px}
 
-        .value-card {
-            background: linear-gradient(135deg, rgba(204, 170, 0, 0.1), rgba(180, 140, 0, 0.1));
-            border: 1px solid rgba(204, 170, 0, 0.3);
-            border-radius: 15px;
-            padding: 15px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
+.status-pill{
+  padding:4px 12px;border-radius:20px;font-size:0.72em;font-weight:600;
+  letter-spacing:0.08em;text-transform:uppercase;
+}
+.status-aguardando{background:rgba(184,196,184,0.15);color:var(--muted);border:1px solid rgba(184,196,184,0.3)}
+.status-aberta{background:rgba(95,191,111,0.18);color:#a5e8b0;border:1px solid rgba(95,191,111,0.45)}
+.status-encerrada{background:rgba(255,90,106,0.15);color:#ffb0b8;border:1px solid rgba(255,90,106,0.4)}
 
-        .value-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(204, 170, 0, 0.2);
-        }
+.aviso-box{
+  background:rgba(224,177,58,0.08);
+  border:1px dashed rgba(224,177,58,0.35);
+  border-radius:12px;
+  padding:14px 16px;
+  margin-bottom:16px;
+  font-size:0.9em;
+  line-height:1.5;
+}
+.aviso-box strong{color:var(--gold-2)}
+.aviso-box.danger{background:rgba(255,90,106,0.08);border-color:rgba(255,90,106,0.35)}
+.aviso-box.success{background:rgba(95,191,111,0.08);border-color:rgba(95,191,111,0.35)}
 
-        .value-icon {
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 50px;
-            font-size: 35px;
-            color: #ccaa00;
-        }
+.disclaimer{
+  background:rgba(255,90,106,0.10);
+  border-left:3px solid var(--red);
+  padding:12px 16px;
+  border-radius:8px;
+  font-size:0.85em;
+  color:#ffb0b8;
+  margin-top:12px;
+  line-height:1.5;
+}
 
-        .value-title {
-            font-size: 11px;
-            color: #ccaa00;
-            font-weight: 600;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-family: 'Montserrat', sans-serif;
-        }
+.vote-option{
+  background:rgba(255,255,255,0.04);
+  border:1px solid transparent;
+  border-radius:12px;
+  padding:14px 16px;
+  margin-bottom:10px;
+  cursor:pointer;
+  transition:all .2s;
+}
+.vote-option:hover{border-color:var(--border);background:rgba(224,177,58,0.08)}
+.vote-option.selected{border-color:var(--gold);background:rgba(224,177,58,0.15);box-shadow:0 0 20px rgba(224,177,58,0.15)}
+.vote-option.disabled{cursor:not-allowed;opacity:0.65}
 
-        .value-amount {
-            font-size: 18px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 5px;
-            letter-spacing: 0.5px;
-            font-family: 'Montserrat', sans-serif;
-        }
+.option-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:10px;flex-wrap:wrap}
+.option-name{font-weight:600;font-size:1em}
+.option-votes{color:var(--gold-2);font-weight:600;font-size:0.85em}
+.progress-bar{background:rgba(0,0,0,0.25);height:6px;border-radius:3px;overflow:hidden}
+.progress-fill{background:linear-gradient(90deg,var(--gold),var(--gold-2));height:100%;transition:width .4s;border-radius:3px;box-shadow:0 0 8px rgba(224,177,58,0.5)}
 
-        .value-description {
-            font-size: 10px;
-            color: #ccc;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 300;
-        }
+.voters-list{margin-top:10px;padding-top:10px;border-top:1px solid rgba(224,177,58,0.2);display:flex;flex-wrap:wrap;gap:6px}
+.voter-tag{background:rgba(95,191,111,0.18);color:#a5e8b0;padding:3px 10px;border-radius:12px;font-size:0.75em;font-weight:500}
 
-        .message-container {
-            background: linear-gradient(135deg, rgba(204, 170, 0, 0.05), rgba(180, 140, 0, 0.05));
-            border: 1px solid rgba(204, 170, 0, 0.2);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: center;
-            position: relative;
-        }
+/* MODAL */
+.modal{display:none;position:fixed;inset:0;background:rgba(10,20,12,0.88);backdrop-filter:blur(8px);justify-content:center;align-items:center;z-index:1000;padding:16px}
+.modal.active{display:flex}
+.modal-content{
+  background:linear-gradient(135deg,var(--card-2),var(--card));
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:28px;
+  width:100%;max-width:560px;max-height:90vh;overflow-y:auto;
+  box-shadow:0 25px 70px rgba(0,0,0,0.5), 0 0 0 1px rgba(224,177,58,0.1) inset;
+}
+.modal-content h2{color:var(--gold);margin-bottom:18px;font-weight:600}
+.form-group{margin-bottom:16px}
+.form-group label{color:var(--muted);font-weight:500;display:block;margin-bottom:6px;font-size:0.9em}
+.form-group input,.form-group select{
+  width:100%;padding:12px 14px;border-radius:10px;
+  border:1px solid var(--border-soft);background:rgba(0,0,0,0.25);
+  color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:0.95em;
+  transition:border-color .2s;
+}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(224,177,58,0.15)}
 
-        .message-container::before {
-            content: '🃏';
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 30px;
-            background: #1a1a1a;
-            padding: 0 10px;
-        }
+.checkbox-group{display:flex;align-items:center;gap:10px;padding:12px;background:rgba(255,255,255,0.04);border-radius:10px;cursor:pointer;border:1px solid transparent;transition:border-color .2s}
+.checkbox-group:hover{border-color:var(--border-soft)}
+.checkbox-group input{width:auto}
 
-        .message-text {
-            font-size: 13px;
-            line-height: 1.8;
-            color: #ddd;
-            font-style: normal;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 300;
-        }
+.modal-buttons{display:flex;gap:10px;margin-top:20px}
+.modal-btn{flex:1;padding:14px;font-weight:600;border:none;border-radius:10px;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-size:0.95em;transition:all .2s}
+.modal-btn.confirm{background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#1a2e1f}
+.modal-btn.confirm:hover:not(:disabled){transform:translateY(-1px);box-shadow:var(--shadow-gold)}
+.modal-btn.confirm:disabled{opacity:0.4;cursor:not-allowed}
+.modal-btn.cancel{background:rgba(255,255,255,0.07);color:var(--text);border:1px solid var(--border-soft)}
+.modal-btn.cancel:hover{border-color:var(--gold)}
 
-        .confirmed-count {
-            text-align: center;
-            margin: 20px 0;
-            padding: 25px;
-            background: linear-gradient(135deg, rgba(204, 170, 0, 0.1), rgba(180, 140, 0, 0.1));
-            border-radius: 20px;
-            border: 2px solid rgba(204, 170, 0, 0.3);
-            position: relative;
-        }
+.step-indicator{display:flex;justify-content:center;gap:8px;margin-bottom:20px}
+.step-dot{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:0.85em;color:var(--muted);border:1px solid transparent;transition:all .2s}
+.step-dot.active{background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#1a2e1f;border-color:var(--gold);box-shadow:0 0 15px rgba(224,177,58,0.4)}
+.step-dot.done{background:rgba(95,191,111,0.25);color:#a5e8b0;border-color:rgba(95,191,111,0.5)}
+.step-line{width:30px;height:2px;background:rgba(255,255,255,0.1);align-self:center}
+.step-line.done{background:var(--green)}
 
-        .count-number {
-            font-size: 48px;
-            font-weight: 400;
-            color: #ccaa00;
-            margin: 10px 0;
-            font-family: 'Anton', sans-serif;
-            text-shadow: 0 0 20px rgba(204, 170, 0, 0.3);
-        }
+/* ADMIN */
+.admin-panel{position:fixed;bottom:16px;right:16px;display:flex;flex-direction:column;gap:6px;z-index:999}
+.admin-btn{
+  padding:10px 16px;background:rgba(26,46,31,0.6);
+  border:1px solid var(--border-soft);color:var(--text);
+  border-radius:10px;cursor:pointer;font-family:'Space Grotesk',sans-serif;
+  font-size:0.78em;font-weight:500;opacity:0.2;transition:all .3s;
+  backdrop-filter:blur(8px);
+}
+.admin-btn:hover{opacity:1;background:var(--gold);color:#1a2e1f;border-color:var(--gold)}
+.admin-btn.active{opacity:1;background:var(--green);color:#fff;border-color:var(--green)}
 
-        .count-label {
-            font-size: 13px;
-            color: #ccc;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 500;
-            letter-spacing: 1px;
-        }
+.etapa-selector{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0}
+.etapa-btn{background:var(--card-2);border:1px solid var(--border-soft);color:var(--text);padding:10px;border-radius:8px;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:500;transition:all .2s}
+.etapa-btn:hover{border-color:var(--gold)}
+.etapa-btn.ativa{background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#1a2e1f;border-color:var(--gold)}
 
-        .confirm-form {
-            margin-top: 20px;
-        }
+.foto-item{display:flex;align-items:center;gap:14px;margin-bottom:12px;background:rgba(255,255,255,0.04);padding:12px;border-radius:10px;flex-wrap:wrap;border:1px solid transparent;transition:border-color .2s}
+.foto-item:hover{border-color:var(--border-soft)}
+.foto-info{min-width:140px;font-weight:600;color:var(--gold);font-size:0.9em}
+.foto-preview{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--gold)}
+.foto-input{flex:1;min-width:200px;padding:10px;background:rgba(0,0,0,0.25);border:1px solid var(--border-soft);color:var(--text);border-radius:8px;font-family:'Space Grotesk',sans-serif;font-size:0.85em}
+.foto-input:focus{outline:none;border-color:var(--gold)}
 
-        .input-group {
-            margin-bottom: 15px;
-        }
+.penalized-item{background:rgba(255,138,61,0.12);border:1px solid rgba(255,138,61,0.35);border-radius:10px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.remove-penalty-btn{background:rgba(255,90,106,0.15);color:var(--red);border:1px solid rgba(255,90,106,0.3);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:0.8em;font-family:'Space Grotesk',sans-serif}
+.remove-penalty-btn:hover{background:rgba(255,90,106,0.3)}
 
-        .input-group input {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid rgba(204, 170, 0, 0.2);
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 400;
-        }
+.admin-option-item{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:rgba(255,255,255,0.04);border-radius:8px;margin-bottom:6px;font-size:0.9em;border:1px solid transparent;transition:border-color .2s}
+.admin-option-item:hover{border-color:var(--border-soft)}
+.remove-option-btn{background:rgba(255,90,106,0.15);color:var(--red);border:1px solid rgba(255,90,106,0.3);padding:4px 10px;border-radius:6px;cursor:pointer;font-size:0.75em;font-family:'Space Grotesk',sans-serif}
+.remove-option-btn:hover{background:rgba(255,90,106,0.3)}
 
-        .input-group input:focus {
-            outline: none;
-            border-color: #ccaa00;
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 15px rgba(204, 170, 0, 0.2);
-        }
+.status-indicator{
+  position:fixed;top:14px;right:14px;
+  background:rgba(26,46,31,0.85);backdrop-filter:blur(8px);
+  padding:8px 14px;border-radius:20px;font-size:0.78em;
+  border:1px solid var(--border-soft);z-index:100;
+  box-shadow:var(--shadow);
+}
+.status-indicator.connected{border-color:rgba(95,191,111,0.5);color:#a5e8b0}
+.status-indicator.error{border-color:rgba(255,90,106,0.5);color:#ffb0b8}
 
-        .input-group input::placeholder {
-            color: #999;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 300;
-        }
+.dashboard{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+.dash-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;box-shadow:var(--shadow);transition:transform .2s, box-shadow .2s}
+.dash-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-gold)}
+.dash-card .icon{font-size:2em;margin-bottom:8px}
+.dash-card h4{color:var(--muted);font-size:0.75em;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;font-weight:500}
+.dash-card .value{font-weight:700;font-size:1.3em;color:var(--gold-2);margin-bottom:4px;word-break:break-word;text-shadow:0 0 15px rgba(245,212,114,0.25)}
+.dash-card .detail{color:var(--muted);font-size:0.82em}
 
-        .btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 10px;
-            font-family: 'Montserrat', sans-serif;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+.loading{text-align:center;color:var(--muted);padding:20px}
 
-        .btn-confirm {
-            background: linear-gradient(135deg, #00c853, #00e676);
-            color: #fff;
-            box-shadow: 0 5px 15px rgba(0, 200, 83, 0.3);
-        }
-
-        .btn-confirm:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 200, 83, 0.5);
-            background: linear-gradient(135deg, #00e676, #00c853);
-        }
-
-        .btn-cancel {
-            background: linear-gradient(135deg, #d32f2f, #f44336);
-            color: #fff;
-            box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
-        }
-
-        .btn-cancel:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(211, 47, 47, 0.5);
-            background: linear-gradient(135deg, #f44336, #d32f2f);
-        }
-
-        .btn-rules {
-            background: linear-gradient(135deg, #4a4a4a, #2a2a2a);
-            color: #ccaa00;
-            border: 1px solid #ccaa00;
-            margin-top: 10px;
-        }
-
-        .btn-rules:hover {
-            background: rgba(204, 170, 0, 0.1);
-            box-shadow: 0 5px 15px rgba(204, 170, 0, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .confirmed-list {
-            margin-top: 20px;
-        }
-
-        .confirmed-list h3 {
-            font-size: 15px;
-            margin-bottom: 15px;
-            color: #ccaa00;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .player-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            margin-bottom: 8px;
-            border: 1px solid rgba(204, 170, 0, 0.1);
-        }
-
-        .player-name {
-            font-size: 14px;
-            font-weight: 500;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .admin-section {
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .admin-toggle {
-            color: #999;
-            text-align: center;
-            font-size: 13px;
-            cursor: pointer;
-            text-decoration: underline;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 400;
-            letter-spacing: 1px;
-        }
-
-        .admin-form {
-            display: none;
-            margin-top: 15px;
-        }
-
-        .admin-form.active {
-            display: block;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: linear-gradient(135deg, #1a1a1a, #2c1810);
-            border-radius: 20px;
-            padding: 30px;
-            width: 90%;
-            max-width: 350px;
-            text-align: center;
-            border: 2px solid rgba(204, 170, 0, 0.3);
-        }
-
-        .modal-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-
-        .modal-message {
-            font-size: 14px;
-            margin-bottom: 20px;
-            color: #ddd;
-            line-height: 1.6;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 400;
-        }
-
-        .rules-modal-content {
-            max-height: 80vh;
-            overflow-y: auto;
-            text-align: left;
-        }
-
-        .rules-modal-content h2 {
-            text-align: center;
-            color: #ccaa00;
-            margin-bottom: 20px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .rules-section {
-            margin-bottom: 20px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            border: 1px solid rgba(204, 170, 0, 0.2);
-        }
-
-        .rules-section h3 {
-            color: #ccaa00;
-            margin-bottom: 10px;
-            font-size: 14px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        .rules-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .rules-section li {
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 12px;
-            color: #ddd;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 300;
-        }
-
-        .rules-section li:last-child {
-            border-bottom: none;
-        }
-
-        @media (max-width: 360px) {
-            body {
-                padding: 10px;
-            }
-            
-            .container-card {
-                padding: 15px;
-            }
-            
-            .count-number {
-                font-size: 40px;
-            }
-            
-            .values-container {
-                gap: 5px;
-            }
-            
-            .value-card {
-                padding: 10px;
-            }
-        }
-    </style>
+@media(max-width:768px){
+  .info-cards{grid-template-columns:1fr}
+  .dashboard{grid-template-columns:1fr}
+  .etapa-selector{grid-template-columns:repeat(3,1fr)}
+  .foto-item{flex-direction:column;align-items:flex-start}
+  .foto-input{width:100%}
+  .admin-panel{bottom:8px;right:8px}
+  .admin-btn{padding:8px 12px;font-size:0.72em}
+  .modal-content{padding:20px}
+}
+</style>
 </head>
+
 <body>
-    <div class="container">
-        <!-- Container Principal -->
-        <div class="container-card">
-            <div class="header">
-                <h1>POKER DOS AMIGOS</h1>
-                <div class="subtitle">CONFIRMAÇÃO DE PRESENÇA</div>
-            </div>
 
-            <!-- Detalhes do Evento -->
-            <div class="event-details">
-                <h2><i class="fas fa-calendar-alt"></i> DETALHES DO EVENTO</h2>
-                <div class="detail-item">
-                    <div class="icon"><i class="fas fa-calendar calendar-icon"></i></div>
-                    <div>
-                        <strong>DATA:</strong> 10 DE SETEMBRO<br>
-                        <strong>HORÁRIO:</strong> 19:00
-                    </div>
-                </div>
-                <div class="detail-item">
-                    <div class="icon"><i class="fas fa-map-marker-alt location-icon"></i></div>
-                    <div>
-                        <strong>LOCAL:</strong> NEW SOCCER<br>
-                        <a href="https://www.google.com/maps/search/?api=1&query=Av.+Ver.+Toaldo+Tulio+n+3538+-+Sao+Braz+Curitiba" 
-                           target="_blank" 
-                           class="address-link">
-                            <i class="fab fa-google maps-icon"></i>
-                            <div class="address-text">
-                                AV. VER. TOALDO TULIO Nº 3538<br>
-                                SÃO BRAZ - CURITIBA/PR
-                            </div>
-                        </a>
-                    </div>
-                </div>
+<div class="status-indicator" id="statusIndicator">🔄 Conectando...</div>
 
-                <!-- Valores do Torneio em 3 Containers -->
-                <div class="values-container">
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i class="fas fa-coins"></i>
-                        </div>
-                        <div class="value-title">BUY-IN</div>
-                        <div class="value-amount">R$ 100</div>
-                        <div class="value-description">ENTRADA INICIAL</div>
-                    </div>
+<div class="logo-top">
+  <img src="logo pdq.png" onerror="this.style.display='none'">
+</div>
 
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i class="fas fa-sync-alt"></i>
-                        </div>
-                        <div class="value-title">RE-BUY</div>
-                        <div class="value-amount">R$ 30</div>
-                        <div class="value-description">ILIMITADOS</div>
-                    </div>
+<div class="container">
 
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i class="fas fa-plus-circle"></i>
-                        </div>
-                        <div class="value-title">ADD-ON</div>
-                        <div class="value-amount">R$ 50</div>
-                        <div class="value-description">FICHAS ADICIONAIS</div>
-                    </div>
-                </div>
-            </div>
+  <header>
+    <h1>POKER DE QUINTA<span class="sub">Temporada 2027</span></h1>
+    <div class="subtitle" id="dataEvento">📅 1ª Etapa - 28/01/2027</div>
+  </header>
 
-            <!-- Mensagem de Confraternização -->
-            <div class="message-container">
-                <div class="message-text">
-                    "Este encontro tem como objetivo confraternizar duas turmas que têm membros em comum. O espírito do poker e a resenha devem prevalecer. É apenas um motivo para reunir os amigos, dar aquela baralhada, tomar uma cerveja e comer uma boa janta. Venha fazer parte dessa jogada!"
-                </div>
-            </div>
+  <div id="countdownContainer">
+    <span class="timer-header" id="timerHeader">⏳ Abertura das inscrições em</span>
+    <div id="timer">--d --h --m --s</div>
+  </div>
 
-            <!-- Contador de Confirmados -->
-            <div class="confirmed-count">
-                <div class="count-label">JOGADORES CONFIRMADOS</div>
-                <div class="count-number" id="confirmedCount">0</div>
-                <div class="count-label">PESSOAS</div>
-            </div>
+  <div class="info-cards">
+    <div class="info-card"><h2 id="confirmedCount">0</h2><span>✅ Confirmados</span></div>
+    <div class="info-card"><h2 id="vacancyCount">20</h2><span>🎯 Vagas Restantes</span></div>
+    <div class="info-card"><h2 id="waitlistCount">0</h2><span>⏳ Lista de Espera</span></div>
+  </div>
 
-            <!-- Formulário de Confirmação -->
-            <div class="confirm-form">
-                <div class="input-group">
-                    <input type="text" id="playerName" placeholder="👤 Digite seu nome" maxlength="30">
-                </div>
-                <div class="input-group">
-                    <input type="tel" id="playerPhone" placeholder="📱 WhatsApp (DDD + número)" maxlength="15">
-                </div>
-                <button class="btn btn-confirm" onclick="confirmPresence()"><i class="fas fa-check-circle"></i> Confirmar Presença</button>
-                <button class="btn btn-cancel" onclick="cancelPresence()"><i class="fas fa-times-circle"></i> Cancelar Inscrição</button>
-            </div>
+  <!-- DASHBOARD DE RESULTADOS -->
+  <div class="dashboard" id="dashboard">
+    <div class="dash-card">
+      <div class="icon">🍽️</div>
+      <h4>Janta Mais Votada</h4>
+      <div class="value" id="dashJantaVencedor">-</div>
+      <div class="detail" id="dashJantaVotos">0 votos</div>
+    </div>
+    <div class="dash-card">
+      <div class="icon">🎴</div>
+      <h4>Mão Mais Votada</h4>
+      <div class="value" id="dashMaoVencedor">-</div>
+      <div class="detail" id="dashMaoVotos">0 votos</div>
+    </div>
+    <div class="dash-card">
+      <div class="icon">👥</div>
+      <h4>Participação</h4>
+      <div class="value" id="dashParticipacao">0%</div>
+      <div class="detail" id="dashTotalVotos">0/20 votantes</div>
+    </div>
+  </div>
 
-            <!-- Lista de Confirmados -->
-            <div class="confirmed-list">
-                <h3><i class="fas fa-users"></i> Jogadores Confirmados:</h3>
-                <div id="playerList"></div>
-            </div>
+  <div class="btn-group">
+    <button class="btn btn-primary" id="btnConfirmar" disabled>🔒 INSCRIÇÕES FECHADAS</button>
+    <button class="btn btn-danger" id="btnCancelarWhatsApp">❌ CANCELAR MINHA INSCRIÇÃO</button>
+    <button class="btn btn-ghost" id="btnExportar">📊 EXPORTAR LISTA (CSV)</button>
+  </div>
 
-            <!-- Botão de Regras -->
-            <button class="btn btn-rules" onclick="showRules()"><i class="fas fa-book"></i> Regras do Evento</button>
+  <!-- ENQUETE JANTA -->
+  <div class="enquete-card" id="enqueteJanta">
+    <div class="enquete-title">
+      <h3>🍽️ Enquete: Janta</h3>
+      <span class="status-pill status-aguardando" id="statusJanta">Aguardando</span>
+    </div>
+    <div class="aviso-box" id="avisoJanta"></div>
+    <div id="jantaOptions"></div>
+    <button class="btn btn-primary" id="btnVotarJanta" disabled style="margin-top:12px">VOTAR NA JANTA</button>
+    <div class="disclaimer">
+      ⚠️ <strong>Regra:</strong> A votação encerra <strong>segunda-feira às 22h</strong>, independente do número de votos. A opção <strong>mais votada vence</strong>.
+    </div>
+  </div>
 
-            <!-- Área Admin -->
-            <div class="admin-section">
-                <div class="admin-toggle" onclick="toggleAdmin()"><i class="fas fa-lock"></i> Área Admin</div>
-                <div class="admin-form" id="adminForm">
-                    <div class="input-group">
-                        <input type="password" id="adminPassword" placeholder="Senha admin" maxlength="20">
-                    </div>
-                    <button class="btn btn-confirm" onclick="loginAdmin()"><i class="fas fa-sign-in-alt"></i> Entrar</button>
-                    <div id="adminControls" style="display: none;">
-                        <div class="input-group">
-                            <input type="text" id="playerToRemove" placeholder="Nome do jogador para remover">
-                        </div>
-                        <button class="btn btn-cancel" onclick="removePlayer()"><i class="fas fa-user-minus"></i> Remover Jogador</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <!-- ENQUETE MÃO -->
+  <div class="enquete-card" id="enqueteMao">
+    <div class="enquete-title">
+      <h3>🎴 Enquete: Mão da Etapa</h3>
+      <span class="status-pill status-aguardando" id="statusMao">Aguardando</span>
+    </div>
+    <div class="aviso-box" id="avisoMao"></div>
+    <div id="maoOptions"></div>
+    <button class="btn btn-primary" id="btnVotarMao" disabled style="margin-top:12px">VOTAR NA MÃO</button>
+    <div class="disclaimer">
+      ⚠️ <strong>Regra:</strong> A votação encerra <strong>segunda-feira às 22h</strong>, independente do número de votos. A opção <strong>mais votada vence</strong>. Quem ganhar a mão com as cartas escolhidas e tiver showdown gira a Roleta da Sorte!
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>✅ Confirmados</h3>
+    <ul id="confirmedList" class="player-list">
+      <li class="loading">Carregando dados...</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h3>⏳ Lista de Espera</h3>
+    <p style="color:var(--muted);margin-bottom:14px;font-size:0.88em">
+      🔸 Membros têm prioridade sobre convidados • Ordem de chegada dentro de cada categoria
+    </p>
+    <ul id="waitlistList" class="player-list">
+      <li class="loading">Carregando dados...</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel">
+  <button class="admin-btn" id="btnModoAdmin">🔐 Admin</button>
+  <button class="admin-btn" id="btnToggleInscricoes" style="display:none">🔒 Fechar Inscrições</button>
+  <button class="admin-btn" id="btnProximaEtapa" style="display:none">⏭️ Próxima Etapa</button>
+  <button class="admin-btn" id="btnSelecionarEtapa" style="display:none">📅 Etapa</button>
+  <button class="admin-btn" id="btnGerenciarFotos" style="display:none">📸 Fotos</button>
+  <button class="admin-btn" id="btnGerenciarPenalidades" style="display:none">⚠️ Penalidades</button>
+  <button class="admin-btn" id="btnGerenciarEnquetes" style="display:none">🍽️ Enquetes</button>
+  <button class="admin-btn" id="btnSairAdmin" style="display:none">🚪 Sair</button>
+</div>
+
+<!-- ================= MODAIS ================= -->
+
+<!-- Admin Login -->
+<div class="modal" id="modalAdmin">
+  <div class="modal-content">
+    <h2>🔐 Modo Administrador</h2>
+    <p style="margin:12px 0;color:var(--muted)">Digite a senha de administrador:</p>
+    <div class="form-group">
+      <label>Senha</label>
+      <input type="password" id="senhaAdmin" placeholder="Digite a senha">
+    </div>
+    <div class="modal-buttons">
+      <button class="modal-btn cancel" id="btnFecharAdmin">Cancelar</button>
+      <button class="modal-btn confirm" id="btnAcessarAdmin">Acessar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmação de Presença (multi-step) -->
+<div class="modal" id="modalConfirmacao">
+  <div class="modal-content">
+    <div class="step-indicator">
+      <div class="step-dot active" id="step1Dot">1</div>
+      <div class="step-line" id="line1"></div>
+      <div class="step-dot" id="step2Dot">2</div>
+      <div class="step-line" id="line2"></div>
+      <div class="step-dot" id="step3Dot">3</div>
     </div>
 
-    <!-- Modal de Sucesso/Erro -->
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <div class="modal-icon" id="modalIcon">✅</div>
-            <div class="modal-message" id="modalMessage"></div>
-            <button class="btn btn-confirm" onclick="closeModal()">OK</button>
-        </div>
+    <!-- STEP 1: Identificação -->
+    <div id="step1">
+      <h2>👤 Quem é você?</h2>
+      <div class="form-group">
+        <label>Selecione seu nome</label>
+        <select id="playerName"></select>
+      </div>
+      <div class="form-group">
+        <label class="checkbox-group">
+          <input type="checkbox" id="isGuest">
+          <span>🧑‍🤝‍🧑 Sou convidado de um membro</span>
+        </label>
+      </div>
+      <div class="form-group" id="guestNameGroup" style="display:none">
+        <label>📝 Nome do Convidado</label>
+        <input id="guestName" placeholder="Digite o nome completo">
+      </div>
+      <div class="aviso-box">
+        📅 <strong id="modalEtapaInfo">1ª Etapa</strong><br>
+        🕐 Inscrições a partir de <strong id="modalAberturaInfo">--</strong>
+      </div>
+      <div class="modal-buttons">
+        <button class="modal-btn cancel" id="btnCancelarStep1">Cancelar</button>
+        <button class="modal-btn confirm" id="btnProximoStep2">Próximo →</button>
+      </div>
     </div>
 
-    <!-- Modal de Regras -->
-    <div class="modal" id="rulesModal">
-        <div class="modal-content rules-modal-content">
-            <h2><i class="fas fa-book"></i> Regras do Evento</h2>
-            
-            <div class="rules-section">
-                <h3><i class="fas fa-trophy"></i> Estrutura do Torneio</h3>
-                <ul>
-                    <li>• Buy-in: R$ 100,00 (fichas iniciais)</li>
-                    <li>• Re-buys ilimitados: R$ 30,00</li>
-                    <li>• Add-on opcional: R$ 50,00</li>
-                    <li>• Modalidade: Texas Hold'em No Limit</li>
-                </ul>
-            </div>
-
-            <div class="rules-section">
-                <h3><i class="fas fa-cards"></i> Regras Básicas</h3>
-                <ul>
-                    <li>• Cada jogador recebe 2 cartas fechadas</li>
-                    <li>• 5 cartas comunitárias na mesa</li>
-                    <li>• Melhor combinação de 5 cartas vence</li>
-                    <li>• Apostas em sentido horário</li>
-                </ul>
-            </div>
-
-            <div class="rules-section">
-                <h3><i class="fas fa-handshake"></i> Conduta</h3>
-                <ul>
-                    <li>• Respeito entre todos os jogadores</li>
-                    <li>• Proibido revelar cartas em jogo</li>
-                    <li>• Decisões do dealer são finais</li>
-                    <li>• Diversão e amizade em primeiro lugar</li>
-                </ul>
-            </div>
-
-            <div class="rules-section">
-                <h3><i class="fas fa-money-bill-wave"></i> Premiação</h3>
-                <ul>
-                    <li>• 1º Lugar: 50% do pote</li>
-                    <li>• 2º Lugar: 30% do pote</li>
-                    <li>• 3º Lugar: 20% do pote</li>
-                </ul>
-            </div>
-
-            <button class="btn btn-confirm" onclick="closeRulesModal()">Entendi</button>
-        </div>
+    <!-- STEP 2: Voto Janta -->
+    <div id="step2" style="display:none">
+      <h2>🍽️ Vote na Janta</h2>
+      <p style="color:var(--muted);margin-bottom:14px;font-size:0.9em">Escolha uma opção (obrigatório):</p>
+      <div id="voteJantaOptions"></div>
+      <div class="aviso-box danger" id="avisoJantaModal"></div>
+      <div class="modal-buttons">
+        <button class="modal-btn cancel" id="btnVoltarStep1">← Voltar</button>
+        <button class="modal-btn confirm" id="btnProximoStep3" disabled>Próximo →</button>
+      </div>
     </div>
 
-    <script>
-        // Configuração do Firebase (COLE AQUI SUAS CREDENCIAIS)
-        const firebaseConfig = {
-            apiKey: "COLE_SEU_API_KEY_AQUI",
-            authDomain: "COLE_SEU_AUTH_DOMAIN_AQUI",
-            projectId: "COLE_SEU_PROJECT_ID_AQUI",
-            storageBucket: "COLE_SEU_STORAGE_BUCKET_AQUI",
-            messagingSenderId: "COLE_SEU_MESSAGING_SENDER_ID_AQUI",
-            appId: "COLE_SEU_APP_ID_AQUI"
-        };
+    <!-- STEP 3: Voto Mão -->
+    <div id="step3" style="display:none">
+      <h2>🎴 Vote na Mão da Etapa</h2>
+      <p style="color:var(--muted);margin-bottom:14px;font-size:0.9em">Escolha uma opção (obrigatório):</p>
+      <div id="voteMaoOptions"></div>
+      <div class="aviso-box danger" id="avisoMaoModal"></div>
+      <div class="disclaimer">
+        ⚠️ Votação encerra segunda 22h. A mais votada vence.
+      </div>
+      <div class="modal-buttons">
+        <button class="modal-btn cancel" id="btnVoltarStep2">← Voltar</button>
+        <button class="modal-btn confirm" id="btnConfirmarFinal" disabled>✅ Confirmar Presença</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-        // Inicializar Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        
-        // Referência à coleção de confirmados
-        const confirmadosRef = db.collection('confirmados');
-        
-        // Carregar confirmados em tempo real
-        function loadConfirmedPlayers() {
-            confirmadosRef.onSnapshot((snapshot) => {
-                const players = [];
-                snapshot.forEach((doc) => {
-                    players.push({ id: doc.id, ...doc.data() });
-                });
-                
-                // Atualizar contador
-                document.getElementById('confirmedCount').textContent = players.length;
-                
-                // Atualizar lista
-                const playerList = document.getElementById('playerList');
-                playerList.innerHTML = '';
-                
-                players.forEach((player) => {
-                    const playerItem = document.createElement('div');
-                    playerItem.className = 'player-item';
-                    playerItem.innerHTML = `
-                        <span class="player-name">🃏 ${player.name}</span>
-                        ${player.phone ? `<span style="color: #25D366; font-size: 12px;"><i class="fab fa-whatsapp"></i> ${player.phone}</span>` : ''}
-                    `;
-                    playerList.appendChild(playerItem);
-                });
-            });
+<!-- Aviso Penalidade -->
+<div class="modal" id="modalAvisoPenalidade">
+  <div class="modal-content" style="border-color:var(--orange)">
+    <h2 style="color:var(--orange);text-align:center">⚠️ Penalidade Aplicada</h2>
+    <div class="aviso-box danger">
+      <strong id="penaltyPlayerName"></strong>, você foi penalizado por <strong>falta em etapa anterior</strong> sem cancelamento prévio.<br><br>
+      Sua inscrição foi colocada no <strong>último lugar da lista de espera</strong>.
+    </div>
+    <div class="modal-buttons">
+      <button class="modal-btn confirm" id="btnFecharAvisoPenalidade" style="background:var(--orange);color:#fff">Entendi</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bem-vindo -->
+<div class="modal" id="modalBemVindo">
+  <div class="modal-content">
+    <h2>🎲 Bem-vindo ao Poker de Quinta 2027!</h2>
+    <p style="margin:14px 0;line-height:1.6;color:var(--muted)">Página oficial de inscrição e votação do torneio.</p>
+    <div class="aviso-box">
+      <strong>📅 DATAS IMPORTANTES:</strong><br>
+      🟢 Abertura das inscrições: <strong style="color:#a5e8b0" id="welcomeAberturaInfo">--</strong><br>
+      🎯 <span id="welcomeEtapaInfo">1ª Etapa</span>
+    </div>
+    <div class="aviso-box danger">
+      <strong>⚠️ VOTAÇÕES (JANTA E MÃO):</strong><br>
+      Encerram <strong>segunda-feira às 22h</strong>, independente do número de votos. A opção <strong>mais votada vence</strong>.
+    </div>
+    <div class="aviso-box">
+      <strong>📋 Regras:</strong><br>
+      • Limite de 20 vagas confirmadas<br>
+      • <strong>Ao confirmar presença, é obrigatório votar na janta e na mão</strong><br>
+      • Confirme apenas se for com CERTEZA<br>
+      • Cancelamentos pelo WhatsApp<br>
+      • Após 20 confirmações → lista de espera<br>
+      • Membros têm prioridade sobre convidados
+    </div>
+    <div class="modal-buttons">
+      <button class="modal-btn confirm" id="btnEntendi" style="width:100%">👍 Entendi!</button>
+    </div>
+  </div>
+</div>
+
+<!-- Gerenciar Fotos -->
+<div class="modal" id="modalGerenciarFotos">
+  <div class="modal-content" style="max-width:900px">
+    <h2>📸 Gerenciar Fotos</h2>
+    <div id="fotosList" style="max-height:420px;overflow-y:auto;margin:16px 0"></div>
+    <div class="modal-buttons">
+      <button class="modal-btn cancel" id="btnFecharFotos">Fechar</button>
+      <button class="modal-btn confirm" id="btnSalvarFotos">Salvar Todas</button>
+    </div>
+  </div>
+</div>
+
+<!-- Selecionar Etapa -->
+<div class="modal" id="modalSelecionarEtapa">
+  <div class="modal-content">
+    <h2>📅 Selecionar Etapa</h2>
+    <div id="etapaSelector" class="etapa-selector"></div>
+    <div class="modal-buttons">
+      <button class="modal-btn cancel" id="btnCancelarSelecao">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Gerenciar Penalidades -->
+<div class="modal" id="modalGerenciarPenalidades">
+  <div class="modal-content" style="max-width:560px">
+    <h2>⚠️ Gerenciar Penalidades</h2>
+    <p style="color:var(--muted);margin:10px 0;font-size:0.9em">Jogadores penalizados vão para o último lugar da lista de espera.</p>
+    <div style="margin:18px 0">
+      <select id="penaltyPlayerSelect" style="width:100%;padding:12px;background:rgba(0,0,0,0.25);color:var(--text);border:1px solid rgba(255,138,61,0.4);border-radius:10px;font-family:'Space Grotesk',sans-serif">
+        <option value="">Selecione o jogador...</option>
+      </select>
+      <button id="btnAplicarPenalidade" style="margin-top:10px;width:100%;padding:12px;background:rgba(255,138,61,0.2);color:#ffc4a0;border:1px solid rgba(255,138,61,0.4);border-radius:10px;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:600">⚠️ Aplicar Penalidade</button>
+    </div>
+    <div style="border-top:1px solid var(--border-soft);padding-top:14px">
+      <h3 style="color:var(--gold);font-size:0.95em;margin-bottom:10px">Jogadores Penalizados:</h3>
+      <div id="penalizedList" style="max-height:250px;overflow-y:auto"></div>
+    </div>
+    <div class="modal-buttons">
+      <button class="modal-btn cancel" id="btnFecharPenalidades">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Gerenciar Enquetes (Admin) -->
+<div class="modal" id="modalGerenciarEnquetes">
+  <div class="modal-content" style="max-width:640px">
+    <h2>🍽️ Gerenciar Enquetes</h2>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0">
+      <div>
+        <h3 style="color:var(--gold);font-size:0.95em;margin-bottom:10px">🍽️ Janta</h3>
+        <div class="form-group">
+          <label>Nova opção</label>
+          <input type="text" id="novaOpcaoJanta" placeholder="Ex: Strogonoff">
+        </div>
+        <button class="btn btn-primary" id="btnAddJanta" style="padding:10px;font-size:0.85em">+ Adicionar</button>
+        <div id="listaOpcoesJanta" style="margin-top:12px"></div>
+      </div>
+      <div>
+        <h3 style="color:var(--gold);font-size:0.95em;margin-bottom:10px">🎴 Mão</h3>
+        <div class="form-group">
+          <label>Nova opção</label>
+          <input type="text" id="novaOpcaoMao" placeholder="Ex: 7 e 2 OFF">
+        </div>
+        <button class="btn btn-primary" id="btnAddMao" style="padding:10px;font-size:0.85em">+ Adicionar</button>
+        <div id="listaOpcoesMao" style="margin-top:12px"></div>
+      </div>
+    </div>
+
+    <div style="background:rgba(255,90,106,0.08);border:1px dashed rgba(255,90,106,0.3);border-radius:10px;padding:14px;margin:18px 0">
+      <h4 style="color:var(--red);font-size:0.9em;margin-bottom:12px">⏯️ Controle de Abertura</h4>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <p style="font-size:0.85em;margin-bottom:8px;font-weight:600">🍽️ Janta</p>
+          <button class="btn" id="btnAbrirJanta" style="background:rgba(95,191,111,0.2);color:#a5e8b0;border:1px solid rgba(95,191,111,0.4);padding:8px;font-size:0.8em;margin-bottom:6px;border-radius:8px">Abrir</button>
+          <button class="btn" id="btnEncerrarJanta" style="background:rgba(255,90,106,0.2);color:#ffb0b8;border:1px solid rgba(255,90,106,0.4);padding:8px;font-size:0.8em;border-radius:8px">Encerrar</button>
+        </div>
+        <div>
+          <p style="font-size:0.85em;margin-bottom:8px;font-weight:600">🎴 Mão</p>
+          <button class="btn" id="btnAbrirMao" style="background:rgba(95,191,111,0.2);color:#a5e8b0;border:1px solid rgba(95,191,111,0.4);padding:8px;font-size:0.8em;margin-bottom:6px;border-radius:8px">Abrir</button>
+          <button class="btn" id="btnEncerrarMao" style="background:rgba(255,90,106,0.2);color:#ffb0b8;border:1px solid rgba(255,90,106,0.4);padding:8px;font-size:0.8em;border-radius:8px">Encerrar</button>
+        </div>
+      </div>
+      <p style="font-size:0.78em;color:var(--muted);margin-top:10px;text-align:center">⚠️ As opções precisam existir antes de abrir.</p>
+    </div>
+
+    <div style="background:rgba(255,90,106,0.08);border:1px dashed rgba(255,90,106,0.3);border-radius:10px;padding:14px">
+      <h4 style="color:var(--red);font-size:0.9em;margin-bottom:10px">🧹 Limpeza</h4>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn" id="btnLimparVotos" style="background:rgba(255,90,106,0.15);color:var(--red);border:1px solid rgba(255,90,106,0.3);flex:1;min-width:130px;padding:10px;font-size:0.8em;border-radius:8px">Limpar Votos</button>
+        <button class="btn" id="btnLimparOpcoes" style="background:rgba(255,90,106,0.15);color:var(--red);border:1px solid rgba(255,90,106,0.3);flex:1;min-width:130px;padding:10px;font-size:0.8em;border-radius:8px">Limpar Opções</button>
+      </div>
+    </div>
+
+    <div class="modal-buttons">
+      <button class="modal-btn cancel" id="btnFecharEnquetes">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import { getDatabase, ref, set, onValue, remove, push, get } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD_XXjcjJYM73wLTTzpDgzKCOZnztcJhjE",
+  authDomain: "poker-de-quinta.firebaseapp.com",
+  databaseURL: "https://poker-de-quinta-default-rtdb.firebaseio.com",
+  projectId: "poker-de-quinta",
+  storageBucket: "poker-de-quinta.firebasestorage.app",
+  messagingSenderId: "776724152456",
+  appId: "1:776724152456:web:fbffde9a1c1a7628c61f3d"
+};
+
+const LIMITE_VAGAS = 20;
+const FOTO_PADRAO = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
+const TOTAL_PARTICIPANTES = 20;
+
+// ✅ 13 ETAPAS DA TEMPORADA 2027
+// Regra: última quinta-feira do mês, com exceções em outubro (2 etapas) e dezembro (antecipada)
+const ETAPAS = [
+  { numero: 1,  data: '2027-01-28', descricao: '1ª Etapa' },
+  { numero: 2,  data: '2027-02-25', descricao: '2ª Etapa' },
+  { numero: 3,  data: '2027-03-25', descricao: '3ª Etapa' },
+  { numero: 4,  data: '2027-04-29', descricao: '4ª Etapa' },
+  { numero: 5,  data: '2027-05-27', descricao: '5ª Etapa' },
+  { numero: 6,  data: '2027-06-24', descricao: '6ª Etapa' },
+  { numero: 7,  data: '2027-07-29', descricao: '7ª Etapa' },
+  { numero: 8,  data: '2027-08-26', descricao: '8ª Etapa' },
+  { numero: 9,  data: '2027-09-30', descricao: '9ª Etapa' },
+  { numero: 10, data: '2027-10-14', descricao: '10ª Etapa' },
+  { numero: 11, data: '2027-10-28', descricao: '11ª Etapa' },
+  { numero: 12, data: '2027-11-25', descricao: '12ª Etapa' },
+  { numero: 13, data: '2027-12-09', descricao: '13ª Etapa - FINAL 🏆' }
+];
+
+const JOGADORES_INICIAIS = [
+  "Amarildo","Boy","Buiu","Caio","Charles","Cleversson","Davi","Daniel","Gera","Diego",
+  "Dos Anjos","Eduardo","Fernando","Gregory","Gaspar","Guilherme","Guti","Kastelo",
+  "Izidio","Jean","Jean Rebuy","Junior","Leo","Loreto","Lucas","Matheus","Maykon",
+  "Marcelo","Neto","Nil","Peterson","Rafael","Ricardo Amarante","Ricardo Linhares",
+  "Ricardo Matoso","Robson","Sergio","Solano","Tigre","Van Van","Waltinho","Wesley"
+];
+
+// ✅ Config inicial: começa na 1ª etapa de 2027
+let config = { etapa: 1, dataEvento: '2027-01-28', inscricoesAbertas: false };
+let db;
+let confirmados = [];
+let listaEspera = [];
+let jogadoresPenalizados = [];
+let jogadores = [];
+let modoAdmin = false;
+let inscricoesAtivas = false;
+let countdownInterval = null;
+let DATA_ABERTURA_INSCRICOES = null;
+
+let opcoesJanta = [];
+let opcoesMao = [];
+let votosJanta = {};
+let votosMao = {};
+let jantaAberta = false, maoAberta = false;
+let jantaEncerrada = false, maoEncerrada = false;
+
+let stepAtual = 1;
+let jantaSelecionada = null;
+let maoSelecionada = null;
+
+// ---------- HELPERS ----------
+function calcularSegundaAntecedente(dataEtapa) {
+  const data = new Date(dataEtapa);
+  const dia = data.getDay();
+  const ajuste = dia === 1 ? 7 : (dia - 1);
+  const seg = new Date(data);
+  seg.setDate(data.getDate() - ajuste);
+  seg.setHours(7, 0, 0, 0);
+  return seg;
+}
+function formatarDataParaExibicao(d) {
+  return d.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric' }) +
+         ' às ' + d.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+}
+function calcularDataAbertura(etapa) {
+  return calcularSegundaAntecedente(new Date(etapa.data + 'T00:00:00'));
+}
+function getEtapaAtual() { return ETAPAS.find(e => e.numero === config.etapa) || ETAPAS[0]; }
+function formatarDataBR(s) { const p = s.split('-'); return p.length===3 ? `${p[2]}/${p[1]}/${p[0]}` : s; }
+function isJogadorPenalizado(nome) { return jogadoresPenalizados.some(p => p.nome === nome); }
+function getFotoJogador(nome) { const j = jogadores.find(x => x.nome === nome); return j ? j.foto : FOTO_PADRAO; }
+
+// ---------- UI DATAS ----------
+function atualizarDatasNaInterface() {
+  const etapa = getEtapaAtual();
+  const dataFmt = formatarDataBR(etapa.data);
+  document.getElementById('dataEvento').textContent = `📅 ${etapa.descricao} - ${dataFmt}`;
+  DATA_ABERTURA_INSCRICOES = calcularDataAbertura(etapa);
+  const aberturaFmt = formatarDataParaExibicao(DATA_ABERTURA_INSCRICOES);
+  document.getElementById('modalEtapaInfo').textContent = `${etapa.descricao}: ${dataFmt}`;
+  document.getElementById('modalAberturaInfo').textContent = aberturaFmt;
+  document.getElementById('welcomeAberturaInfo').textContent = aberturaFmt;
+  document.getElementById('welcomeEtapaInfo').textContent = `${etapa.descricao}: ${dataFmt}`;
+  document.getElementById('btnConfirmar').textContent = `🔒 INSCRIÇÕES FECHADAS - ABREM ${aberturaFmt}`;
+}
+
+// ---------- CONTADOR ----------
+function iniciarContador() {
+  if (countdownInterval) clearInterval(countdownInterval);
+  if (!DATA_ABERTURA_INSCRICOES) DATA_ABERTURA_INSCRICOES = calcularDataAbertura(getEtapaAtual());
+  countdownInterval = setInterval(() => {
+    const diff = DATA_ABERTURA_INSCRICOES.getTime() - Date.now();
+    const btn = document.getElementById('btnConfirmar');
+    if (diff <= 0) {
+      if (!inscricoesAtivas) {
+        inscricoesAtivas = true;
+        document.getElementById('timerHeader').textContent = '✅ INSCRIÇÕES ABERTAS!';
+        document.getElementById('timer').textContent = 'As inscrições estão liberadas!';
+        document.getElementById('countdownContainer').style.borderColor = 'rgba(95,191,111,0.5)';
+        btn.disabled = false;
+        btn.textContent = '➕ CONFIRMAR PRESENÇA';
+        if (config.inscricoesAbertas !== true) {
+          set(ref(db, 'config/inscricoesAbertas'), true);
+          config.inscricoesAbertas = true;
         }
-        
-        // Formatar telefone
-        function formatPhone(phone) {
-            let numbers = phone.replace(/\D/g, '');
-            numbers = numbers.slice(0, 11);
-            
-            if (numbers.length <= 2) {
-                return numbers;
-            } else if (numbers.length <= 6) {
-                return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
-            } else if (numbers.length <= 10) {
-                return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 6)}-${numbers.slice(6)}`;
-            } else {
-                return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7)}`;
-            }
+      }
+    } else {
+      if (inscricoesAtivas) {
+        inscricoesAtivas = false;
+        document.getElementById('timerHeader').textContent = '⏳ Abertura das inscrições em';
+        document.getElementById('countdownContainer').style.borderColor = '';
+        btn.disabled = true;
+        btn.textContent = `🔒 INSCRIÇÕES FECHADAS - ABREM ${formatarDataParaExibicao(DATA_ABERTURA_INSCRICOES)}`;
+        if (config.inscricoesAbertas !== false) {
+          set(ref(db, 'config/inscricoesAbertas'), false);
+          config.inscricoesAbertas = false;
         }
-        
-        document.getElementById('playerPhone').addEventListener('input', function(e) {
-            this.value = formatPhone(this.value);
-        });
-        
-        function confirmPresence() {
-            const name = document.getElementById('playerName').value.trim();
-            const phone = document.getElementById('playerPhone').value.trim();
-            
-            if (!name) {
-                showModal('❌', 'Por favor, digite seu nome!');
-                return;
-            }
-            
-            if (!phone) {
-                showModal('❌', 'Por favor, digite seu WhatsApp!');
-                return;
-            }
-            
-            confirmadosRef.where('name', '==', name).get().then((snapshot) => {
-                if (snapshot.empty) {
-                    confirmadosRef.add({
-                        name: name,
-                        phone: phone,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                    }).then(() => {
-                        document.getElementById('playerName').value = '';
-                        document.getElementById('playerPhone').value = '';
-                        showModal('✅', `${name}, sua presença foi confirmada!`);
-                    }).catch((error) => {
-                        showModal('❌', 'Erro ao confirmar presença. Tente novamente.');
-                    });
-                } else {
-                    showModal('❌', `${name}, você já confirmou presença!`);
-                }
-            });
+      }
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      document.getElementById('timer').textContent = `${d}d ${h}h ${m}m ${s}s`;
+    }
+  }, 1000);
+}
+
+// ---------- FIREBASE ----------
+try {
+  const app = initializeApp(firebaseConfig);
+  db = getDatabase(app);
+  document.getElementById('statusIndicator').textContent = '✅ Conectado';
+  document.getElementById('statusIndicator').classList.add('connected');
+
+  await carregarFotosJogadores();
+  await carregarConfig();
+  iniciarContador();
+
+  onValue(ref(db, 'confirmados'), s => {
+    confirmados = [];
+    if (s.exists()) s.forEach(c => confirmados.push({...c.val(), id: c.key}));
+    atualizar();
+  });
+  onValue(ref(db, 'listaEspera'), s => {
+    listaEspera = [];
+    if (s.exists()) s.forEach(c => listaEspera.push({...c.val(), id: c.key}));
+    atualizar();
+  });
+  onValue(ref(db, 'penalizados'), s => {
+    jogadoresPenalizados = [];
+    if (s.exists()) s.forEach(c => jogadoresPenalizados.push({...c.val(), id: c.key}));
+    atualizarListaPenalizados();
+  });
+
+  onValue(ref(db, 'opcoes/janta'), s => {
+    opcoesJanta = s.exists() ? s.val() : [];
+    renderizarOpcoesPublicas('janta');
+    if (modoAdmin) atualizarListaOpcoesAdmin();
+    atualizarAvisosEnquetes();
+  });
+  onValue(ref(db, 'opcoes/mao'), s => {
+    opcoesMao = s.exists() ? s.val() : [];
+    renderizarOpcoesPublicas('mao');
+    if (modoAdmin) atualizarListaOpcoesAdmin();
+    atualizarAvisosEnquetes();
+  });
+  onValue(ref(db, 'controle/jantaAberta'), s => { jantaAberta = !!s.val(); atualizarAvisosEnquetes(); renderizarOpcoesPublicas('janta'); });
+  onValue(ref(db, 'controle/maoAberta'), s => { maoAberta = !!s.val(); atualizarAvisosEnquetes(); renderizarOpcoesPublicas('mao'); });
+  onValue(ref(db, 'controle/jantaEncerrada'), s => { jantaEncerrada = !!s.val(); atualizarAvisosEnquetes(); renderizarOpcoesPublicas('janta'); });
+  onValue(ref(db, 'controle/maoEncerrada'), s => { maoEncerrada = !!s.val(); atualizarAvisosEnquetes(); renderizarOpcoesPublicas('mao'); });
+  onValue(ref(db, 'enquetes/janta'), s => { votosJanta = s.val() || {}; renderizarOpcoesPublicas('janta'); atualizarDashboard(); });
+  onValue(ref(db, 'enquetes/mao'), s => { votosMao = s.val() || {}; renderizarOpcoesPublicas('mao'); atualizarDashboard(); });
+
+} catch (e) {
+  document.getElementById('statusIndicator').textContent = '❌ Erro de conexão';
+  document.getElementById('statusIndicator').classList.add('error');
+  console.error(e);
+}
+
+// ---------- CARREGAMENTO ----------
+async function carregarFotosJogadores() {
+  try {
+    const s = await get(ref(db, 'fotosJogadores'));
+    const salvas = s.exists() ? s.val() : {};
+    jogadores = JOGADORES_INICIAIS.map(n => ({ nome: n, foto: salvas[n] || FOTO_PADRAO }));
+  } catch {
+    jogadores = JOGADORES_INICIAIS.map(n => ({ nome: n, foto: FOTO_PADRAO }));
+  }
+  preencherSelectJogadores();
+  preencherSelectPenalidade();
+}
+async function carregarConfig() {
+  try {
+    const s = await get(ref(db, 'config'));
+    if (s.exists()) config = { ...config, ...s.val() };
+    const etapa = getEtapaAtual();
+    DATA_ABERTURA_INSCRICOES = calcularDataAbertura(etapa);
+    config.dataEvento = etapa.data;
+    atualizarDatasNaInterface();
+  } catch (e) { console.error(e); }
+}
+function preencherSelectJogadores() {
+  const sel = document.getElementById('playerName');
+  sel.innerHTML = '<option value="">Selecione seu nome...</option>';
+  jogadores.slice().sort((a,b) => a.nome.localeCompare(b.nome)).forEach(j => {
+    const o = document.createElement('option');
+    o.value = o.textContent = j.nome;
+    sel.appendChild(o);
+  });
+}
+function preencherSelectPenalidade() {
+  const sel = document.getElementById('penaltyPlayerSelect');
+  sel.innerHTML = '<option value="">Selecione o jogador...</option>';
+  JOGADORES_INICIAIS.slice().sort((a,b) => a.localeCompare(b)).forEach(n => {
+    const o = document.createElement('option');
+    o.value = o.textContent = n;
+    sel.appendChild(o);
+  });
+}
+
+// ---------- ENQUETES ----------
+function atualizarAvisosEnquetes() {
+  const avisoJ = document.getElementById('avisoJanta');
+  const statusJ = document.getElementById('statusJanta');
+  const cardJ = document.getElementById('enqueteJanta');
+  const btnJ = document.getElementById('btnVotarJanta');
+
+  cardJ.classList.remove('aberta','encerrada');
+  if (jantaEncerrada) {
+    cardJ.classList.add('encerrada');
+    statusJ.textContent = 'Encerrada'; statusJ.className = 'status-pill status-encerrada';
+    avisoJ.className = 'aviso-box danger';
+    avisoJ.innerHTML = '⏹️ <strong>Votação encerrada.</strong> A opção mais votada venceu.';
+    btnJ.disabled = true; btnJ.textContent = 'VOTAÇÃO ENCERRADA';
+  } else if (jantaAberta && opcoesJanta.length > 0) {
+    cardJ.classList.add('aberta');
+    statusJ.textContent = 'Aberta'; statusJ.className = 'status-pill status-aberta';
+    avisoJ.className = 'aviso-box success';
+    avisoJ.innerHTML = '🍽️ <strong>Votação aberta!</strong> Escolha sua opção ao confirmar presença.';
+    btnJ.disabled = true; btnJ.textContent = 'VOTE AO CONFIRMAR PRESENÇA';
+  } else {
+    statusJ.textContent = 'Aguardando'; statusJ.className = 'status-pill status-aguardando';
+    avisoJ.className = 'aviso-box';
+    avisoJ.innerHTML = '📋 <strong>Aguardando definição pela organização.</strong>';
+    btnJ.disabled = true; btnJ.textContent = 'AGUARDANDO';
+  }
+
+  const avisoM = document.getElementById('avisoMao');
+  const statusM = document.getElementById('statusMao');
+  const cardM = document.getElementById('enqueteMao');
+  const btnM = document.getElementById('btnVotarMao');
+
+  cardM.classList.remove('aberta','encerrada');
+  if (maoEncerrada) {
+    cardM.classList.add('encerrada');
+    statusM.textContent = 'Encerrada'; statusM.className = 'status-pill status-encerrada';
+    avisoM.className = 'aviso-box danger';
+    avisoM.innerHTML = '⏹️ <strong>Votação encerrada.</strong> A opção mais votada venceu.';
+    btnM.disabled = true; btnM.textContent = 'VOTAÇÃO ENCERRADA';
+  } else if (maoAberta && opcoesMao.length > 0) {
+    cardM.classList.add('aberta');
+    statusM.textContent = 'Aberta'; statusM.className = 'status-pill status-aberta';
+    avisoM.className = 'aviso-box success';
+    avisoM.innerHTML = '🎴 <strong>Votação aberta!</strong> Escolha a mão da etapa.';
+    btnM.disabled = true; btnM.textContent = 'VOTE AO CONFIRMAR PRESENÇA';
+  } else {
+    statusM.textContent = 'Aguardando'; statusM.className = 'status-pill status-aguardando';
+    avisoM.className = 'aviso-box';
+    avisoM.innerHTML = '📋 <strong>Aguardando definição pela organização.</strong>';
+    btnM.disabled = true; btnM.textContent = 'AGUARDANDO';
+  }
+}
+
+function renderizarOpcoesPublicas(tipo) {
+  const opcoes = tipo === 'janta' ? opcoesJanta : opcoesMao;
+  const votos = tipo === 'janta' ? votosJanta : votosMao;
+  const container = document.getElementById(tipo + 'Options');
+  const isEncerrada = tipo === 'janta' ? jantaEncerrada : maoEncerrada;
+  const isAberta = tipo === 'janta' ? jantaAberta : maoAberta;
+
+  if (!opcoes.length) { container.innerHTML = `<div class="loading">⏳ Opções ainda não definidas</div>`; return; }
+
+  const votosPor = {}, votantes = {};
+  Object.values(votos).forEach(v => {
+    votosPor[v.opcao] = (votosPor[v.opcao] || 0) + 1;
+    if (!votantes[v.opcao]) votantes[v.opcao] = [];
+    votantes[v.opcao].push(v.jogador);
+  });
+  const total = Object.values(votos).length;
+
+  container.innerHTML = '';
+  opcoes.forEach(op => {
+    const n = votosPor[op] || 0;
+    const pct = total ? (n / total * 100).toFixed(1) : 0;
+    const div = document.createElement('div');
+    div.className = 'vote-option disabled';
+    div.innerHTML = `
+      <div class="option-header">
+        <span class="option-name">${op}</span>
+        <span class="option-votes">${n} voto(s) • ${pct}%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+      ${n > 0 ? `<div class="voters-list">${votantes[op].map(v => `<span class="voter-tag">${v}</span>`).join('')}</div>` : ''}
+    `;
+    container.appendChild(div);
+  });
+
+  if (!isAberta && !isEncerrada) {
+    container.innerHTML = `<div class="loading">⏳ As opções estão definidas, mas a votação ainda não foi aberta pela organização.</div>` + container.innerHTML;
+  }
+}
+
+function atualizarDashboard() {
+  const votosJ = {}; const votantesJ = new Set();
+  Object.values(votosJanta).forEach(v => { votosJ[v.opcao] = (votosJ[v.opcao]||0)+1; votantesJ.add(v.jogador); });
+  let vJ = '-', maxJ = 0;
+  Object.entries(votosJ).forEach(([o,n]) => { if (n > maxJ) { maxJ = n; vJ = o; } });
+  document.getElementById('dashJantaVencedor').textContent = vJ;
+  document.getElementById('dashJantaVotos').textContent = `${maxJ} voto(s)`;
+
+  const votosM = {}; const votantesM = new Set();
+  Object.values(votosMao).forEach(v => { votosM[v.opcao] = (votosM[v.opcao]||0)+1; votantesM.add(v.jogador); });
+  let vM = '-', maxM = 0;
+  Object.entries(votosM).forEach(([o,n]) => { if (n > maxM) { maxM = n; vM = o; } });
+  document.getElementById('dashMaoVencedor').textContent = vM;
+  document.getElementById('dashMaoVotos').textContent = `${maxM} voto(s)`;
+
+  const totalVotantes = new Set([...votantesJ, ...votantesM]).size;
+  const pct = TOTAL_PARTICIPANTES ? (totalVotantes / TOTAL_PARTICIPANTES * 100).toFixed(1) : 0;
+  document.getElementById('dashParticipacao').textContent = pct + '%';
+  document.getElementById('dashTotalVotos').textContent = `${totalVotantes}/${TOTAL_PARTICIPANTES} votantes`;
+}
+
+// ---------- LISTAS ----------
+function atualizar() {
+  document.getElementById('confirmedCount').textContent = confirmados.length;
+  document.getElementById('vacancyCount').textContent = Math.max(0, LIMITE_VAGAS - confirmados.length);
+  document.getElementById('waitlistCount').textContent = listaEspera.length;
+
+  const cList = document.getElementById('confirmedList');
+  const wList = document.getElementById('waitlistList');
+
+  const confOrd = [...confirmados].sort((a,b) => (a.timestamp||0) - (b.timestamp||0));
+  cList.innerHTML = confOrd.length ? '' : '<li class="empty-state">Nenhuma confirmação</li>';
+  confOrd.forEach((p, i) => {
+    const foto = p.foto || getFotoJogador(p.nome) || FOTO_PADRAO;
+    const badge = p.isGuest ? '<span class="player-badge badge-guest">Convidado</span>' : '<span class="player-badge badge-member">Membro</span>';
+    const gInfo = p.isGuest && p.guestOf ? ` <small style="color:var(--muted)">(de ${p.guestOf})</small>` : '';
+    const btnRem = modoAdmin ? `<button class="remove-btn" onclick="removerJogador('${p.id}',false)">❌</button>` : '';
+    const vJ = p.votoJanta ? `<small style="color:var(--gold-2)">🍽️ ${p.votoJanta}</small>` : '';
+    const vM = p.votoMao ? `<small style="color:var(--gold-2)">🎴 ${p.votoMao}</small>` : '';
+    cList.innerHTML += `<li class="player-item">
+      <div class="player-info">
+        <img class="player-avatar" src="${foto}" onerror="this.src='${FOTO_PADRAO}'">
+        <div class="player-number">${i+1}º</div>
+        <div class="player-details">
+          <strong>${p.nome}${gInfo}</strong>
+          <small>🕒 ${new Date(p.data).toLocaleString('pt-BR')}</small>
+          ${vJ} ${vM}
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">${badge} ${btnRem}</div>
+    </li>`;
+  });
+
+  const membros = listaEspera.filter(p => !p.isGuest && !p.penalizado).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
+  const convidados = listaEspera.filter(p => p.isGuest).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
+  const pen = listaEspera.filter(p => p.penalizado).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
+  const ord = [...membros, ...convidados, ...pen];
+
+  wList.innerHTML = ord.length ? '' : '<li class="empty-state">Lista vazia</li>';
+  ord.forEach((p, i) => {
+    const foto = p.foto || (!p.isGuest ? getFotoJogador(p.nome) : FOTO_PADRAO);
+    const gInfo = p.isGuest && p.guestOf ? ` <small style="color:var(--muted)">(de ${p.guestOf})</small>` : '';
+    const badge = p.isGuest ? '<span class="player-badge badge-guest">Convidado</span>' :
+                  p.penalizado ? '<span class="player-badge badge-penalized">Membro</span>' :
+                  '<span class="player-badge badge-wait">Membro</span>';
+    const pr = !p.isGuest && !p.penalizado && i < membros.length ? '<span class="priority-tag">PRIORIDADE</span>' : '';
+    const pTag = p.penalizado ? '<span class="penalty-tag">⚠️ PENALIZADO</span>' : '';
+    const btnRem = modoAdmin ? `<button class="remove-btn" onclick="removerJogador('${p.id}',true)">❌</button>` : '';
+    const btnPr = modoAdmin && confirmados.length < LIMITE_VAGAS ?
+      `<button class="remove-btn" style="background:rgba(95,191,111,0.15);color:#a5e8b0;border-color:rgba(95,191,111,0.3)" onclick="promoverJogadorManual('${p.id}')">↗️</button>` : '';
+    wList.innerHTML += `<li class="player-item">
+      <div class="player-info">
+        <img class="player-avatar" src="${foto}" onerror="this.src='${FOTO_PADRAO}'">
+        <div class="player-number">${i+1}º</div>
+        <div class="player-details">
+          <strong>${p.nome}${gInfo}</strong>
+          <small>🕒 ${new Date(p.data).toLocaleString('pt-BR')}</small>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">${badge} ${pr} ${pTag} ${btnPr} ${btnRem}</div>
+    </li>`;
+  });
+}
+
+// ---------- REMOVER/PROMOVER ----------
+window.removerJogador = async (id, isWait) => {
+  if (!confirm('Remover este jogador?')) return;
+  try {
+    await remove(ref(db, `${isWait ? 'listaEspera' : 'confirmados'}/${id}`));
+    if (!isWait) await promoverDaListaDeEspera();
+    alert('Removido!');
+  } catch (e) { alert('Erro: ' + e.message); }
+};
+async function promoverDaListaDeEspera() {
+  try {
+    const sC = await get(ref(db, 'confirmados'));
+    const total = sC.exists() ? sC.size : 0;
+    if (total >= LIMITE_VAGAS) return;
+    const sE = await get(ref(db, 'listaEspera'));
+    if (!sE.exists()) return;
+    const cands = [];
+    sE.forEach(c => cands.push({...c.val(), id: c.key}));
+    const membros = cands.filter(p => !p.isGuest && !p.penalizado).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
+    if (!membros.length) return;
+    const p = membros[0];
+    await push(ref(db, 'confirmados'), {
+      nome: p.nome, isGuest: false, data: p.data, timestamp: p.timestamp,
+      foto: p.foto || getFotoJogador(p.nome), promovido: true,
+      dataPromocao: new Date().toISOString(), etapa: config.etapa,
+      votoJanta: p.votoJanta || null, votoMao: p.votoMao || null
+    });
+    await remove(ref(db, `listaEspera/${p.id}`));
+  } catch (e) { console.error(e); }
+}
+window.promoverJogadorManual = async (id) => {
+  try {
+    const sC = await get(ref(db, 'confirmados'));
+    const total = sC.exists() ? sC.size : 0;
+    if (total >= LIMITE_VAGAS) return alert('Sem vagas!');
+    const s = await get(ref(db, `listaEspera/${id}`));
+    if (!s.exists()) return alert('Não encontrado!');
+    const j = s.val();
+    if (!confirm(`Promover ${j.nome}?`)) return;
+    await push(ref(db, 'confirmados'), {
+      nome: j.nome, isGuest: j.isGuest, guestOf: j.guestOf || null,
+      data: j.data, timestamp: j.timestamp,
+      foto: j.foto || (!j.isGuest ? getFotoJogador(j.nome) : FOTO_PADRAO),
+      promovido: true, promocaoManual: true, dataPromocao: new Date().toISOString(),
+      etapa: config.etapa, votoJanta: j.votoJanta || null, votoMao: j.votoMao || null
+    });
+    await remove(ref(db, `listaEspera/${id}`));
+    alert('Promovido!');
+  } catch (e) { alert('Erro: ' + e.message); }
+};
+
+// ---------- MODAL MULTI-STEP ----------
+const modalConf = document.getElementById('modalConfirmacao');
+function setStep(n) {
+  stepAtual = n;
+  document.getElementById('step1').style.display = n === 1 ? 'block' : 'none';
+  document.getElementById('step2').style.display = n === 2 ? 'block' : 'none';
+  document.getElementById('step3').style.display = n === 3 ? 'block' : 'none';
+  document.getElementById('step1Dot').className = 'step-dot' + (n === 1 ? ' active' : n > 1 ? ' done' : '');
+  document.getElementById('step2Dot').className = 'step-dot' + (n === 2 ? ' active' : n > 2 ? ' done' : '');
+  document.getElementById('step3Dot').className = 'step-dot' + (n === 3 ? ' active' : '');
+  document.getElementById('line1').className = 'step-line' + (n > 1 ? ' done' : '');
+  document.getElementById('line2').className = 'step-line' + (n > 2 ? ' done' : '');
+}
+function renderizarVotoModal(tipo) {
+  const opcoes = tipo === 'janta' ? opcoesJanta : opcoesMao;
+  const sel = tipo === 'janta' ? jantaSelecionada : maoSelecionada;
+  const container = document.getElementById(tipo === 'janta' ? 'voteJantaOptions' : 'voteMaoOptions');
+  const aviso = document.getElementById(tipo === 'janta' ? 'avisoJantaModal' : 'avisoMaoModal');
+  const aberta = tipo === 'janta' ? jantaAberta : maoAberta;
+  const encerrada = tipo === 'janta' ? jantaEncerrada : maoEncerrada;
+
+  if (!aberta || encerrada) {
+    container.innerHTML = '';
+    aviso.innerHTML = encerrada
+      ? '⏹️ Esta votação foi <strong>encerrada</strong> pela organização. Você ainda pode confirmar presença, mas não votar.'
+      : '📋 Esta votação ainda <strong>não foi aberta</strong>. Você pode confirmar presença, mas não votar agora.';
+    return;
+  }
+  if (!opcoes.length) {
+    container.innerHTML = '';
+    aviso.innerHTML = '⏳ A organização ainda não definiu as opções. Você pode confirmar presença, mas não votar agora.';
+    return;
+  }
+  aviso.innerHTML = '⚠️ <strong>Voto obrigatório</strong> para confirmar presença.';
+  container.innerHTML = '';
+  opcoes.forEach(op => {
+    const div = document.createElement('div');
+    div.className = 'vote-option' + (sel === op ? ' selected' : '');
+    div.innerHTML = `<div class="option-name">${op}</div>`;
+    div.onclick = () => {
+      if (tipo === 'janta') jantaSelecionada = op; else maoSelecionada = op;
+      renderizarVotoModal(tipo);
+      atualizarBotoesModal();
+    };
+    container.appendChild(div);
+  });
+}
+function atualizarBotoesModal() {
+  const btnJ = document.getElementById('btnProximoStep3');
+  const btnF = document.getElementById('btnConfirmarFinal');
+  const jOk = !jantaAberta || jantaEncerrada || !opcoesJanta.length ? true : !!jantaSelecionada;
+  const mOk = !maoAberta || maoEncerrada || !opcoesMao.length ? true : !!maoSelecionada;
+  btnJ.disabled = !jOk;
+  btnF.disabled = !mOk;
+}
+
+document.getElementById('btnConfirmar').onclick = () => {
+  if (!inscricoesAtivas && !modoAdmin) {
+    alert(`📅 As inscrições abrirão ${formatarDataParaExibicao(DATA_ABERTURA_INSCRICOES)}!`);
+    return;
+  }
+  stepAtual = 1;
+  jantaSelecionada = null;
+  maoSelecionada = null;
+  document.getElementById('playerName').value = '';
+  document.getElementById('isGuest').checked = false;
+  document.getElementById('guestNameGroup').style.display = 'none';
+  document.getElementById('guestName').value = '';
+  setStep(1);
+  renderizarVotoModal('janta');
+  renderizarVotoModal('mao');
+  atualizarBotoesModal();
+  modalConf.classList.add('active');
+};
+document.getElementById('btnCancelarStep1').onclick = () => modalConf.classList.remove('active');
+document.getElementById('isGuest').onchange = e => {
+  document.getElementById('guestNameGroup').style.display = e.target.checked ? 'block' : 'none';
+};
+document.getElementById('btnProximoStep2').onclick = () => {
+  const nome = document.getElementById('playerName').value;
+  if (!nome) return alert('Selecione seu nome!');
+  const isG = document.getElementById('isGuest').checked;
+  if (isG && !document.getElementById('guestName').value.trim()) return alert('Digite o nome do convidado!');
+  if (!isG) {
+    const ja = [...confirmados, ...listaEspera].some(p => !p.isGuest && p.nome === nome);
+    if (ja) return alert('Você já está inscrito!');
+  }
+  renderizarVotoModal('janta');
+  setStep(2);
+  atualizarBotoesModal();
+};
+document.getElementById('btnVoltarStep1').onclick = () => setStep(1);
+document.getElementById('btnProximoStep3').onclick = () => {
+  renderizarVotoModal('mao');
+  setStep(3);
+  atualizarBotoesModal();
+};
+document.getElementById('btnVoltarStep2').onclick = () => setStep(2);
+document.getElementById('btnConfirmarFinal').onclick = async () => {
+  if (!inscricoesAtivas && !modoAdmin) return alert('Inscrições fechadas!');
+  const nome = document.getElementById('playerName').value;
+  const isG = document.getElementById('isGuest').checked;
+  const gNome = document.getElementById('guestName').value.trim();
+  if (!nome) return alert('Selecione seu nome!');
+  if (!isG) {
+    const ja = [...confirmados, ...listaEspera].some(p => !p.isGuest && p.nome === nome);
+    if (ja) return alert('Você já está inscrito!');
+  }
+  if (jantaAberta && !jantaEncerrada && opcoesJanta.length && !jantaSelecionada)
+    return alert('⚠️ Voto na janta é obrigatório!');
+  if (maoAberta && !maoEncerrada && opcoesMao.length && !maoSelecionada)
+    return alert('⚠️ Voto na mão é obrigatório!');
+
+  const agora = new Date().toISOString();
+  const penalizado = !isG && isJogadorPenalizado(nome);
+
+  try {
+    if (!isG) {
+      const s = await get(ref(db, 'confirmados'));
+      const total = s.exists() ? s.size : 0;
+      const foto = getFotoJogador(nome);
+      const base = {
+        nome, isGuest: false, data: agora, timestamp: Date.now(),
+        foto, etapa: config.etapa,
+        votoJanta: jantaSelecionada || null,
+        votoMao: maoSelecionada || null
+      };
+      if (total < LIMITE_VAGAS && !penalizado) {
+        await push(ref(db, 'confirmados'), base);
+        alert('✅ Presença confirmada! Você está na lista.');
+      } else {
+        const ts = penalizado ? Date.now() + 31536000000 : Date.now();
+        await push(ref(db, 'listaEspera'), { ...base, timestamp: ts, penalizado });
+        if (penalizado) {
+          modalConf.classList.remove('active');
+          document.getElementById('penaltyPlayerName').textContent = nome;
+          document.getElementById('modalAvisoPenalidade').classList.add('active');
+          return;
         }
-        
-        function cancelPresence() {
-            const name = document.getElementById('playerName').value.trim();
-            
-            if (!name) {
-                showModal('❌', 'Digite seu nome para cancelar!');
-                return;
-            }
-            
-            confirmadosRef.where('name', '==', name).get().then((snapshot) => {
-                if (!snapshot.empty) {
-                    const doc = snapshot.docs[0];
-                    const playerData = doc.data();
-                    
-                    const message = `Olá! Gostaria de cancelar minha inscrição no Poker dos Amigos.%0A%0A*Nome:* ${name}%0A*WhatsApp:* ${playerData.phone || 'Não informado'}%0A%0A*Motivo do cancelamento:* Por favor, remova meu nome da lista.`;
-                    
-                    window.open(`https://wa.me/5541987210685?text=${message}`, '_blank');
-                    
-                    doc.ref.delete().then(() => {
-                        document.getElementById('playerName').value = '';
-                        document.getElementById('playerPhone').value = '';
-                        showModal('📱', 'WhatsApp aberto para confirmar cancelamento. Sua inscrição foi removida!');
-                    });
-                } else {
-                    showModal('❌', 'Nome não encontrado na lista de confirmados.');
-                }
-            });
-        }
-        
-        function toggleAdmin() {
-            const adminForm = document.getElementById('adminForm');
-            adminForm.classList.toggle('active');
-        }
-        
-        function loginAdmin() {
-            const password = document.getElementById('adminPassword').value;
-            
-            if (password === 'poker2026') {
-                document.getElementById('adminControls').style.display = 'block';
-                showModal('✅', 'Login como admin realizado!');
-            } else {
-                showModal('❌', 'Senha incorreta!');
-            }
-        }
-        
-        function removePlayer() {
-            const name = document.getElementById('playerToRemove').value.trim();
-            
-            if (!name) {
-                showModal('❌', 'Digite o nome do jogador!');
-                return;
-            }
-            
-            confirmadosRef.where('name', '==', name).get().then((snapshot) => {
-                if (!snapshot.empty) {
-                    const doc = snapshot.docs[0];
-                    doc.ref.delete().then(() => {
-                        document.getElementById('playerToRemove').value = '';
-                        showModal('✅', `${name} foi removido da lista!`);
-                    });
-                } else {
-                    showModal('❌', 'Jogador não encontrado!');
-                }
-            });
-        }
-        
-        function showRules() {
-            document.getElementById('rulesModal').classList.add('active');
-        }
-        
-        function closeRulesModal() {
-            document.getElementById('rulesModal').classList.remove('active');
-        }
-        
-        function showModal(icon, message) {
-            document.getElementById('modalIcon').textContent = icon;
-            document.getElementById('modalMessage').textContent = message;
-            document.getElementById('modal').classList.add('active');
-        }
-        
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
-        }
-        
-        loadConfirmedPlayers();
-    </script>
+        alert('⏳ Você foi para a LISTA DE ESPERA.');
+      }
+    } else {
+      if (!gNome) return alert('Digite o nome do convidado!');
+      await push(ref(db, 'listaEspera'), {
+        nome: gNome, isGuest: true, guestOf: nome, data: agora,
+        timestamp: Date.now(), etapa: config.etapa, foto: FOTO_PADRAO,
+        votoJanta: jantaSelecionada || null,
+        votoMao: maoSelecionada || null
+      });
+      alert('✅ Convidado adicionado à lista de espera!');
+    }
+
+    const votante = isG ? gNome : nome;
+    if (jantaAberta && !jantaEncerrada && jantaSelecionada) {
+      await push(ref(db, 'enquetes/janta'), { jogador: votante, opcao: jantaSelecionada, data: agora });
+    }
+    if (maoAberta && !maoEncerrada && maoSelecionada) {
+      await push(ref(db, 'enquetes/mao'), { jogador: votante, opcao: maoSelecionada, data: agora });
+    }
+    modalConf.classList.remove('active');
+  } catch (e) { alert('Erro: ' + e.message); }
+};
+document.getElementById('btnFecharAvisoPenalidade').onclick = () => document.getElementById('modalAvisoPenalidade').classList.remove('active');
+document.getElementById('btnCancelarWhatsApp').onclick = () => {
+  const msg = encodeURIComponent('Gostaria de cancelar minha inscrição no Poker de Quinta.\nNome: ');
+  window.open(`https://wa.me/5541987210685?text=${msg}`, '_blank');
+};
+
+// ---------- BEM-VINDO ----------
+window.addEventListener('load', () => document.getElementById('modalBemVindo').classList.add('active'));
+document.getElementById('btnEntendi').onclick = () => document.getElementById('modalBemVindo').classList.remove('active');
+
+// ---------- ADMIN ----------
+document.getElementById('btnModoAdmin').onclick = () => document.getElementById('modalAdmin').classList.add('active');
+document.getElementById('btnFecharAdmin').onclick = () => document.getElementById('modalAdmin').classList.remove('active');
+document.getElementById('btnAcessarAdmin').onclick = () => {
+  if (document.getElementById('senhaAdmin').value === 'poker2027') {
+    modoAdmin = true;
+    document.getElementById('modalAdmin').classList.remove('active');
+    ['btnToggleInscricoes','btnProximaEtapa','btnSelecionarEtapa','btnGerenciarFotos','btnGerenciarPenalidades','btnGerenciarEnquetes','btnSairAdmin']
+      .forEach(id => document.getElementById(id).style.display = 'block');
+    document.getElementById('btnModoAdmin').classList.add('active');
+    atualizar();
+    alert('✅ Modo Admin ativado!');
+  } else alert('❌ Senha incorreta!');
+};
+document.getElementById('btnSairAdmin').onclick = () => {
+  modoAdmin = false;
+  ['btnToggleInscricoes','btnProximaEtapa','btnSelecionarEtapa','btnGerenciarFotos','btnGerenciarPenalidades','btnGerenciarEnquetes','btnSairAdmin']
+    .forEach(id => document.getElementById(id).style.display = 'none');
+  document.getElementById('btnModoAdmin').classList.remove('active');
+  atualizar();
+};
+document.getElementById('btnToggleInscricoes').onclick = async () => {
+  inscricoesAtivas = !inscricoesAtivas;
+  const btn = document.getElementById('btnConfirmar');
+  if (inscricoesAtivas) {
+    btn.disabled = false;
+    btn.textContent = '➕ CONFIRMAR PRESENÇA';
+    document.getElementById('timerHeader').textContent = '✅ Inscrições abertas (Admin)';
+    document.getElementById('timer').textContent = 'Abertas manualmente pelo administrador';
+  } else {
+    btn.disabled = true;
+    btn.textContent = `🔒 INSCRIÇÕES FECHADAS - ABREM ${formatarDataParaExibicao(DATA_ABERTURA_INSCRICOES)}`;
+    iniciarContador();
+  }
+};
+
+// ---------- ETAPAS ----------
+document.getElementById('btnSelecionarEtapa').onclick = () => {
+  const sel = document.getElementById('etapaSelector');
+  sel.innerHTML = '';
+  ETAPAS.forEach(e => {
+    const b = document.createElement('button');
+    b.className = 'etapa-btn' + (e.numero === config.etapa ? ' ativa' : '');
+    b.textContent = `${e.numero}ª`;
+    b.title = `${e.descricao} - ${formatarDataBR(e.data)}`;
+    b.onclick = () => selecionarEtapa(e.numero);
+    sel.appendChild(b);
+  });
+  document.getElementById('modalSelecionarEtapa').classList.add('active');
+};
+document.getElementById('btnCancelarSelecao').onclick = () => document.getElementById('modalSelecionarEtapa').classList.remove('active');
+async function selecionarEtapa(n) {
+  const etapa = ETAPAS.find(e => e.numero === n);
+  if (!etapa) return;
+  if (!confirm(`Ir para ${etapa.descricao}?\n\nIsso apaga TODOS os jogadores e votos atuais!`)) return;
+  try {
+    await set(ref(db, 'confirmados'), null);
+    await set(ref(db, 'listaEspera'), null);
+    await set(ref(db, 'enquetes/janta'), null);
+    await set(ref(db, 'enquetes/mao'), null);
+    await set(ref(db, 'controle/jantaAberta'), false);
+    await set(ref(db, 'controle/maoAberta'), false);
+    await set(ref(db, 'controle/jantaEncerrada'), false);
+    await set(ref(db, 'controle/maoEncerrada'), false);
+    const abertura = calcularDataAbertura(etapa);
+    await set(ref(db, 'config'), {
+      etapa: etapa.numero, dataEvento: etapa.data,
+      dataAbertura: abertura.toISOString(), inscricoesAbertas: false
+    });
+    config.etapa = etapa.numero;
+    config.dataEvento = etapa.data;
+    DATA_ABERTURA_INSCRICOES = abertura;
+    document.getElementById('modalSelecionarEtapa').classList.remove('active');
+    atualizarDatasNaInterface();
+    iniciarContador();
+    alert(`✅ ${etapa.descricao} configurada!`);
+  } catch (e) { alert('Erro: ' + e.message); }
+}
+
+// ✅ Próxima etapa NÃO dá loop: para na 13ª com aviso
+document.getElementById('btnProximaEtapa').onclick = () => {
+  const prox = ETAPAS.find(e => e.numero === config.etapa + 1);
+  if (!prox) return alert('🏆 Você já está na ÚLTIMA etapa da temporada 2027!');
+  if (!confirm(`Avançar para ${prox.descricao} (${formatarDataBR(prox.data)})?`)) return;
+  selecionarEtapa(prox.numero);
+};
+
+// ---------- FOTOS ----------
+document.getElementById('btnGerenciarFotos').onclick = () => {
+  const l = document.getElementById('fotosList');
+  l.innerHTML = '';
+  jogadores.slice().sort((a,b) => a.nome.localeCompare(b.nome)).forEach((j, i) => {
+    const d = document.createElement('div');
+    d.className = 'foto-item';
+    d.innerHTML = `
+      <img class="foto-preview" src="${j.foto}" onerror="this.src='${FOTO_PADRAO}'">
+      <div class="foto-info">${j.nome}</div>
+      <input type="text" class="foto-input" id="foto-${i}" value="${j.foto}" placeholder="URL da foto">
+    `;
+    l.appendChild(d);
+  });
+  document.getElementById('modalGerenciarFotos').classList.add('active');
+};
+document.getElementById('btnFecharFotos').onclick = () => document.getElementById('modalGerenciarFotos').classList.remove('active');
+document.getElementById('btnSalvarFotos').onclick = async () => {
+  jogadores.forEach((j, i) => {
+    const inp = document.getElementById(`foto-${i}`);
+    if (inp) j.foto = inp.value || FOTO_PADRAO;
+  });
+  try {
+    const obj = {};
+    jogadores.forEach(j => obj[j.nome] = j.foto);
+    await set(ref(db, 'fotosJogadores'), obj);
+    alert('✅ Fotos salvas!');
+    atualizar();
+    document.getElementById('modalGerenciarFotos').classList.remove('active');
+  } catch (e) { alert('Erro: ' + e.message); }
+};
+
+// ---------- PENALIDADES ----------
+document.getElementById('btnGerenciarPenalidades').onclick = () => {
+  preencherSelectPenalidade();
+  atualizarListaPenalizados();
+  document.getElementById('modalGerenciarPenalidades').classList.add('active');
+};
+document.getElementById('btnFecharPenalidades').onclick = () => document.getElementById('modalGerenciarPenalidades').classList.remove('active');
+document.getElementById('btnAplicarPenalidade').onclick = async () => {
+  const nome = document.getElementById('penaltyPlayerSelect').value;
+  if (!nome) return alert('Selecione um jogador!');
+  if (isJogadorPenalizado(nome)) return alert(`${nome} já está penalizado!`);
+  if (!confirm(`Aplicar penalidade a ${nome}?`)) return;
+  try {
+    await push(ref(db, 'penalizados'), { nome, etapaFalta: config.etapa, dataAplicacao: new Date().toISOString() });
+    alert('⚠️ Penalidade aplicada!');
+    document.getElementById('penaltyPlayerSelect').value = '';
+  } catch (e) { alert('Erro: ' + e.message); }
+};
+function atualizarListaPenalizados() {
+  const l = document.getElementById('penalizedList');
+  if (!l) return;
+  l.innerHTML = '';
+  if (!jogadoresPenalizados.length) {
+    l.innerHTML = '<div class="empty-state">Nenhum jogador penalizado.</div>';
+    return;
+  }
+  jogadoresPenalizados.forEach(p => {
+    const d = document.createElement('div');
+    d.className = 'penalized-item';
+    d.innerHTML = `
+      <div>
+        <strong style="color:#ffc4a0">⚠️ ${p.nome}</strong>
+        <div style="font-size:0.78em;color:var(--muted)">Penalizado na ${p.etapaFalta}ª etapa</div>
+      </div>
+      <button class="remove-penalty-btn" onclick="removerPenalidade('${p.id}','${p.nome}')">Remover</button>
+    `;
+    l.appendChild(d);
+  });
+}
+window.removerPenalidade = async (id, nome) => {
+  if (!confirm(`Remover penalidade de ${nome}?`)) return;
+  try { await remove(ref(db, `penalizados/${id}`)); alert('Removida!'); }
+  catch (e) { alert('Erro: ' + e.message); }
+};
+
+// ---------- ENQUETES ADMIN ----------
+document.getElementById('btnGerenciarEnquetes').onclick = () => {
+  atualizarListaOpcoesAdmin();
+  document.getElementById('modalGerenciarEnquetes').classList.add('active');
+};
+document.getElementById('btnFecharEnquetes').onclick = () => document.getElementById('modalGerenciarEnquetes').classList.remove('active');
+function atualizarListaOpcoesAdmin() {
+  const lj = document.getElementById('listaOpcoesJanta');
+  const lm = document.getElementById('listaOpcoesMao');
+  lj.innerHTML = opcoesJanta.length
+    ? opcoesJanta.map((o, i) => `<div class="admin-option-item"><span>${i+1}. ${o}</span><button class="remove-option-btn" onclick="removerOpcao('janta',${i})">✕</button></div>`).join('')
+    : '<p style="color:var(--muted);font-size:0.85em;font-style:italic">Nenhuma opção</p>';
+  lm.innerHTML = opcoesMao.length
+    ? opcoesMao.map((o, i) => `<div class="admin-option-item"><span>${i+1}. ${o}</span><button class="remove-option-btn" onclick="removerOpcao('mao',${i})">✕</button></div>`).join('')
+    : '<p style="color:var(--muted);font-size:0.85em;font-style:italic">Nenhuma opção</p>';
+}
+window.removerOpcao = async (tipo, idx) => {
+  if (!confirm('Remover opção?')) return;
+  const arr = tipo === 'janta' ? [...opcoesJanta] : [...opcoesMao];
+  arr.splice(idx, 1);
+  try { await set(ref(db, `opcoes/${tipo}`), arr); alert('Removida!'); }
+  catch (e) { alert('Erro: ' + e.message); }
+};
+document.getElementById('btnAddJanta').onclick = async () => {
+  const v = document.getElementById('novaOpcaoJanta').value.trim();
+  if (!v) return alert('Digite uma opção');
+  if (opcoesJanta.includes(v)) return alert('Já existe');
+  try {
+    await set(ref(db, 'opcoes/janta'), [...opcoesJanta, v]);
+    document.getElementById('novaOpcaoJanta').value = '';
+    alert('✅ Adicionada!');
+  } catch (e) { alert('Erro: ' + e.message); }
+};
+document.getElementById('btnAddMao').onclick = async () => {
+  const v = document.getElementById('novaOpcaoMao').value.trim();
+  if (!v) return alert('Digite uma opção');
+  if (opcoesMao.includes(v)) return alert('Já existe');
+  try {
+    await set(ref(db, 'opcoes/mao'), [...opcoesMao, v]);
+    document.getElementById('novaOpcaoMao').value = '';
+    alert('✅ Adicionada!');
+  } catch (e) { alert('Erro: ' + e.message); }
+};
+document.getElementById('btnAbrirJanta').onclick = async () => {
+  if (!opcoesJanta.length) return alert('Adicione opções primeiro!');
+  await set(ref(db, 'controle/jantaEncerrada'), false);
+  await set(ref(db, 'controle/jantaAberta'), true);
+  alert('✅ Janta aberta!');
+};
+document.getElementById('btnEncerrarJanta').onclick = async () => {
+  if (!confirm('Encerrar votação da janta?')) return;
+  await set(ref(db, 'controle/jantaEncerrada'), true);
+  await set(ref(db, 'controle/jantaAberta'), false);
+  alert('✅ Janta encerrada!');
+};
+document.getElementById('btnAbrirMao').onclick = async () => {
+  if (!opcoesMao.length) return alert('Adicione opções primeiro!');
+  await set(ref(db, 'controle/maoEncerrada'), false);
+  await set(ref(db, 'controle/maoAberta'), true);
+  alert('✅ Mão aberta!');
+};
+document.getElementById('btnEncerrarMao').onclick = async () => {
+  if (!confirm('Encerrar votação da mão?')) return;
+  await set(ref(db, 'controle/maoEncerrada'), true);
+  await set(ref(db, 'controle/maoAberta'), false);
+  alert('✅ Mão encerrada!');
+};
+document.getElementById('btnLimparVotos').onclick = async () => {
+  if (!confirm('Limpar TODOS os votos?')) return;
+  await set(ref(db, 'enquetes/janta'), null);
+  await set(ref(db, 'enquetes/mao'), null);
+  alert('✅ Votos limpos!');
+};
+document.getElementById('btnLimparOpcoes').onclick = async () => {
+  if (!confirm('Limpar TODAS as opções?')) return;
+  await set(ref(db, 'opcoes/janta'), null);
+  await set(ref(db, 'opcoes/mao'), null);
+  alert('✅ Opções limpas!');
+};
+
+// ---------- CSV ----------
+document.getElementById('btnExportar').onclick = () => {
+  let csv = 'Posição,Nome,Status,Voto Janta,Voto Mão,Data/Hora\n';
+  confirmados.forEach((p, i) => {
+    csv += `${i+1},${p.nome},CONFIRMADO,${p.votoJanta||''},${p.votoMao||''},${new Date(p.data).toLocaleString('pt-BR')}\n`;
+  });
+  const membros = listaEspera.filter(p => !p.isGuest && !p.penalizado).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
+  const convidados = listaEspera.filter(p => p.isGuest).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
+  const pen = listaEspera.filter(p => p.penalizado).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
+  [...membros, ...convidados, ...pen].forEach((p, i) => {
+    const tipo = p.isGuest ? 'CONVIDADO' : p.penalizado ? 'ESPERA-PENALIZADO' : 'ESPERA';
+    const nome = p.isGuest && p.guestOf ? `${p.nome} (de ${p.guestOf})` : p.nome;
+    csv += `${i+1},${nome},${tipo},${p.votoJanta||''},${p.votoMao||''},${new Date(p.data).toLocaleString('pt-BR')}\n`;
+  });
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `lista-poker-etapa${config.etapa}-${new Date().toISOString().split('T')[0]}.csv`;
+  document.body.appendChild(link); link.click(); document.body.removeChild(link);
+};
+</script>
 </body>
 </html>
