@@ -5,16 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Poker de Quinta 2027</title>
 
-<link rel="manifest" href="/site/manifest.json">
-<link rel="apple-touch-icon" href="/site/icons/icon-192x192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Poker de Quinta">
 <meta name="theme-color" content="#1a2e1f">
 <meta name="mobile-web-app-capable" content="yes">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
@@ -31,17 +26,13 @@
 
 <main class="app-main">
 
-  <section class="next-stage" id="nextStageSection" aria-labelledby="nextStageTitle">
+  <section class="next-stage" id="nextStageSection">
     <div class="next-stage__badge" id="nextStageBadge">—</div>
-
-    <h2 class="next-stage__title section-title" id="nextStageTitle">
-      Próxima Etapa
-    </h2>
+    <h2 class="next-stage__title section-title">Próxima Etapa</h2>
 
     <div class="next-stage__card">
       <p class="next-stage__date" id="nextStageDate">Carregando…</p>
       <p class="next-stage__desc" id="nextStageDesc"></p>
-
       <dl class="info-grid" id="nextStageInfo"></dl>
 
       <a class="btn btn--primary btn--block"
@@ -52,24 +43,22 @@
     </div>
   </section>
 
-  <section class="history" aria-labelledby="historyTitle">
-    <h2 class="section-title" id="historyTitle">Histórico de Etapas</h2>
-
-    <nav class="stage-tabs" id="stageTabs" aria-label="Selecionar etapa"></nav>
-
+  <section class="history">
+    <h2 class="section-title">Histórico de Etapas</h2>
+    <nav class="stage-tabs" id="stageTabs"></nav>
     <div id="stageContent" class="stage-content"></div>
   </section>
 
 </main>
 
-<nav class="bottom-nav" aria-label="Menu principal">
+<nav class="bottom-nav">
   <a href="https://pokerdequinta.github.io/ranking/" class="bottom-nav__item">
     <span class="bottom-nav__icon">🏆</span><span class="bottom-nav__label">Ranking</span>
   </a>
   <a href="https://pokerdequinta.github.io/confirma/" class="bottom-nav__item">
     <span class="bottom-nav__icon">✅</span><span class="bottom-nav__label">Inscrição</span>
   </a>
-  <a href="regulamento.html" class="bottom-nav__item">
+  <a href="./regulamento.html" class="bottom-nav__item">
     <span class="bottom-nav__icon">📋</span><span class="bottom-nav__label">Regulamento</span>
   </a>
   <button class="bottom-nav__item bottom-nav__item--menu" id="moreBtn">
@@ -78,7 +67,7 @@
 </nav>
 
 <div class="sheet-overlay" id="sheetOverlay" hidden></div>
-<aside class="sheet" id="moreSheet" hidden aria-label="Mais opções">
+<aside class="sheet" id="moreSheet" hidden>
   <div class="sheet__handle"></div>
   <a href="https://pokerdequinta.github.io/calendario/" class="sheet__item"><span>📆</span> Calendário</a>
   <a href="https://pokerdequinta.github.io/novidades/" class="sheet__item"><span>🎉</span> Novidades 2027</a>
@@ -86,7 +75,7 @@
   <a href="https://forms.gle/yG2MAeQvSco46DK49" class="sheet__item"><span>📸</span> Cadastro PIX</a>
   <a href="https://pokerdequinta.github.io/loja/" class="sheet__item"><span>🛒</span> Loja</a>
   <a href="https://pokerdequinta.github.io/endereco/" class="sheet__item"><span>📍</span> Localização</a>
-  <a href="admin.html" class="sheet__item sheet__item--admin"><span>⚙️</span> Admin</a>
+  <a href="./admin.html" class="sheet__item sheet__item--admin"><span>⚙️</span> Admin</a>
 </aside>
 
 <footer class="app-footer">
@@ -94,6 +83,6 @@
   <p class="app-footer__suits">♠ ♥ ♦ ♣</p>
 </footer>
 
-<script type="module" src="app.js"></script>
+<script type="module" src="./app.js"></script>
 </body>
 </html>
