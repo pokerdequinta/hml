@@ -2,10 +2,25 @@
    POKER DE QUINTA 2027 — admin.js (Firebase RTDB)
    ============================================ */
 
-import { db, DATA_PATH } from "./firebase-config.js";
-import {
-  ref, onValue, set, get
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAdQ5YfqyZ0Uhu234OPW3hK1QzvZw9bjlw",
+  authDomain: "pdqhml.firebaseapp.com",
+  databaseURL: "https://pdqhml-default-rtdb.firebaseio.com",
+  projectId: "pdqhml",
+  storageBucket: "pdqhml.firebasestorage.app",
+  messagingSenderId: "166410002787",
+  appId: "1:166410002787:web:e04bf2c3c4a7ebb8577356",
+  measurementId: "G-MJBNCJBDZK"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const DATA_PATH = "pdq/data";
+
+// ... o resto do código do admin.js continua igual a partir daqui ...
 
 /* ---------- CONFIGURAÇÃO RÁPIDA ---------- */
 // Deixe vazio "" para gravar direto (bom para homologação).
