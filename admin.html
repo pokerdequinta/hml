@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Poker de Quinta 2027</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .admin-header {
+    position: sticky; top: 0; z-index: var(--z-sticky);
+    background: var(--color-bg-elevated);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-4) var(--space-5);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: var(--space-3);
+  }
+  .admin-header h1 { font-size: var(--font-size-md); color: var(--color-brand); }
+  .admin-actions { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+  .admin-main { max-width: 1100px; margin: 0 auto; padding: var(--space-5) var(--space-4) var(--space-9); display: flex; flex-direction: column; gap: var(--space-6); }
+  .admin-section {
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-5);
+  }
+  .admin-section h2 { font-size: var(--font-size-md); color: var(--color-brand); margin-bottom: var(--space-4); }
+  .form-row { display: grid; grid-template-columns: 1fr; gap: var(--space-3); margin-bottom: var(--space-3); }
+  @media (min-width: 640px) { .form-row { grid-template-columns: 1fr 1fr; } }
+  .form-field { display: flex; flex-direction: column; gap: var(--space-1); }
+  .form-field label { font-size: var(--font-size-xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: var(--tracking-wide); }
+  .form-field input, .form-field textarea, .form-field select {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    color: var(--color-text);
+    font: inherit;
+    font-size: var(--font-size-sm);
+    width: 100%;
+  }
+  .form-field textarea { min-height: 80px; resize: vertical; }
+  .form-field input:focus, .form-field textarea:focus { outline: 2px solid var(--color-brand); }
+  .admin-stage-block {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+  .admin-stage-block h3 { color: var(--color-brand-light); font-size: var(--font-size-base); margin-bottom: var(--space-3); }
+  .highlight-editor {
+    background: var(--color-surface-2);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+  .highlight-editor h4 { font-size: var(--font-size-sm); color: var(--color-brand); margin-bottom: var(--space-2); }
+  .btn-row { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-3); }
+  .hint { font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: var(--space-1); }
+  .toast {
+    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
+    background: var(--color-success-soft); color: var(--color-success);
+    border: 1px solid var(--color-border-success);
+    padding: var(--space-3) var(--space-5); border-radius: var(--radius-pill);
+    font-weight: var(--font-weight-semibold); z-index: var(--z-modal);
+    animation: toastIn 0.3s ease;
+  }
+  @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+  #connStatus {
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-soft);
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+</style>
+</head>
+<body>
+
+<header class="admin-header">
+  <h1>⚙️ Admin — PDQ 2027</h1>
+  <div class="admin-actions">
+    <button class="btn btn--ghost"   id="reloadBtn">🔄 Recarregar do Firebase</button>
+    <button class="btn btn--primary" id="saveAllBtn">💾 Salvar tudo no Firebase</button>
+  </div>
+</header>
+
+<main class="admin-main">
+
+  <div id="connStatus">🔌 Conectando ao Firebase…</div>
+  <div id="toast" class="toast" hidden></div>
+
+  <section class="admin-section">
+    <h2>Próxima Etapa</h2>
+    <div class="form-row">
+      <div class="form-field"><label>Badge</label><input id="nextBadge" placeholder="11ª ETAPA"></div>
+      <div class="form-field"><label>Data</label><input id="nextDate" placeholder="29 de Outubro"></div>
+    </div>
+    <div class="form-field" style="margin-bottom: 12px"><label>Descrição</label><textarea id="nextDesc" placeholder="Prepare-se..."></textarea></div>
+    <div class="form-field" style="margin-bottom: 12px"><label>URL do botão CTA</label><input id="nextCta"></div>
+    <label style="font-size: var(--font-size-xs); color: var(--color-text-muted); text-transform: uppercase;">Itens de informação</label>
+    <div id="nextInfoList" style="margin-top: 8px"></div>
+    <button class="btn btn--ghost" id="addInfoBtn" style="margin-top: 8px">+ Adicionar info</button>
+  </section>
+
+  <section class="admin-section">
+    <h2>Etapas (Histórico)</h2>
+    <div id="stagesEditor"></div>
+    <button class="btn btn--primary" id="addStageBtn" style="margin-top: 16px">+ Adicionar etapa</button>
+  </section>
+
+</main>
+
+<script type="module" src="admin.js"></script>
+</body>
+</html>
