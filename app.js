@@ -1,9 +1,21 @@
-/* ============================================
-   POKER DE QUINTA 2027 — app.js (Firebase RTDB)
-   ============================================ */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-import { db, DATA_PATH } from "./firebase-config.js";
-import { ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+// Configuração do Firebase direto aqui
+const firebaseConfig = {
+  apiKey:            "AIzaSyAdQ5YfqyZ0Uhu234OPW3hK1QzvZw9bjlw",
+  authDomain:        "pdqhml.firebaseapp.com",
+  databaseURL:       "https://pdqhml-default-rtdb.firebaseio.com",
+  projectId:         "pdqhml",
+  storageBucket:     "pdqhml.firebasestorage.app",
+  messagingSenderId: "166410002787",
+  appId:             "1:166410002787:web:e04bf2c3c4a7ebb8577356",
+  measurementId:     "G-MJBNCJBDZK"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const DATA_PATH = "pdq/data";
 
 let DATA = null;
 let activeStage = null;
@@ -14,7 +26,7 @@ function subscribeData() {
   onValue(dataRef, (snapshot) => {
     DATA = snapshot.val();
     if (!DATA) {
-      renderEmpty();
+      document.getElementById('stageContent').innerHTML = '<p class="empty-state">Nenhum dado no Firebase. Vá no Admin e clique em Salvar.</p>';
       return;
     }
     renderNextStage();
@@ -27,21 +39,10 @@ function subscribeData() {
       : (stages.length ? stages[stages.length - 1].number : null);
 
     if (target !== null) selectStage(target);
-    else document.getElementById('stageContent').innerHTML =
-      '<p class="empty-state">Nenhuma etapa cadastrada ainda.</p>';
   }, (error) => {
-    console.error("Erro ao ler Firebase:", error);
-    renderEmpty("Não foi possível conectar ao banco. Verifique sua internet.");
+    console.error("Erro Firebase:", error);
+    document.getElementById('stageContent').innerHTML = `<p class="empty-state">Erro ao conectar: ${error.message}</p>`;
   });
-}
-
-function renderEmpty(msg = "Nenhum dado cadastrado ainda.") {
-  document.getElementById('nextStageBadge').textContent = '—';
-  document.getElementById('nextStageDate').textContent = '—';
-  document.getElementById('nextStageDesc').textContent = '';
-  document.getElementById('nextStageInfo').innerHTML = '';
-  document.getElementById('stageTabs').innerHTML = '';
-  document.getElementById('stageContent').innerHTML = `<p class="empty-state">${msg}</p>`;
 }
 
 function renderNextStage() {
@@ -79,8 +80,7 @@ function renderStageTabs() {
 function selectStage(number) {
   activeStage = number;
   Object.values(sliderIntervals).forEach(clearInterval);
-  Object.keys(sliderIntervals).forEach(k => delete sliderIntervals[k]);
-
+  
   document.querySelectorAll('.stage-tab').forEach(b => {
     b.classList.toggle('active', Number(b.dataset.stage) === number);
   });
@@ -91,12 +91,9 @@ function renderStageContent(number) {
   const stages = DATA.stages || [];
   const stage = stages.find(s => s.number === number);
   const wrap = document.getElementById('stageContent');
-  if (!stage) { wrap.innerHTML = `<p class="empty-state">Etapa não encontrada.</p>`; return; }
+  if (!stage) return;
 
-  const highlights = Array.isArray(stage.highlights)
-    ? stage.highlights
-    : Object.values(stage.highlights || {});
-
+  const highlights = Array.isArray(stage.highlights) ? stage.highlights : Object.values(stage.highlights || {});
   wrap.innerHTML = `<div class="highlight-grid">${highlights.map((h, i) => renderHighlight(h, number, i)).join('')}</div>`;
 
   highlights.forEach((h, i) => {
@@ -165,7 +162,6 @@ function renderHighlight(h, stageNum, idx) {
       <div class="highlight-card__detail">${h.detail || ''}</div>
     </article>`;
   }
-
   return '';
 }
 
@@ -176,10 +172,7 @@ function initSlider(id, images) {
   sliderIntervals[id] = setInterval(() => {
     i = (i + 1) % images.length;
     img.style.opacity = '0.4';
-    setTimeout(() => {
-      img.src = images[i];
-      img.style.opacity = '1';
-    }, 180);
+    setTimeout(() => { img.src = images[i]; img.style.opacity = '1'; }, 180);
   }, 2200);
 }
 
@@ -187,6 +180,8 @@ function initSheet() {
   const btn = document.getElementById('moreBtn');
   const sheet = document.getElementById('moreSheet');
   const overlay = document.getElementById('sheetOverlay');
+  if (!btn) return;
+  
   const close = () => { sheet.hidden = true; overlay.hidden = true; document.body.style.overflow = ''; };
   const open  = () => { sheet.hidden = false; overlay.hidden = false; document.body.style.overflow = 'hidden'; };
 
