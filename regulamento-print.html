@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Regulamento — Poker de Quinta 2027</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 15mm 14mm 16mm;
+    }
+    :root {
+      --green: #1a2e1f;
+      --green-2: #2a4531;
+      --gold: #b8902a;
+      --gold-light: #e0b13a;
+      --ink: #1d261e;
+      --muted: #5e6b60;
+      --line: #d8ddcf;
+      --paper: #fbfaf5;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      color: var(--ink);
+      background: #fff;
+      font-family: "Space Grotesk", "Segoe UI", system-ui, -apple-system, sans-serif;
+      font-size: 9.6pt;
+      line-height: 1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: 28pt; line-height: 1.02; letter-spacing: -0.045em; margin-bottom: 8mm; }
+    h2 { font-size: 14pt; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 3mm; color: var(--green); }
+    h3 { font-size: 10.5pt; margin: 0 0 2mm; color: var(--green); }
+    p { margin-bottom: 3mm; }
+    .cover {
+      background:
+        radial-gradient(circle at 100% 0%, rgba(224,177,58,0.24), transparent 38%),
+        linear-gradient(145deg, #223a28, #15281c);
+      color: #f8faf8;
+      border-radius: 5mm;
+      padding: 13mm 12mm 11mm;
+      margin-bottom: 9mm;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::after {
+      content: "♠";
+      position: absolute;
+      right: -10mm; bottom: -26mm;
+      font: 700 92pt Georgia, serif;
+      color: rgba(245,212,114,.1);
+      transform: rotate(-12deg);
+    }
+    .brandline { display: flex; align-items: center; gap: 4mm; margin-bottom: 15mm; }
+    .brandline img { width: 13mm; height: 13mm; border-radius: 3.5mm; }
+    .brandline strong { display: block; color: #f8faf8; text-transform: uppercase; letter-spacing: .12em; font-size: 9.5pt; line-height: 1.2; }
+    .brandline span { display: block; color: #e0b13a; text-transform: uppercase; letter-spacing: .2em; font-size: 6.2pt; margin-top: 1.2mm; }
+    .cover .eyebrow { color: #e0b13a; text-transform: uppercase; letter-spacing: .28em; font-size: 6.5pt; font-weight: 600; }
+    .cover h1 { margin-top: 4mm; max-width: 120mm; }
+    .cover h1 span { color: #f5d472; }
+    .cover p { max-width: 131mm; color: #b8c4b8; font-size: 10pt; line-height: 1.65; margin-bottom: 0; }
+    .cover-meta { display: flex; gap: 11mm; margin-top: 12mm; padding-top: 5mm; border-top: 1px solid rgba(245,212,114,.3); }
+    .cover-meta div { display: flex; flex-direction: column; gap: .8mm; }
+    .cover-meta span { color: #8fa292; font-size: 6.2pt; text-transform: uppercase; letter-spacing: .14em; }
+    .cover-meta strong { color: #f5d472; font-size: 10.5pt; font-weight: 500; }
+    .note {
+      border: 1px solid var(--line);
+      border-left: 2.5px solid var(--gold);
+      background: var(--paper);
+      padding: 4mm 5mm;
+      color: #445148;
+      font-size: 8.6pt;
+      border-radius: 1.2mm;
+      margin-bottom: 8mm;
+    }
+    .section { break-inside: avoid; margin-top: 7mm; }
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      gap: 4mm;
+      border-top: 1px solid var(--line);
+      padding-top: 4mm;
+      margin-bottom: 4mm;
+    }
+    .section-head .num {
+      color: var(--gold);
+      font-size: 7pt;
+      font-weight: 700;
+      letter-spacing: .12em;
+    }
+    .section-head h2 { margin: 0; }
+    .section-head .sub { margin-left: auto; color: var(--muted); font-size: 7.5pt; letter-spacing: .02em; }
+    ul { margin: 0 0 3mm; padding-left: 4mm; }
+    li { margin-bottom: 1.5mm; padding-left: .5mm; }
+    li::marker { color: var(--gold); }
+    strong { color: var(--green); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+    table { width: 100%; border-collapse: collapse; margin: 2.5mm 0 4mm; font-size: 8.4pt; break-inside: avoid; }
+    caption { text-align: left; color: var(--muted); font-size: 6.8pt; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 1.5mm; }
+    th { text-align: left; text-transform: uppercase; letter-spacing: .08em; font-size: 6.5pt; color: #6f5b24; border-bottom: 1.2px solid #c5a855; padding: 1.8mm 2mm; background: #f6f2e8; }
+    td { border-bottom: .6px solid #e4e6dd; padding: 1.7mm 2mm; }
+    td:nth-child(even) { font-weight: 600; color: var(--green); }
+    .callout {
+      border: 1px solid #d9c98f;
+      background: #fbf7ea;
+      border-radius: 1.2mm;
+      padding: 3.5mm 4mm;
+      margin: 3mm 0 4mm;
+      color: #4c4430;
+      font-size: 8.5pt;
+    }
+    .callout strong { color: #6f5410; }
+    .footer {
+      margin-top: 11mm;
+      padding-top: 4mm;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 6mm;
+      color: var(--muted);
+      font-size: 6.8pt;
+      line-height: 1.5;
+    }
+    .footer strong { color: var(--green); }
+    .badge {
+      display: inline-block;
+      border: 1px solid #d9c98f;
+      color: #6f5410;
+      border-radius: 99px;
+      padding: 1mm 2.5mm;
+      font-size: 6.5pt;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .page-break { break-before: page; }
+    .small { color: var(--muted); font-size: 8pt; }
+    @media print {
+      .cover { border-radius: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="cover">
+    <div class="brandline">
+      <img src="../assets/icons/favicon.svg" alt="">
+      <div>
+        <strong>Poker de Quinta</strong>
+        <span>Temporada 2027</span>
+      </div>
+    </div>
+    <p class="eyebrow">Regulamento oficial · versão 1.0</p>
+    <h1>Regras claras.<br><span>Jogo limpo.</span></h1>
+    <p>Tudo o que você precisa saber para jogar, pontuar e chegar à Grande Final da Temporada 2027. Sem letras miúdas — só o combinado da casa.</p>
+    <div class="cover-meta">
+      <div><span>Temporada</span><strong>2027</strong></div>
+      <div><span>Etapas</span><strong>12 + final</strong></div>
+      <div><span>Jogadores</span><strong>16 por noite</strong></div>
+      <div><span>Atualização</span><strong>30 out 2026</strong></div>
+    </div>
+  </header>
+
+  <div class="note">
+    <strong>Resumo da casa:</strong> torneio individual de No Limit Texas Hold'em, 16 cadeiras, 30.000 fichas iniciais, níveis de 20 minutos, buy-in de R$ 650 (R$ 600 + R$ 50 de taxa) e R$ 10.000 garantidos por etapa. Apenas maiores de 18 anos.
+  </div>
+
+  <section class="section">
+    <div class="section-head"><span class="num">01</span><h2>O torneio</h2><span class="sub">Formato, estrutura e inscrições</span></div>
+    <p>O Poker de Quinta é um torneio individual de No Limit Texas Hold'em, destinado a maiores de 18 anos, com 16 cadeiras por etapa. A Temporada 2027 tem 12 etapas regulares e uma Grande Final entre os oito melhores do ranking.</p>
+    <div class="two-col">
+      <div>
+        <h3>Estrutura</h3>
+        <ul>
+          <li><strong>Stack inicial:</strong> 30.000 fichas, sem add-on.</li>
+          <li><strong>Blinds:</strong> níveis de 20 minutos; big blind ante a partir do nível 4.</li>
+          <li><strong>Entrada única:</strong> não há re-entry. Em caso de desistência antes da primeira mão, a vaga é oferecida à lista de espera.</li>
+          <li><strong>Start:</strong> 20h, com portas abertas a partir das 19h.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Inscrições e check-in</h3>
+        <ul>
+          <li><strong>Reserva:</strong> confirmação pelo WhatsApp da casa; membros têm prioridade até 72h antes.</li>
+          <li><strong>Check-in:</strong> encerra às 20h15. Cadeiras não confirmadas vão para a lista de espera.</li>
+          <li><strong>Lista de espera:</strong> chamada em ordem, na presença física, até o fim do nível 3.</li>
+          <li><strong>Cancelamento:</strong> avise com ao menos 24h de antecedência para liberar a vaga.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout">A casa pode ajustar a estrutura em caso de atraso excepcional, sempre informando os jogadores antes do início da primeira mão.</div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><span class="num">02</span><h2>Pontuação e ranking</h2><span class="sub">Como a temporada é decidida</span></div>
+    <p>Os pontos são atribuídos pela posição final de cada etapa, independentemente do número de participantes. Todas as 12 etapas contam para o ranking.</p>
+    <table>
+      <caption>Pontuação por colocação</caption>
+      <thead><tr><th>Colocação</th><th>Pontos</th><th>Colocação</th><th>Pontos</th></tr></thead>
+      <tbody>
+        <tr><td>1º</td><td>650 pts</td><td>9º</td><td>100 pts</td></tr>
+        <tr><td>2º</td><td>440 pts</td><td>10º</td><td>80 pts</td></tr>
+        <tr><td>3º</td><td>330 pts</td><td>11º</td><td>65 pts</td></tr>
+        <tr><td>4º</td><td>260 pts</td><td>12º</td><td>50 pts</td></tr>
+        <tr><td>5º</td><td>210 pts</td><td>13º</td><td>30 pts</td></tr>
+        <tr><td>6º</td><td>170 pts</td><td>14º</td><td>30 pts</td></tr>
+        <tr><td>7º</td><td>140 pts</td><td>15º</td><td>30 pts</td></tr>
+        <tr><td>8º</td><td>120 pts</td><td>16º</td><td>30 pts</td></tr>
+      </tbody>
+    </table>
+    <div class="two-col">
+      <div>
+        <h3>Critérios de desempate</h3>
+        <ul>
+          <li>Mais vitórias na temporada.</li>
+          <li>Mais mesas finais (top 8).</li>
+          <li>Melhor colocação na etapa mais recente disputada.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Grande Final</h3>
+        <p class="small">Os oito primeiros do ranking ao término da Etapa 11 disputam a final, em 16 de dezembro de 2027. Se um classificado não puder jogar, a vaga passa ao nono colocado, e assim por diante.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section page-break">
+    <div class="section-head"><span class="num">03</span><h2>Premiação</h2><span class="sub">O que está em jogo</span></div>
+    <p>Cada etapa tem R$ 10.000 garantidos no prize pool, distribuídos entre os oito primeiros colocados. A premiação da Grande Final é ampliada e anunciada antes da etapa decisiva.</p>
+    <table>
+      <caption>Distribuição da premiação por etapa</caption>
+      <thead><tr><th>Colocação</th><th>% do prize pool</th><th>Prêmio estimado</th></tr></thead>
+      <tbody>
+        <tr><td>1º</td><td>30%</td><td>R$ 3.000</td></tr>
+        <tr><td>2º</td><td>20%</td><td>R$ 2.000</td></tr>
+        <tr><td>3º</td><td>14%</td><td>R$ 1.400</td></tr>
+        <tr><td>4º</td><td>10%</td><td>R$ 1.000</td></tr>
+        <tr><td>5º</td><td>8%</td><td>R$ 800</td></tr>
+        <tr><td>6º</td><td>7%</td><td>R$ 700</td></tr>
+        <tr><td>7º</td><td>6%</td><td>R$ 600</td></tr>
+        <tr><td>8º</td><td>5%</td><td>R$ 500</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><strong>Campeão da temporada:</strong> troféu, faixa da casa e vaga garantida na Temporada 2028. O campeão da Grande Final recebe o título de Campeão da Temporada 2027.</div>
+    <p class="small">O buy-in é composto por R$ 600 destinados ao prize pool e R$ 50 de taxa da casa. Água, café e o drink de boas-vindas estão inclusos.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><span class="num">04</span><h2>Conduta na mesa</h2><span class="sub">Etiqueta, fair play e decisões</span></div>
+    <p>O Poker de Quinta é uma casa de jogo entre amigos. Respeito é regra, não diferencial. A organização espera de todos a mesma postura que se espera à mesa.</p>
+    <ul>
+      <li>É proibido soft play, combinação de resultados, chip dumping ou qualquer forma de conluio.</li>
+      <li>String bets e ações fora de turno recebem advertência. Reincidência pode gerar penalidade de uma órbita.</li>
+      <li>Celulares devem ficar fora da mesa durante a mão. Não é permitido filmar ou fotografar cartas em jogo.</li>
+      <li>“Tanking” excessivo, discussão de mão em andamento e comportamento desrespeitoso estão sujeitos a penalidade.</li>
+      <li>A decisão final e irrecorrível é do floor da casa. O floor nunca joga na mesma mesa em que toma decisões.</li>
+      <li>É proibido jogar sob efeito de álcool em excesso ou qualquer substância que comprometa o jogo. A casa pode vetar a entrada.</li>
+    </ul>
+    <p><strong>Penalidades possíveis:</strong> advertência verbal, penalidade de órbita, redução de stack, desclassificação sem devolução do buy-in e, em casos graves, suspensão da temporada.</p>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><span class="num">05</span><h2>Lista de espera e convidados</h2><span class="sub">Como participar</span></div>
+    <p>As cadeiras são limitadas a 16 por noite. A reserva é feita antecipadamente pelo WhatsApp da casa e confirmada pela organização. Jogadores membros têm prioridade na reserva até 72h antes de cada etapa.</p>
+    <ul>
+      <li><strong>Lista de espera:</strong> se a etapa estiver cheia, o jogador entra na lista e é chamado em ordem, na presença física, até o fim do nível 3.</li>
+      <li><strong>Convidados:</strong> cada membro pode indicar um convidado por etapa. A indicação precisa ser confirmada pela organização.</li>
+      <li><strong>Cancelamento:</strong> avise com ao menos 24h de antecedência para liberar a vaga. Faltas sem aviso podem impactar a prioridade na etapa seguinte.</li>
+      <li><strong>Menores de 18 anos:</strong> não é permitida a participação, mesmo acompanhados.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><span class="num">06</span><h2>Privacidade e imagem</h2><span class="sub">Seus dados e a casa</span></div>
+    <p>Os dados informados no cadastro e na lista de presença são usados apenas para organização do torneio, comunicação de etapas e gestão do ranking. Não vendemos nem compartilhamos seus dados com terceiros para fins comerciais.</p>
+    <p>Fotos e vídeos do evento podem ser publicados nas redes da casa. Ao frequentar o evento, o participante autoriza o uso de sua imagem em conteúdo editorial não publicitário. Para solicitar remoção, fale com a organização.</p>
+    <p>Você pode solicitar acesso, correção ou exclusão dos seus dados pelo e-mail <strong>contato@pokerdequinta.com.br</strong>.</p>
+  </section>
+
+  <div class="footer">
+    <div>
+      <strong>Poker de Quinta · Temporada 2027</strong><br>
+      Casa Palmeira — Rua Harmonia, 321 · Vila Madalena · São Paulo/SP<br>
+      contato@pokerdequinta.com.br · @pokerdequinta
+    </div>
+    <div style="text-align:right">
+      <span class="badge">+18 · Jogo responsável</span><br><br>
+      Poker é entretenimento, não fonte de renda.<br>
+      Regulamento v1.0 · 30 de outubro de 2026.
+    </div>
+  </div>
+</body>
+</html>

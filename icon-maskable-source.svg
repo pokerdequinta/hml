@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="felt" cx="30%" cy="10%" r="95%">
+      <stop offset="0%" stop-color="#33503a"/>
+      <stop offset="55%" stop-color="#223a28"/>
+      <stop offset="100%" stop-color="#13251a"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f5d472"/>
+      <stop offset="45%" stop-color="#e0b13a"/>
+      <stop offset="100%" stop-color="#b8902a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#e0b13a" stop-opacity=".22"/>
+      <stop offset="100%" stop-color="#e0b13a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#felt)"/>
+  <circle cx="256" cy="230" r="250" fill="url(#glow)"/>
+  <circle cx="256" cy="256" r="170" fill="none" stroke="#e0b13a" stroke-opacity=".55" stroke-width="3"/>
+  <circle cx="256" cy="256" r="154" fill="none" stroke="#f5d472" stroke-opacity=".18" stroke-width="1.5"/>
+  <circle cx="256" cy="86" r="3.5" fill="#f5d472" fill-opacity=".8"/>
+  <circle cx="426" cy="256" r="3.5" fill="#f5d472" fill-opacity=".8"/>
+  <circle cx="256" cy="426" r="3.5" fill="#f5d472" fill-opacity=".8"/>
+  <circle cx="86" cy="256" r="3.5" fill="#f5d472" fill-opacity=".8"/>
+  <path d="M256 154C248 186 180 218 180 274c0 46 48 62 80 29 32 33 80 17 80-29 0-56-68-88-76-120Z" fill="url(#gold)"/>
+  <path d="M256 294c-3 36-20 65-41 85h86c-21-20-42-49-45-85Z" fill="url(#gold)"/>
+  <text x="256" y="420" text-anchor="middle" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="20" font-weight="600" letter-spacing="7" fill="#f5d472" fill-opacity=".75">2027</text>
+</svg>
