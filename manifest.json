@@ -1,0 +1,15 @@
+{
+  "name": "Poker de Quinta — Temporada 2027",
+  "short_name": "Poker Quinta",
+  "description": "Ranking, regulamento, histórico e destaques do Poker de Quinta — Temporada 2027.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#1a2e1f",
+  "theme_color": "#1a2e1f",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "categories": ["sports", "entertainment", "lifestyle"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "
