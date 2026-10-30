@@ -1,0 +1,245 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Poker de Quinta//Temporada 2027//PT-BR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Poker de Quinta — Temporada 2027
+X-WR-TIMEZONE:America/Sao_Paulo
+BEGIN:VTIMEZONE
+TZID:America/Sao_Paulo
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:-0300
+TZOFFSETTO:-0300
+TZNAME:BRT
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:etapa-01-2027@pokerdequinta.com.br
+DTSTAMP:20261030T190000Z
+DTSTART;TZID=America/Sao_Paulo:20270204T200000
+DTEND;TZID=America/Sao_Paulo:20270205T020000
+SUMMARY:Poker de Quinta · Etapa 01 — A Mesa da Abertura
+DESCRIPTION:Abertura da temporada 2027 do Poker de Quinta. 16 lugares\, 3
+ 0.000 fichas\, níveis de 20 minutos. Buy-in: R$ 650. Casa Palmeira\, Ru
+ a Harmonia\, 321 — Vila Madalena\, São Paulo.
+LOCATION:Casa Palmeira — Rua Harmonia\, 321\, Vila Madalena\, São Paul
+ o/SP
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Amanhã tem A Mesa da Abertura no Poker de Quinta.
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:etapa-02-2027@pokerdequinta.com.br
+DTSTAMP:20261030T190000Z
+DTSTART;TZID=America/Sao_Paulo:20270304T200000
+DTEND;TZID=America/Sao_Paulo:20270305T020000
+SUMMARY:Poker de Quinta · Etapa 02 — Noite dos Ases
+DESCRIPTION:Etapa 02 da temporada 2027. Uma noite dedicada aos ases\, com
+  estrutura deepstack. Buy-in: R$ 650. Casa Palmeira\, Rua Harmonia\, 321
+  — Vila Madalena\, São Paulo.
+LOCATION:Casa Palmeira — Rua Harmonia\, 321\, Vila Madalena\, São Paul
+ o/SP
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Amanhã tem Noite dos Ases no Poker de Quinta.
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:etapa-03-2027@pokerdequinta.com.br
+DTSTAMP:20261030T190000Z
+DTSTART;TZID=America/Sao_Paulo:20270401T200000
+DTEND;TZID=America/Sao_Paulo:20270402T020000
+SUMMARY:Poker de Quinta · Etapa 03 — O Clássico
+DESCRIPTION:Etapa 03 da temporada 2027. O clássico da casa: campo profun
+ do e blinds cadenciados. Buy-in: R$ 650. Casa Palmeira\, Rua Harmonia\, 
+ 321 — Vila Madalena\, São Paulo.
+LOCATION:Casa Palmeira — Rua Harmonia\, 321\, Vila Madalena\, São Paul
+ o/SP
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Amanhã tem O Clássico no Poker de Quinta.
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:etapa-04-2027@pokerdequinta.com.br
+DTSTAMP:20261030T190000Z
+DTSTART;TZID=America/Sao_Paulo:20270506T200000
+DTEND;TZID=America/Sao_Paulo:20270507T020000
+SUMMARY:Poker de Quinta · Etapa 04 — A Virada
+DESCRIPTION:Etapa 04 da temporada 2027. A noite das viradas: ninguém des
+ iste até a última ficha. Buy-in: R$ 650. Casa Palmeira\, Rua Harmonia\
+ , 321 — Vila Madalena\, São Paulo.
+LOCATION:Casa Palmeira — Rua Harmonia\, 321\, Vila Madalena\, São Paul
+ o/SP
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Amanhã tem A Virada no Poker de Quinta.
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:etapa-05-2027@pokerdequinta.com.br
+DTSTAMP:20261030T190000Z
+DTSTART;TZID=America/Sao_Paulo:20270603T200000
+DTEND;TZID=America/Sao_Paulo:20270604T020000
+SUMMARY:Poker de Quinta · Etapa 05 — Batida de Ouro
+DESCRIPTION:Etapa 05 da temporada 2027. Edição especial com premiação
+  extra para o melhor bluff. Buy-in: R$ 650. Casa Palmeira\, Rua Harmonia
+ \, 321 — Vila Madalena\, São Paulo.
+LOCATION:Casa Palmeira — Rua Harmonia\, 321\, Vila Madalena\, São Paul
+ o/SP
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Amanhã tem Batida de Ouro no Poker de Quinta.
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:etapa-06-2027@pokerdequinta.com.br
+DTSTAMP:20261030T190000Z
+DTSTART;TZID=America/Sao_Paulo:20270701T200000
+DTEND;TZID=America/Sao_Paulo:20270702T020000
+SUMMARY:Poker de Quinta · Etapa 06 — Meia Temporada
+DESCRIPTION:Etapa 06 da temporada 2027. Metade do caminho\, ranking apert
+ ado. Buy-in: R$ 650. Casa Palmeira\, Rua Harmonia\, 321 — Vila Madalen
+ a\, São Paulo.
+LOCATION:Casa Palmeira — Rua Harmonia\, 321\, Vila Madalena\, São Paul
+ o/SP
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Amanhã tem Meia Temporada no Poker de Quinta.
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:etapa-07-2027@pokerdequinta.com.br
+DTSTAMP:20261030T190000Z
+DTSTART;TZID=America/Sao_Paulo:20270805T200000
+DTEND;TZID=America/Sao_Paulo:20270806T020000
+SUMMARY:Poker de Quinta · Etapa 07 — Repique de Reis
+DESCRIPTION:Etapa 07 da temporada 2027. Noite dos campeões\, com bounty 
+ em dobro. Buy-in: R$ 650. Casa Palmeira\, Rua Harmonia\, 321 — Vila Ma
+ dalena\, São Paulo.
+LOCATION:Casa Palmeira — Rua Harmonia\, 321\, Vila Madalena\, São Paul
+ o/SP
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Amanhã tem Repique de Reis no Poker de Quinta.
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:etapa-08-2027@pokerdequinta.com.br
+DTSTAMP:20261030T190000Z
+DTSTART;TZID=America/Sao_Paulo:20270902T200000
+DTEND;TZID=America/Sao_Paulo:20270903T020000
+SUMMARY:Poker de Quinta · Etapa 08 — Noite de Instinto
+DESCRIPTION:Etapa 08 da temporada 2027. Fichas voando\, decisões em segu
+ ndos e o teste definitivo de instinto. Buy-in: R$ 650. Casa Palmeira\, R
+ ua Harmonia\, 321 — Vila Madalena\, São Paulo.
+LOCATION:Casa Palmeira — Rua Harmonia\, 321\, Vila Madalena\, São Paul
+ o/SP
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Amanhã tem Noite de Instinto no Poker de Quinta.
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:etapa-09-2027@pokerdequinta.com.br
+DTSTAMP:20261030T190000Z
+DTSTART;TZID=America/Sao_Paulo:20271007T200000
+DTEND;TZID=America/Sao_Paulo:20271008T020000
+SUMMARY:Poker de Quinta · Etapa 09 — Mesa dos Tubarões
+DESCRIPTION:Etapa 09 da temporada 2027. A etapa mais seletiva do calendá
+ rio: leitura afiada e cada decisão cobra o preço. Buy-in: R$ 650. Casa
+  Palmeira\, Rua Harmonia\, 321 — Vila Madalena\, São Paulo.
+LOCATION:Casa Palmeira — Rua Harmonia\, 321\, Vila Madalena\, São Paul
+ o/SP
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Amanhã tem Mesa dos Tubarões no Poker de Quinta.
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:etapa-10-2027@pokerdequinta.com.br
+DTSTAMP:20261030T190000Z
+DTSTART;TZID=America/Sao_Paulo:20271104T200000
+DTEND;TZID=America/Sao_Paulo:20271105T020000
+SUMMARY:Poker de Quinta · Etapa 10 — Clássico de Outono
+DESCRIPTION:Etapa 10 da temporada 2027. Estrutura deepstack e jantar da c
+ asa para todos os jogadores. Buy-in: R$ 650. Casa Palmeira\, Rua Harmoni
+ a\, 321 — Vila Madalena\, São Paulo.
+LOCATION:Casa Palmeira — Rua Harmonia\, 321\, Vila Madalena\, São Paul
+ o/SP
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Amanhã tem Clássico de Outono no Poker de Quinta.
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:etapa-11-2027@pokerdequinta.com.br
+DTSTAMP:20261030T190000Z
+DTSTART;TZID=America/Sao_Paulo:20271202T200000
+DTEND;TZID=America/Sao_Paulo:20271203T020000
+SUMMARY:Poker de Quinta · Etapa 11 — Última Cartada
+DESCRIPTION:Etapa 11 da temporada 2027. A penúltima chance de mudar o ra
+ nking antes da final. Buy-in: R$ 650. Casa Palmeira\, Rua Harmonia\, 321
+  — Vila Madalena\, São Paulo.
+LOCATION:Casa Palmeira — Rua Harmonia\, 321\, Vila Madalena\, São Paul
+ o/SP
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Amanhã tem Última Cartada no Poker de Quinta.
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:etapa-12-2027@pokerdequinta.com.br
+DTSTAMP:20261030T190000Z
+DTSTART;TZID=America/Sao_Paulo:20271216T200000
+DTEND;TZID=America/Sao_Paulo:20271217T020000
+SUMMARY:Poker de Quinta · Etapa 12 — Grande Final
+DESCRIPTION:Grande Final da temporada 2027. Os 8 melhores da temporada di
+ sputam o título. Buy-in: R$ 650. Casa Palmeira\, Rua Harmonia\, 321 —
+  Vila Madalena\, São Paulo.
+LOCATION:Casa Palmeira — Rua Harmonia\, 321\, Vila Madalena\, São Paul
+ o/SP
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Amanhã tem Grande Final no Poker de Quinta.
+END:VALARM
+END:VEVENT
+END:VCALENDAR
