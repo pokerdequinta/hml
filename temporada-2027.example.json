@@ -1,0 +1,23 @@
+{
+  "config": {
+    "temporada": "2027",
+    "proximaEtapa": 9,
+    "inscricoesAbertas": true,
+    "dataAbertura": "2027-10-04T10:00:00.000Z",
+    "rankingUpdatedAfter": 8
+  },
+  "etapas": {
+    "1": { "numero": 1, "data": "2027-02-04", "status": "completed" },
+    "2": { "numero": 2, "data": "2027-03-04", "status": "completed" },
+    "3": { "numero": 3, "data": "2027-04-01", "status": "completed" },
+    "4": { "numero": 4, "data": "2027-05-06", "status": "completed" },
+    "5": { "numero": 5, "data": "2027-06-03", "status": "completed" },
+    "6": { "numero": 6, "data": "2027-07-01", "status": "completed" },
+    "7": { "numero": 7, "data": "2027-08-05", "status": "completed" },
+    "8": { "numero": 8, "data": "2027-09-02", "status": "completed" },
+    "9": { "numero": 9, "data": "2027-10-07", "status": "next" },
+    "10": { "numero": 10, "data": "2027-11-04", "status": "upcoming" },
+    "11": { "numero": 11, "data": "2027-12-02", "status": "upcoming" },
+    "12": { "numero": 12, "data": "2027-12-16", "status": "final" }
+  }
+}

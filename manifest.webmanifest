@@ -43,6 +43,13 @@
       "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
     },
     {
+      "name": "Confirmação de presença",
+      "short_name": "Confirmar",
+      "description": "Confirme sua presença na etapa oficial",
+      "url": "./#confirmar",
+      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
       "name": "Histórico das etapas",
       "short_name": "Histórico",
       "description": "Reveja as etapas e campeões",

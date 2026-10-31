@@ -86,6 +86,16 @@ async function main() {
   }))()`);
   console.log("OFFLINE STATE", JSON.stringify(offlineState, null, 2));
 
+  await send("Page.navigate", { url: `${BASE}/#confirmar` });
+  await sleep(1800);
+  const offlineConfirm = await evaluate(`({
+    stage: document.querySelector('#confirm-stage')?.textContent,
+    offlineMessageVisible: !document.querySelector('#confirm-offline')?.hidden,
+    iframeDisplay: getComputedStyle(document.querySelector('#confirm-frame')).display,
+    route: document.body.dataset.route
+  })`);
+  console.log("OFFLINE CONFIRM", JSON.stringify(offlineConfirm, null, 2));
+
   await send("Network.emulateNetworkConditions", {
     offline: false,
     latency: 0,

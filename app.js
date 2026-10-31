@@ -11,12 +11,13 @@
     return;
   }
 
-  const ROUTES = ["inicio", "ranking", "regulamento", "historico", "loja", "localizacao", "sobre", "contato"];
+  const ROUTES = ["inicio", "ranking", "regulamento", "historico", "confirmar", "loja", "localizacao", "sobre", "contato"];
   const PAGE_TITLES = {
     inicio: "Poker de Quinta — Temporada 2027",
     ranking: "Ranking 2027 — Poker de Quinta",
     regulamento: "Regulamento 2027 — Poker de Quinta",
     historico: "Histórico das etapas — Poker de Quinta",
+    confirmar: "Confirmação de presença — Poker de Quinta",
     loja: "Loja — Poker de Quinta",
     localizacao: "Localização — Poker de Quinta",
     sobre: "Sobre o clube — Poker de Quinta",
@@ -52,6 +53,9 @@
     pendingScroll: null,
     toastTimeouts: new Set(),
     swReloading: false,
+    countdownInterval: null,
+    firebaseData: null,
+    firebaseSource: null,
   };
 
   const $ = (selector, root = document) => root.querySelector(selector);
@@ -106,6 +110,17 @@
       .map((part) => part.charAt(0))
       .join("")
       .toUpperCase();
+  }
+
+  function avatarMarkup(player, className) {
+    const fallback = `<span class="avatar-initials">${escapeHTML(initials(player.name))}</span>`;
+    if (player.photo) {
+      return `<span class="${className} has-photo">
+        <img src="${escapeHTML(player.photo)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.classList.remove('has-photo');this.remove()">
+        ${fallback}
+      </span>`;
+    }
+    return `<span class="${className}">${escapeHTML(initials(player.name))}</span>`;
   }
 
   function dateParts(iso) {
@@ -288,11 +303,13 @@
   /* ============================================================
      RENDER — CARROSSEL
      ============================================================ */
-  function miniCard(rank, suit, extraClass) {
+  function miniCard(rank, suit, extraClass, withLogo = false) {
     const suitName = SUITS.includes(suit) ? suit : "spade";
     return `<div class="stage-mini-card ${extraClass}">
       <span>${escapeHTML(rank)}</span>
-      <span class="stage-mini-card__pip">${icon(suitName)}</span>
+      ${withLogo
+        ? `<span class="stage-mini-card__logo"><img src="${escapeHTML(DATA.site.logo)}" alt=""></span>`
+        : `<span class="stage-mini-card__pip">${icon(suitName)}</span>`}
       <span class="stage-mini-card__season">TEMPORADA<br>2027</span>
     </div>`;
   }
@@ -336,7 +353,7 @@
         <span class="stage-slide__motif" aria-hidden="true">${icon(stage.motif)}</span>
         <div class="stage-card-fan" aria-hidden="true">
           ${miniCard("A", leftSuit, "stage-mini-card--left")}
-          ${miniCard(stage.rank, stage.motif === "trophy" ? "spade" : stage.motif, "stage-mini-card--center")}
+          ${miniCard(stage.rank, stage.motif === "trophy" ? "spade" : stage.motif, "stage-mini-card--center", true)}
           ${miniCard("K", rightSuit, "stage-mini-card--right")}
         </div>
         <span class="stage-slide__venue">${icon("pin")} ${escapeHTML(DATA.site.venue)} · ${escapeHTML(DATA.site.city)}</span>
@@ -591,7 +608,8 @@
     }
 
     tick();
-    window.setInterval(tick, 1000);
+    if (state.countdownInterval) window.clearInterval(state.countdownInterval);
+    state.countdownInterval = window.setInterval(tick, 1000);
   }
 
   /* ============================================================
@@ -608,7 +626,7 @@
     >
       <span class="leader-card__rank">${player.rank}</span>
       <span class="leader-card__top">
-        <span class="leader-card__avatar">${escapeHTML(initials(player.name))}</span>
+        ${avatarMarkup(player, "leader-card__avatar")}
         <span>
           <span class="leader-card__name">${escapeHTML(player.name)}</span>
           <span class="leader-card__city">${escapeHTML(player.city)} · ${escapeHTML(player.uf)}</span>
@@ -639,7 +657,7 @@
         <span class="podium-card__label">${index === 0 ? icon("trophy") + "Líder" : index === 1 ? "2º lugar" : "3º lugar"}</span>
         <span class="podium-card__rank">${index + 1}</span>
       </span>
-      <span class="podium-card__avatar">${escapeHTML(initials(player.name))}</span>
+      ${avatarMarkup(player, "podium-card__avatar")}
       <span class="podium-card__name">${escapeHTML(player.name)}</span>
       <span class="podium-card__city">${escapeHTML(player.city)} · ${escapeHTML(player.uf)}</span>
       <span class="podium-card__stats">
@@ -692,7 +710,7 @@
       <td class="ranking-pos">${pad(player.rank)}</td>
       <td>
         <div class="ranking-player">
-          <span class="ranking-player__avatar">${escapeHTML(initials(player.name))}</span>
+          ${avatarMarkup(player, "ranking-player__avatar")}
           <span class="ranking-player__copy">
             <button class="ranking-player__name" type="button" data-player-open="${player.id}">${escapeHTML(player.name)}</button>
             <span class="ranking-player__city">${escapeHTML(player.city)} · ${escapeHTML(player.uf)}${player.wins ? ` · ${player.wins} ${player.wins === 1 ? "vitória" : "vitórias"}` : ""}</span>
@@ -739,6 +757,240 @@
         <span class="champion-card__trophy">${icon("trophy")}</span>
       </article>`;
     }).join("");
+  }
+
+  /* ============================================================
+     FIREBASE — DATAS, FOTOS E CONFIRMAÇÃO DE PRESENÇA
+     ============================================================ */
+  function firebaseDateToISO(value) {
+    const raw = String(value == null ? "" : value).trim();
+    if (!raw) return null;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return `${raw}T20:00:00-03:00`;
+    const parsed = new Date(raw);
+    return Number.isNaN(parsed.getTime()) ? null : raw;
+  }
+
+  function firebaseDateOnly(value) {
+    const iso = firebaseDateToISO(value);
+    return iso ? shortDate(iso) : "—";
+  }
+
+  function firebaseDateTime(value) {
+    if (!value) return "—";
+    const parsed = new Date(value);
+    if (Number.isNaN(parsed.getTime())) return "—";
+    const parts = new Intl.DateTimeFormat("pt-BR", {
+      day: "2-digit",
+      month: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZone: TZ,
+    }).formatToParts(parsed).reduce((acc, part) => { acc[part.type] = part.value; return acc; }, {});
+    return `${parts.day} ${String(parts.month || "").replace(".", "").toUpperCase()} · ${parts.hour}h${parts.minute}`;
+  }
+
+  function updateRankingUpdatedMeta() {
+    const updatedStage = getStage(DATA.site.rankingUpdatedAfter);
+    if (!updatedStage) return;
+    const updatedLabel = $("#ranking-updated-stage");
+    const updatedDate = $("#ranking-updated-date");
+    if (updatedLabel) updatedLabel.textContent = `Etapa ${pad(updatedStage.id)}`;
+    if (updatedDate) updatedDate.textContent = `${shortDate(updatedStage.date)} · 23h58`;
+  }
+
+  function applyFirebasePhotos(photos) {
+    if (!photos || typeof photos !== "object") return false;
+    const photoMap = new Map();
+    Object.entries(photos).forEach(([name, url]) => {
+      if (typeof url !== "string") return;
+      const clean = url.trim();
+      if (!clean || clean.includes("avatar/00000000000000000000000000000000")) return;
+      photoMap.set(normalizeSearch(name), clean);
+    });
+
+    let changed = false;
+    DATA.players.forEach((player) => {
+      if (player.photo) return;
+      const candidates = [player.photoKey, player.name, player.nickname].filter(Boolean);
+      for (const candidate of candidates) {
+        const url = photoMap.get(normalizeSearch(candidate));
+        if (url) {
+          player.photo = url;
+          changed = true;
+          break;
+        }
+      }
+    });
+
+    if (changed) {
+      setupRanking();
+      renderHomeLeaders();
+      renderPodium();
+      renderRankingTable();
+    }
+    return changed;
+  }
+
+  function applyFirebaseSeason(season, liveConfig) {
+    const seasonData = season && typeof season === "object" ? season : null;
+    const seasonConfig = seasonData && seasonData.config ? seasonData.config : null;
+    const seasonEtapas = seasonData && seasonData.etapas
+      ? seasonData.etapas
+      : Array.isArray(seasonData) ? seasonData : null;
+
+    let config = seasonConfig;
+    if (!config && liveConfig && String(liveConfig.dataEvento || "").startsWith(`${DATA.site.season}-`)) {
+      config = liveConfig;
+    }
+    if (!config && !seasonEtapas) return false;
+
+    let changed = false;
+
+    if (seasonEtapas) {
+      const entries = Array.isArray(seasonEtapas)
+        ? seasonEtapas
+        : Object.entries(seasonEtapas).map(([key, value]) => ({ ...(value || {}), _key: key }));
+      entries.forEach((entry) => {
+        if (!entry) return;
+        const number = Number(entry.numero ?? entry.etapa ?? entry._key);
+        const stage = getStage(number);
+        if (!stage) return;
+        const dateValue = entry.data ?? entry.dataEvento ?? entry.date;
+        if (dateValue) {
+          const iso = firebaseDateToISO(dateValue);
+          if (iso && iso !== stage.date) {
+            stage.date = iso;
+            changed = true;
+          }
+        }
+        if (["completed", "next", "upcoming", "final"].includes(entry.status) && stage.status !== entry.status) {
+          stage.status = entry.status;
+          changed = true;
+        }
+      });
+    }
+
+    if (config) {
+      const number = Number(config.proximaEtapa ?? config.etapa);
+      const stage = getStage(number);
+      if (stage) {
+        if (DATA.site.nextStageId !== number) {
+          DATA.site.nextStageId = number;
+          changed = true;
+        }
+        if (config.dataEvento) {
+          const iso = firebaseDateToISO(config.dataEvento);
+          if (iso && stage.date !== iso) {
+            stage.date = iso;
+            changed = true;
+          }
+        }
+      }
+      if (config.rankingUpdatedAfter) {
+        const updatedAfter = Number(config.rankingUpdatedAfter);
+        if (updatedAfter && getStage(updatedAfter) && DATA.site.rankingUpdatedAfter !== updatedAfter) {
+          DATA.site.rankingUpdatedAfter = updatedAfter;
+          changed = true;
+          setupRanking();
+          renderHomeLeaders();
+          renderPodium();
+          renderRankingTable();
+        }
+      }
+    }
+
+    if (!changed) return false;
+
+    const previousIndex = state.carouselIndex;
+    renderCarousel();
+    updateCarousel(previousIndex, false);
+    renderNextStage();
+    renderHistory();
+    updateRankingUpdatedMeta();
+    renderConfirmPage();
+    hydrateWhatsApp();
+    return true;
+  }
+
+  function renderConfirmPage() {
+    if (!els.confirmStage) return;
+    const data = state.firebaseData;
+    const liveConfig = data && data.season && data.season.config
+      ? data.season.config
+      : data && data.liveConfig ? data.liveConfig : null;
+    const stageNumber = Number(liveConfig && (liveConfig.etapa ?? liveConfig.proximaEtapa));
+    const stage = getStage(stageNumber) || getStage(DATA.site.nextStageId);
+    const eventDate = liveConfig && liveConfig.dataEvento ? liveConfig.dataEvento : stage ? stage.date : null;
+    const open = liveConfig ? Boolean(liveConfig.inscricoesAbertas) : null;
+
+    els.confirmStage.textContent = stageNumber ? `Etapa ${pad(stageNumber)}` : stage ? `Etapa ${pad(stage.id)}` : "Etapa a confirmar";
+    els.confirmDate.textContent = eventDate ? firebaseDateOnly(eventDate) : "Data a confirmar";
+    els.confirmOpening.textContent = liveConfig && liveConfig.dataAbertura
+      ? firebaseDateTime(liveConfig.dataAbertura)
+      : "Definida pela organização";
+
+    if (open === null) {
+      els.confirmStatus.textContent = "Status não informado";
+      els.confirmStatus.className = "badge badge--upcoming";
+    } else {
+      els.confirmStatus.textContent = open ? "Inscrições abertas" : "Inscrições fechadas";
+      els.confirmStatus.className = `badge ${open ? "badge--open" : "badge--closed"}`;
+    }
+
+    if (els.confirmSource) {
+      const source = state.firebaseSource;
+      els.confirmSource.textContent = source === "network"
+        ? "Firebase · ao vivo"
+        : source === "cache"
+          ? "Firebase · sincronizado"
+          : source === "cache-offline"
+            ? "Firebase · offline"
+            : source === "error"
+              ? "Firebase · indisponível"
+              : "Firebase · verificando";
+      els.confirmSource.dataset.source = source || "";
+    }
+
+    if (els.confirmOpen) {
+      els.confirmOpen.href = DATA.site.confirmUrl;
+      els.confirmOpen.target = "_blank";
+      els.confirmOpen.rel = "noopener";
+    }
+    if (els.confirmOpenTop) {
+      els.confirmOpenTop.href = DATA.site.confirmUrl;
+      els.confirmOpenTop.target = "_blank";
+      els.confirmOpenTop.rel = "noopener";
+    }
+  }
+
+  function initConfirmPage() {
+    const sync = () => {
+      const offline = !navigator.onLine;
+      if (els.confirmEmbed) els.confirmEmbed.classList.toggle("is-offline", offline);
+      if (els.confirmOffline) els.confirmOffline.hidden = !offline;
+    };
+    sync();
+    window.addEventListener("online", sync);
+    window.addEventListener("offline", sync);
+  }
+
+  async function initFirebaseData() {
+    if (!window.PQFirebase || !window.PQFirebase.enabled) {
+      renderConfirmPage();
+      return;
+    }
+    try {
+      const data = await window.PQFirebase.load();
+      state.firebaseData = data;
+      state.firebaseSource = data.source;
+      document.body.dataset.firebaseSource = data.source || "";
+      applyFirebasePhotos(data.photos);
+      applyFirebaseSeason(data.season, data.liveConfig);
+    } catch (error) {
+      state.firebaseSource = "error";
+      document.body.dataset.firebaseSource = "error";
+    }
+    renderConfirmPage();
   }
 
   function initRankingControls() {
@@ -1521,7 +1773,7 @@
 
     openModal(`
       <div class="player-modal__head">
-        <span class="player-modal__avatar">${escapeHTML(initials(player.name))}</span>
+        ${avatarMarkup(player, "player-modal__avatar")}
         <div>
           <p class="modal__eyebrow">Perfil · Temporada 2027</p>
           <h2 class="modal__title player-modal__name" id="modal-title">${escapeHTML(player.name)}</h2>
@@ -1646,6 +1898,10 @@
       startAutoplayTimer();
     } else {
       clearTimeout(state.autoplayTimer);
+    }
+
+    if (route === "confirmar" && els.confirmFrame && !els.confirmFrame.getAttribute("src")) {
+      els.confirmFrame.src = DATA.site.confirmUrl;
     }
 
     if (changed) {
@@ -2093,6 +2349,16 @@
     els.rankingFilter = $("#ranking-filter");
     els.championsGrid = $("#champions-grid");
     els.rulesPointsBody = $("#rules-points-body");
+    els.confirmStage = $("#confirm-stage");
+    els.confirmDate = $("#confirm-date");
+    els.confirmStatus = $("#confirm-status");
+    els.confirmOpening = $("#confirm-opening");
+    els.confirmSource = $("#confirm-source");
+    els.confirmOpen = $("#confirm-open");
+    els.confirmOpenTop = $("#confirm-open-top");
+    els.confirmEmbed = $(".confirm-embed");
+    els.confirmFrame = $("#confirm-frame");
+    els.confirmOffline = $("#confirm-offline");
     els.historyTabs = $("#history-tabs");
     els.historyFilters = $("#history-filters");
     els.historySummary = $("#history-summary");
@@ -2131,20 +2397,16 @@
     initGlobalEvents();
     initInstall();
     initOffline();
+    initConfirmPage();
     initServiceWorker();
     initRouting();
 
     hydrateWhatsApp();
     const year = $("#year");
     if (year) year.textContent = "2027";
-
-    const updatedStage = getStage(DATA.site.rankingUpdatedAfter);
-    if (updatedStage) {
-      const updatedLabel = $("#ranking-updated-stage");
-      const updatedDate = $("#ranking-updated-date");
-      if (updatedLabel) updatedLabel.textContent = `Etapa ${pad(updatedStage.id)}`;
-      if (updatedDate) updatedDate.textContent = `${shortDate(updatedStage.date)} · 23h58`;
-    }
+    updateRankingUpdatedMeta();
+    renderConfirmPage();
+    initFirebaseData();
 
     // Preenche o ano no rodapé caso o HTML seja aberto em outro contexto.
     const cartNote = $(".cart-note");

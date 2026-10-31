@@ -15,6 +15,8 @@ window.PQ_DATA = {
     email: "contato@pokerdequinta.com.br",
     instagramHandle: "@pokerdequinta",
     instagramUrl: "https://www.instagram.com/",
+    logo: "logo%20pdq.png",
+    confirmUrl: "https://pokerdequinta.github.io/confirma/",
     address: "Rua Harmonia, 321 — Vila Madalena",
     city: "São Paulo — SP",
     venue: "Casa Palmeira",
@@ -44,6 +46,7 @@ window.PQ_DATA = {
     {
       id: "p01",
       name: "Camila Duarte",
+      photo: "",
       nickname: "Camila",
       city: "São Paulo",
       uf: "SP",
@@ -54,6 +57,7 @@ window.PQ_DATA = {
     {
       id: "p02",
       name: "Rafael Nogueira",
+      photo: "",
       nickname: "Rafa",
       city: "São Paulo",
       uf: "SP",
@@ -64,6 +68,7 @@ window.PQ_DATA = {
     {
       id: "p03",
       name: "Thiago Bernardes",
+      photo: "",
       nickname: "Thiago",
       city: "Rio de Janeiro",
       uf: "RJ",
@@ -74,6 +79,7 @@ window.PQ_DATA = {
     {
       id: "p04",
       name: "Marina Prado",
+      photo: "",
       nickname: "Marina",
       city: "São Paulo",
       uf: "SP",
@@ -84,6 +90,7 @@ window.PQ_DATA = {
     {
       id: "p05",
       name: "Eduardo Lima",
+      photo: "",
       nickname: "Dudu",
       city: "Belo Horizonte",
       uf: "MG",
@@ -94,6 +101,7 @@ window.PQ_DATA = {
     {
       id: "p06",
       name: "João Pedro Alves",
+      photo: "",
       nickname: "JP",
       city: "Curitiba",
       uf: "PR",
@@ -104,6 +112,7 @@ window.PQ_DATA = {
     {
       id: "p07",
       name: "Beatriz Campos",
+      photo: "",
       nickname: "Bia",
       city: "São Paulo",
       uf: "SP",
@@ -114,6 +123,7 @@ window.PQ_DATA = {
     {
       id: "p08",
       name: "Lucas Ferraz",
+      photo: "",
       nickname: "Lucas",
       city: "Campinas",
       uf: "SP",
@@ -124,6 +134,7 @@ window.PQ_DATA = {
     {
       id: "p09",
       name: "Helena Rios",
+      photo: "",
       nickname: "Helena",
       city: "São Paulo",
       uf: "SP",
@@ -134,6 +145,7 @@ window.PQ_DATA = {
     {
       id: "p10",
       name: "André Salles",
+      photo: "",
       nickname: "André",
       city: "Santos",
       uf: "SP",
@@ -144,6 +156,7 @@ window.PQ_DATA = {
     {
       id: "p11",
       name: "Bruno Tavares",
+      photo: "",
       nickname: "Bruno",
       city: "São Paulo",
       uf: "SP",
@@ -154,6 +167,7 @@ window.PQ_DATA = {
     {
       id: "p12",
       name: "Isabela Monte",
+      photo: "",
       nickname: "Isa",
       city: "Florianópolis",
       uf: "SC",
@@ -164,6 +178,7 @@ window.PQ_DATA = {
     {
       id: "p13",
       name: "Caio Ribeiro",
+      photo: "",
       nickname: "Caio",
       city: "São Paulo",
       uf: "SP",
@@ -174,6 +189,7 @@ window.PQ_DATA = {
     {
       id: "p14",
       name: "Renata Vale",
+      photo: "",
       nickname: "Renata",
       city: "São Paulo",
       uf: "SP",
@@ -184,6 +200,7 @@ window.PQ_DATA = {
     {
       id: "p15",
       name: "Pedro Assis",
+      photo: "",
       nickname: "Pedro",
       city: "Sorocaba",
       uf: "SP",
@@ -194,6 +211,7 @@ window.PQ_DATA = {
     {
       id: "p16",
       name: "Nando Castro",
+      photo: "",
       nickname: "Nando",
       city: "São Paulo",
       uf: "SP",

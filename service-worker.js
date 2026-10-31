@@ -4,9 +4,11 @@
    fallback offline e fontes com stale-while-revalidate.
    ============================================================ */
 
-const VERSION = "pq-2027-v1.1.2";
+const VERSION = "pq-2027-v2.0.2";
 const STATIC_CACHE = `${VERSION}-static`;
 const FONT_CACHE = `${VERSION}-fonts`;
+const APP_ROOT = new URL("./", self.location.href).pathname;
+const CONFIRM_PATH = new URL("confirma/", self.location.href).pathname;
 
 const APP_SHELL = [
   "./",
@@ -15,8 +17,10 @@ const APP_SHELL = [
   "./manifest.webmanifest",
   "./css/styles.css",
   "./js/data.js",
+  "./js/firebase-config.js",
+  "./js/firebase-data.js",
   "./js/app.js",
-  "./assets/icons/favicon.svg",
+  "./logo%20pdq.png",
   "./assets/icons/favicon-32.png",
   "./assets/icons/icon-192.png",
   "./assets/icons/icon-512.png",
@@ -64,11 +68,11 @@ function isFontRequest(url) {
   return FONT_HOSTS.includes(url.hostname);
 }
 
-async function networkFirst(request) {
+async function networkFirst(request, cacheAsShell = true) {
   const cache = await caches.open(STATIC_CACHE);
   try {
     const response = await fetch(request);
-    if (response && response.ok) {
+    if (cacheAsShell && response && response.ok) {
       cache.put("./index.html", response.clone());
     }
     return response;
@@ -125,8 +129,19 @@ self.addEventListener("fetch", (event) => {
 
   if (url.origin !== self.location.origin) return;
 
+  /*
+   * A página oficial /confirma/ já tem o próprio app e o próprio Firebase.
+   * Quando este site é publicado na raiz do mesmo domínio, o service worker
+   * também teria escopo sobre ela; por isso não interceptamos nada ali.
+   */
+  const confirmPathWithoutSlash = CONFIRM_PATH.replace(/\/$/, "");
+  if (url.pathname === confirmPathWithoutSlash || url.pathname.startsWith(CONFIRM_PATH)) {
+    return;
+  }
+
   if (request.mode === "navigate") {
-    event.respondWith(networkFirst(request));
+    const isAppShell = url.pathname === APP_ROOT || url.pathname === `${APP_ROOT}index.html`;
+    event.respondWith(networkFirst(request, isAppShell));
     return;
   }
 
