@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Poker de Quinta — Temporada 2027</title>
+
+  <meta
+    name="description"
+    content="Poker de Quinta — Temporada 2027. Treze etapas, vinte jogadores e uma temporada inteira de rivalidade saudável."
+  />
+
+  <meta name="theme-color" content="#0c0c0c" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="Poker de Quinta - início">
+      <span class="brand-mark">♠</span>
+
+      <span class="brand-text">
+        <strong>POKER DE QUINTA</strong>
+        <small>TEMPORADA 2027</small>
+      </span>
+    </a>
+
+    <nav class="main-nav" aria-label="Navegação principal">
+      <a href="#calendario">Calendário</a>
+      <a href="#ranking">Ranking</a>
+      <a href="#ritual">O ritual</a>
+      <a href="#regulamento">Regulamento</a>
+    </nav>
+
+    <button class="button button-outline header-presence" data-open-presence>
+      Confirmar presença
+    </button>
+
+    <button
+      class="menu-button"
+      id="menuButton"
+      aria-label="Abrir menu"
+      aria-expanded="false"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <main>
+    <section class="hero section" id="inicio">
+      <div class="hero-background"></div>
+
+      <div class="hero-content container">
+        <p class="eyebrow">Circuito amador · Curitiba · Desde 2019</p>
+
+        <h1>
+          A quinta é nossa.
+          <br />
+          A mesa também.
+        </h1>
+
+        <p class="hero-description">
+          Treze etapas. Vinte lugares. Uma temporada inteira de estratégia,
+          rivalidade saudável e histórias que só acontecem na mesa.
+        </p>
+
+        <div class="hero-actions">
+          <button class="button button-primary" data-open-presence>
+            Reservar minha cadeira
+            <span>↗</span>
+          </button>
+
+          <a class="button button-link" href="#calendario">
+            Ver calendário
+            <span>↓</span>
+          </a>
+        </div>
+
+        <div class="hero-facts">
+          <div class="fact">
+            <strong>13</strong>
+            <span>etapas em 2027</span>
+          </div>
+
+          <div class="fact">
+            <strong>20</strong>
+            <span>jogadores por noite</span>
+          </div>
+
+          <div class="fact">
+            <strong>R$ 120</strong>
+            <span>buy-in oficial</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="hero-card-top">
+          <span>PRÓXIMA PARADA</span>
+          <span class="live-dot">● AO VIVO</span>
+        </div>
+
+        <div class="hero-card-date">
+          <strong id="nextDay">28</strong>
+
+          <span>
+            <small id="nextMonth">JAN</small>
+            <small>2027</small>
+          </span>
+        </div>
+
+        <div class="hero-card-info">
+          <p id="nextStageName">1ª Etapa</p>
+          <span>Quinta-feira · 20h</span>
+        </div>
+
+        <div class="countdown" id="countdown">
+          <div>
+            <strong>--</strong>
+            <span>dias</span>
+          </div>
+
+          <div>
+            <strong>--</strong>
+            <span>horas</span>
+          </div>
+
+          <div>
+            <strong>--</strong>
+            <span>min</span>
+          </div>
+
+          <div>
+            <strong>--</strong>
+            <span>seg</span>
+          </div>
+        </div>
+
+        <button class="button button-light button-full" data-open-presence>
+          Confirmar presença
+        </button>
+      </div>
+    </section>
+
+    <section class="stats-strip">
+      <div class="container stats-grid">
+        <div>
+          <strong>01</strong>
+          <span>temporada<br />em andamento</span>
+        </div>
+
+        <div>
+          <strong>13</strong>
+          <span>etapas<br />programadas</span>
+        </div>
+
+        <div>
+          <strong>20</strong>
+          <span>cadeiras<br />por etapa</span>
+        </div>
+
+        <div>
+          <strong>100%</strong>
+          <span>quinta-feira<br />de verdade</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section calendar-section" id="calendario">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Temporada 2027</p>
+            <h2>Cada etapa,<br /><em>uma história.</em></h2>
+          </div>
+
+          <p>
+            Treze encontros para construir a temporada. Escolha sua cadeira,
+            acompanhe o ranking e faça parte da próxima história.
+          </p>
+        </div>
+
+        <div class="calendar-grid" id="calendarGrid"></div>
+      </div>
+    </section>
+
+    <section class="ranking-section section" id="ranking">
+      <div class="container ranking-layout">
+        <div class="ranking-copy">
+          <p class="eyebrow">Classificação geral</p>
+
+          <h2>A corrida<br />pelo <em>trono.</em></h2>
+
+          <p>
+            Cada colocação conta. Cada KO pesa. A temporada é construída etapa
+            por etapa, até que reste apenas um nome no topo.
+          </p>
+
+          <button class="button button-primary" data-open-ranking>
+            Ver ranking completo
+            <span>↗</span>
+          </button>
+        </div>
+
+        <div class="ranking-preview">
+          <div class="ranking-preview-header">
+            <span>#</span>
+            <span>Jogador</span>
+            <span>Pontos</span>
+          </div>
+
+          <div id="rankingPreview"></div>
+
+          <button class="ranking-more" data-open-ranking>
+            Abrir classificação completa
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="ritual-section section" id="ritual">
+      <div class="container">
+        <div class="section-heading ritual-heading">
+          <div>
+            <p class="eyebrow">O ritual da casa</p>
+            <h2>Não é só poker.<br /><em>É quinta.</em></h2>
+          </div>
+
+          <p>
+            Uma mesa, uma comunidade e aquela sensação de que algo importante
+            pode acontecer em qualquer mão.
+          </p>
+        </div>
+
+        <div class="ritual-grid">
+          <article class="ritual-card">
+            <span class="ritual-number">01</span>
+            <div class="ritual-icon">♣</div>
+            <h3>Estrutura de torneio</h3>
+            <p>
+              15.000 fichas iniciais, níveis de 20 minutos e rebuy ilimitado
+              permitido até o 10º nível.
+            </p>
+          </article>
+
+          <article class="ritual-card">
+            <span class="ritual-number">02</span>
+            <div class="ritual-icon">♠</div>
+            <h3>Mesa com história</h3>
+            <p>
+              Vinte cadeiras, uma comunidade e gente que já conhece o nome e o
+              estilo de cada adversário.
+            </p>
+          </article>
+
+          <article class="ritual-card">
+            <span class="ritual-number">03</span>
+            <div class="ritual-icon">♦</div>
+            <h3>Ranking de verdade</h3>
+            <p>
+              Pontos, KOs, melhores mãos e decisões que vão construindo o
+              campeão da temporada.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="rules-section section" id="regulamento">
+      <div class="container">
+        <div class="rules-header">
+          <div>
+            <p class="eyebrow">Informações oficiais</p>
+            <h2>Como a mesa<br /><em>funciona.</em></h2>
+          </div>
+
+          <p>
+            Tudo o que você precisa saber antes de puxar a cadeira e colocar as
+            fichas na mesa.
+          </p>
+        </div>
+
+        <div class="rules-grid">
+          <div class="rule-item">
+            <span>01</span>
+            <div>
+              <strong>Buy-in</strong>
+              <p>R$ 120,00 por etapa</p>
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <span>02</span>
+            <div>
+              <strong>Stack inicial</strong>
+              <p>15.000 fichas</p>
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <span>03</span>
+            <div>
+              <strong>Rebuy</strong>
+              <p>Simples R$ 30 · Duplo R$ 60</p>
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <span>04</span>
+            <div>
+              <strong>Rebuy permitido</strong>
+              <p>Ilimitado até o 10º nível</p>
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <span>05</span>
+            <div>
+              <strong>Add-on</strong>
+              <p>Grátis para a melhor mão da etapa anterior</p>
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <span>06</span>
+            <div>
+              <strong>Local e horário</strong>
+              <p>Rua Prof. Sebastião Paraná, 765 · 20h</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="special-section section">
+      <div class="container">
+        <div class="special-content">
+          <p class="eyebrow">Além do ranking</p>
+          <h2>As histórias que<br /><em>ficam na mesa.</em></h2>
+
+          <p>
+            Melhor mão da etapa, matador de KO, Desafio do JJ e Roleta da
+            Sorte. Toda noite tem seus protagonistas.
+          </p>
+
+          <button class="button button-light" data-open-stage data-stage="1">
+            Ver destaque da etapa
+            <span>↗</span>
+          </button>
+        </div>
+
+        <div class="special-cards">
+          <div class="special-card">
+            <span>♠</span>
+            <strong>Melhor mão</strong>
+            <small>Addon grátis na próxima etapa</small>
+          </div>
+
+          <div class="special-card">
+            <span>♦</span>
+            <strong>Desafio do JJ</strong>
+            <small>Faça um jogo maior que o JJ</small>
+          </div>
+
+          <div class="special-card">
+            <span>♣</span>
+            <strong>Roleta da Sorte</strong>
+            <small>Uma chance extra de ganhar</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="location-section section">
+      <div class="container location-layout">
+        <div>
+          <p class="eyebrow">Onde a quinta acontece</p>
+          <h2>A mesa está<br /><em>esperando.</em></h2>
+        </div>
+
+        <div class="location-info">
+          <p>
+            Rua Prof. Sebastião Paraná, nº 765<br />
+            Curitiba — Paraná
+          </p>
+
+          <a
+            class="button button-outline"
+            href="https://www.google.com/maps/search/?api=1&query=Rua+Prof.+Sebasti%C3%A3o+Paran%C3%A1+765+Curitiba+PR"
+            target="_blank"
+            rel="noopener"
+          >
+            Abrir no mapa
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-top">
+      <div class="brand footer-brand">
+        <span class="brand-mark">♠</span>
+
+        <span class="brand-text">
+          <strong>POKER DE QUINTA</strong>
+          <small>TEMPORADA 2027</small>
+        </span>
+      </div>
+
+      <p>A quinta é nossa. A mesa também.</p>
+
+      <div class="footer-links">
+        <a href="#inicio">Início</a>
+        <a href="#calendario">Calendário</a>
+        <a href="#ranking">Ranking</a>
+        <button data-open-presence>Presença</button>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <span>© 2027 Poker de Quinta</span>
+      <span>Curitiba · PR</span>
+    </div>
+  </footer>
+
+  <!-- Modal genérico -->
+  <div class="modal-backdrop" id="modalBackdrop" hidden></div>
+
+  <!-- Modal de ranking -->
+  <section
+    class="modal"
+    id="rankingModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="rankingModalTitle"
+    hidden
+  >
+    <div class="modal-header">
+      <div>
+        <p class="eyebrow">Temporada 2027</p>
+        <h2 id="rankingModalTitle">Ranking geral</h2>
+      </div>
+
+      <button class="modal-close" data-close-modal aria-label="Fechar">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="ranking-notice">
+        <span>♠</span>
+        <p>
+          A pontuação final será atualizada pelo Caderno do Dealer após o
+          encerramento de cada etapa.
+        </p>
+      </div>
+
+      <div class="ranking-table-wrapper">
+        <table class="ranking-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Jogador</th>
+              <th>Etapas</th>
+              <th>KO</th>
+              <th>Pontos</th>
+            </tr>
+          </thead>
+
+          <tbody id="rankingTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal de presença -->
+  <section
+    class="modal"
+    id="presenceModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="presenceModalTitle"
+    hidden
+  >
+    <div class="modal-header">
+      <div>
+        <p class="eyebrow">Lista oficial</p>
+        <h2 id="presenceModalTitle">Confirmar presença</h2>
+      </div>
+
+      <button class="modal-close" data-close-modal aria-label="Fechar">×</button>
+    </div>
+
+    <div class="modal-body">
+      <form id="presenceForm" class="presence-form">
+        <label>
+          Etapa
+          <select id="presenceStage" required></select>
+        </label>
+
+        <label>
+          Nome completo
+          <input
+            type="text"
+            id="presenceName"
+            placeholder="Digite seu nome"
+            required
+          />
+        </label>
+
+        <label>
+          WhatsApp
+          <input
+            type="tel"
+            id="presencePhone"
+            placeholder="(41) 99999-9999"
+            required
+          />
+        </label>
+
+        <label class="checkbox-label">
+          <input type="checkbox" id="presenceAgreement" required />
+          <span>Estou ciente do horário de início às 20h.</span>
+        </label>
+
+        <button class="button button-primary button-full" type="submit">
+          Confirmar minha presença
+          <span>↗</span>
+        </button>
+      </form>
+
+      <div class="presence-status">
+        <div>
+          <strong id="confirmedCount">0</strong>
+          <span>confirmados</span>
+        </div>
+
+        <div>
+          <strong id="waitingCount">0</strong>
+          <span>na espera</span>
+        </div>
+
+        <div>
+          <strong>20</strong>
+          <span>vagas</span>
+        </div>
+      </div>
+
+      <div class="presence-list" id="presenceList"></div>
+    </div>
+  </section>
+
+  <!-- Modal da etapa -->
+  <section
+    class="modal modal-stage"
+    id="stageModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="stageModalTitle"
+    hidden
+  >
+    <div class="stage-modal-cover">
+      <button class="modal-close modal-close-light" data-close-modal aria-label="Fechar">
+        ×
+      </button>
+
+      <span class="stage-cover-symbol">♠</span>
+
+      <div>
+        <p class="eyebrow">Destaques da etapa</p>
+        <h2 id="stageModalTitle">1ª Etapa</h2>
+        <p id="stageModalDate">28 de janeiro de 2027 · 20h</p>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <div class="stage-highlights">
+        <article>
+          <span>🏆</span>
+          <small>Campeão da etapa</small>
+          <strong id="stageChampion">A definir</strong>
+        </article>
+
+        <article>
+          <span>💥</span>
+          <small>Matador de KO</small>
+          <strong id="stageKiller">A definir</strong>
+        </article>
+
+        <article>
+          <span>🃏</span>
+          <small>Melhor mão</small>
+          <strong id="stageBestHand">A definir</strong>
+        </article>
+
+        <article>
+          <span>🎡</span>
+          <small>Roleta da Sorte</small>
+          <strong id="stageRoulette">A definir</strong>
+        </article>
+
+        <article>
+          <span>♠</span>
+          <small>Desafio do JJ</small>
+          <strong id="stageJJ">A definir</strong>
+        </article>
+      </div>
+
+      <div class="stage-empty">
+        <span>✦</span>
+        <p>
+          Os detalhes e as fotos desta etapa serão publicados após o encerramento
+          do torneio.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
