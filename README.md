@@ -13,6 +13,15 @@ O visual e o CSS são os do projeto **hml2**. O ranking agora tem uma fonte úni
 - **Tabela etapa por etapa:** cada coluna mostra os pontos do jogador naquela etapa, com troféu para o campeão, pontuação negativa em vermelho e total no fim.
 - **Histórico calculado:** o Hall da Fama e o resumo das temporadas encerradas saem do próprio `ranking-data.js`.
 
+## Se a página aparecer sem estilo
+
+Isso significa que o `css/styles.css` não foi carregado. O motivo mais comum é abrir o `index.html` de dentro do ZIP ou copiar apenas o HTML, sem a pasta `css/`.
+
+- Extraia o ZIP inteiro e abra o `index.html` de dentro da pasta extraída.
+- A pasta precisa ter `index.html`, `css/`, `js/` e `assets/` no mesmo nível.
+- No GitHub Pages, confirme que a pasta `css/` foi enviada.
+- Leia também o **[COMECE-AQUI.txt](COMECE-AQUI.txt)**.
+
 ## Como rodar
 
 O projeto é estático. Para testar o service worker e o modo offline, use HTTP:

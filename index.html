@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR" class="no-js">
 <head>
   <meta charset="UTF-8">
@@ -100,7 +100,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css" onerror="window.__pqCssFailed = true">
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (!window.__pqCssFailed) return;
+      var aviso = document.createElement("div");
+      aviso.setAttribute("role", "alert");
+      aviso.style.cssText = "position:fixed;z-index:99999;left:0;right:0;top:0;padding:14px 18px;background:#3a1f1f;color:#ffe8e8;font:15px/1.5 system-ui,sans-serif;border-bottom:1px solid #ff8a8a;text-align:center";
+      aviso.innerHTML = "<strong>O CSS não carregou.</strong> Extraia o ZIP inteiro e abra o <code>index.html</code> de dentro da pasta. Se estiver publicando no GitHub, envie também a pasta <code>css/</code>.";
+      document.body.prepend(aviso);
+    });
+  </script>
   <style>
     /* Mantém os índices no canto superior esquerdo, como na Q de espadas. */
     .hero__visual .playing-card--queen > .playing-card__corner:not(.playing-card__corner--bottom),

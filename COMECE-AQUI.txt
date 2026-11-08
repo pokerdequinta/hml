@@ -1,0 +1,43 @@
+POKER DE QUINTA — COMO ABRIR O SITE
+====================================
+
+Se a página apareceu sem estilo (texto em Times, ícones gigantes), o CSS
+não foi carregado. O HTML está certo; o problema é abrir o arquivo sem
+a pasta "css" ao lado.
+
+1) NÃO abra o index.html de dentro do ZIP
+   O Windows abre só uma cópia temporária do HTML e não leva as pastas
+   css/, js/ e assets/. Clique com o botão direito no ZIP e escolha
+   "Extrair tudo..." antes de abrir.
+
+2) A pasta extraída precisa ficar assim:
+   index.html
+   admin.html
+   css/styles.css
+   css/admin.css
+   js/app.js
+   js/ranking-data.js
+   js/admin-ranking.js
+   assets/...
+
+3) Para ver o site:
+   - Abra "index.html" com o navegador (duplo clique) na pasta extraída.
+   - Para o modo PWA/offline, rode um servidor local na pasta:
+       python -m http.server 8099
+     e acesse http://127.0.0.1:8099
+
+4) Para atualizar o ranking:
+   - Abra "admin.html" na mesma pasta (ou no site publicado).
+   - Lance os pontos e clique em "Baixar ranking-data.js".
+   - Substitua js/ranking-data.js no repositório e faça commit.
+
+5) Publicação no GitHub Pages:
+   - Envie a pasta inteira (index.html, admin.html, css/, js/, assets/).
+   - Confira se css/styles.css existe no repositório.
+   - Aguarde o deploy e force a atualização com Ctrl + F5.
+
+O site publicado em https://pokerdequinta.github.io/hml2/ está no ar.
+Se você estiver vendo a versão nova quebrada, provavelmente enviou só o
+index.html ou está abrindo o arquivo de dentro do ZIP.
+
+Guia completo: COMO-ATUALIZAR-RANKING.md
