@@ -1,20 +1,23 @@
-﻿# Como atualizar o ranking
+# Como atualizar o ranking
 
 O ranking do site é lido de **um único arquivo**: `js/ranking-data.js`. Você pode editá-lo à mão, mas o caminho mais fácil é usar a ferramenta **`admin.html`**.
 
 ## Caminho rápido (recomendado)
 
 1. Abra **`admin.html`** no navegador (no seu computador ou no site publicado).
-2. Escolha a **temporada** e a **etapa** nos seletores.
-3. Preencha os **pontos** de cada jogador que participou. Deixe em branco quem não jogou.
-4. Confira o **Ranking ao vivo** na lateral.
-5. Clique em **Baixar ranking-data.js**.
-6. No repositório do GitHub, substitua `js/ranking-data.js` pelo arquivo baixado.
-7. Faça commit e envie. No site, use **Ctrl + F5** para atualizar.
+2. Digite a senha **`poker2027`**.
+3. Escolha a **temporada** e a **etapa** nos seletores.
+4. Preencha os **pontos** de cada jogador que participou. Deixe em branco quem não jogou.
+5. Confira o **Ranking ao vivo** na lateral.
+6. Clique em **Baixar ranking-data.js**.
+7. No repositório do GitHub, substitua `js/ranking-data.js` pelo arquivo baixado.
+8. Faça commit e envie. No site, use **Ctrl + F5** para atualizar.
 
 Pronto. O site recalcula o ranking sozinho: soma os pontos de todas as etapas, ordena, monta o pódio, a tabela e o Hall da Fama.
 
-> A ferramenta não grava no servidor. Ela salva um rascunho no seu navegador e gera o arquivo para você publicar. É por isso que o passo 6 existe.
+> A ferramenta não grava no servidor. Ela salva um rascunho no seu navegador e gera o arquivo para você publicar. É por isso que o passo 7 existe.
+
+> A senha `poker2027` é uma trava de tela. Ela fica no JavaScript do admin e serve para evitar acesso casual; a proteção real do ranking é o acesso ao repositório do GitHub.
 
 ## Lançar uma etapa da temporada 2027
 

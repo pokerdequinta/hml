@@ -56,6 +56,15 @@ Acesse **http://127.0.0.1:8099/**. Também funciona em GitHub Pages, Netlify, Ve
 └── sitemap.xml
 ```
 
+## Acesso ao admin
+
+Abra **`admin.html`** na pasta do projeto ou em `https://pokerdequinta.github.io/hml2/admin.html` depois do deploy.
+
+- **Senha:** `poker2027`
+- A sessão fica ativa enquanto a aba estiver aberta. Use **Sair** para encerrar.
+- A senha é uma trava de tela: fica no JavaScript e não é autenticação de servidor. A proteção real é o acesso ao repositório do GitHub.
+- Para trocar a senha, edite `ADMIN_PASSWORD` no topo de `js/admin-ranking.js`.
+
 ## Onde editar cada coisa
 
 ### Ranking (jogadores, temporadas e pontos)

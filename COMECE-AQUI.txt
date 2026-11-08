@@ -28,8 +28,14 @@ a pasta "css" ao lado.
 
 4) Para atualizar o ranking:
    - Abra "admin.html" na mesma pasta (ou no site publicado).
+   - Digite a senha: poker2027
    - Lance os pontos e clique em "Baixar ranking-data.js".
    - Substitua js/ranking-data.js no repositório e faça commit.
+   - A sessão termina ao fechar a aba. Use o botão "Sair" para sair antes.
+
+   A senha é uma trava de tela da ferramenta. Ela não altera o site
+   sozinha e não substitui a segurança do GitHub: quem tem acesso ao
+   repositório é quem publica o ranking.
 
 5) Publicação no GitHub Pages:
    - Envie a pasta inteira (index.html, admin.html, css/, js/, assets/).
