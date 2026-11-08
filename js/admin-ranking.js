@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    ADMIN — CONTROLE DO RANKING
    Lê window.PQ_RANKING, edita em memória, salva rascunho local
    e gera o js/ranking-data.js pronto para publicar.
@@ -8,6 +8,7 @@
 
   const STORAGE_KEY = "pq-ranking-draft-v1";
   const SOURCE = window.PQ_RANKING;
+  let booted = false;
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -384,6 +385,9 @@
       .map((player) => `<tr data-player-id="${escapeHTML(player.id)}">
         <td><input type="text" data-field="nome" value="${escapeHTML(player.nome)}" aria-label="Nome"></td>
         <td><input type="text" data-field="apelido" value="${escapeHTML(player.apelido)}" aria-label="Apelido"></td>
+        <td><input type="text" data-field="cidade" value="${escapeHTML(player.cidade)}" placeholder="Cidade" aria-label="Cidade"></td>
+        <td><input type="text" data-field="uf" value="${escapeHTML(player.uf)}" maxlength="2" placeholder="UF" aria-label="UF"></td>
+        <td><input type="number" data-field="desde" value="${player.desde || ""}" min="2000" max="2100" placeholder="Ano" aria-label="Na casa desde"></td>
         <td><input type="url" data-field="foto" value="${escapeHTML(player.foto)}" placeholder="https://..." aria-label="Foto"></td>
         <td><button class="admin-icon-btn" type="button" data-remove-player="${escapeHTML(player.id)}" title="Remover jogador" aria-label="Remover ${escapeHTML(player.nome)}">✕</button></td>
       </tr>`).join("");
@@ -628,15 +632,24 @@ window.PQ_RANKING = `;
       const row = input.closest("[data-player-id]");
       const player = state.data.jogadores.find((item) => item.id === row.dataset.playerId);
       if (!player) return;
-      player[input.dataset.field] = input.value.trim();
-      if (input.dataset.field === "nome" && !input.value.trim()) {
+      const field = input.dataset.field;
+      if (field === "desde") {
+        const year = Number(input.value);
+        player.desde = Number.isFinite(year) && year >= 2000 ? year : null;
+      } else if (field === "uf") {
+        player.uf = input.value.trim().toUpperCase().slice(0, 2);
+        input.value = player.uf;
+      } else {
+        player[field] = input.value.trim();
+      }
+      if (field === "nome" && !input.value.trim()) {
         input.value = player.nome;
         return;
       }
       markDirty();
       renderEntry();
       renderSummary();
-      if (input.dataset.field === "nome" || input.dataset.field === "apelido") renderPlayers();
+      if (field === "nome" || field === "apelido") renderPlayers();
     });
 
     $("#players-body")?.addEventListener("click", (event) => {
@@ -791,6 +804,9 @@ window.PQ_RANKING = `;
      BOOT
      ============================================================ */
   function boot() {
+    if (booted) return;
+    booted = true;
+
     const params = new URLSearchParams(window.location.search);
     const requestedYear = Number(params.get("temporada"));
     const requestedStage = Number(params.get("etapa"));

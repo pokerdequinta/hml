@@ -17,7 +17,7 @@ window.PQ_DATA = {
     instagramHandle: "@pokerdequinta",
     instagramUrl: "https://www.instagram.com/",
     logo: "logo%20pdq.png",
-    confirmUrl: "https://pokerdequinta.github.io/confirma/",
+    confirmUrl: "#confirmar",
     address: "Rua Prof. Sebastião Paraná, 765",
     city: "Curitiba — PR",
     venue: "Luck Bar", // confirmar nome do local
@@ -35,6 +35,17 @@ window.PQ_DATA = {
     nextStageId: 1,
     seasonStart: "2027-01-28T20:00:00-03:00",
     seasonEnd: "2027-12-09T20:00:00-03:00",
+  },
+
+  /* Inscrições: a etapa é a próxima do calendário (nextStageId).
+     O admin da confirmação pode abrir/fechar as inscrições no Firebase. */
+  confirmation: {
+    enabled: true,
+    season: "2027",
+    stageId: 0,
+    capacity: 20,
+    open: true,
+    dbRoot: "confirmacao",
   },
 
   /* Tabela de apoio para telas de etapa (o ranking oficial usa os pontos de ranking-data.js). */

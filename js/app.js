@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    POKER DE QUINTA — TEMPORADA 2027
    Aplicação: navegação, carrossel, ranking, histórico, loja e PWA
    ============================================================ */
@@ -38,7 +38,7 @@
     ranking: "Ranking — Poker de Quinta",
     regulamento: "Regulamento 2027 — Poker de Quinta",
     historico: "Histórico das etapas — Poker de Quinta",
-    confirmar: "Confirmação de presença — Poker de Quinta",
+    confirmar: "Confirmação de inscrição — Poker de Quinta",
     loja: "Loja — Poker de Quinta",
     localizacao: "Localização — Poker de Quinta",
     sobre: "Sobre o Poker de Quinta",
@@ -448,8 +448,8 @@
          </button>
          <span class="stage-slide__link">${icon("trophy")} Etapa encerrada</span>`
       : isNext
-        ? `<a class="btn btn--primary btn--sm" href="#" data-whatsapp="${escapeHTML(invite)}">
-             Reservar cadeira ${icon("arrow-up-right")}
+        ? `<a class="btn btn--primary btn--sm" href="#confirmar" data-confirm-open>
+             Confirmar Inscrição ${icon("arrow-right")}
            </a>
            <button class="btn btn--ghost btn--sm" type="button" data-stage-open="${stage.id}">Detalhes</button>`
         : `<button class="btn btn--ghost btn--sm" type="button" data-stage-open="${stage.id}">
@@ -686,9 +686,10 @@
 
     const reserve = els.nextStageReserve;
     if (reserve) {
-      reserve.href = waUrl(stageInviteMessage(stage));
-      reserve.target = "_blank";
-      reserve.rel = "noopener";
+      reserve.href = "#confirmar";
+      reserve.removeAttribute("target");
+      reserve.removeAttribute("rel");
+      reserve.setAttribute("data-confirm-open", "");
     }
 
     const countdownDate = els.countdownDate;
@@ -1408,7 +1409,7 @@
       const action = stage.status === "completed"
         ? `<button class="btn btn--ghost btn--sm" type="button" data-stage-open="${stage.id}">Mesa final ${icon("arrow-right")}</button>`
         : stage.status === "next"
-          ? `<a class="btn btn--primary btn--sm" href="#" data-whatsapp="${escapeHTML(stageInviteMessage(stage))}">Reservar ${icon("arrow-up-right")}</a>`
+          ? `<a class="btn btn--primary btn--sm" href="#confirmar" data-confirm-open">Confirmar Inscrição ${icon("arrow-right")}</a>`
           : `<button class="btn btn--ghost btn--sm" type="button" data-stage-open="${stage.id}">Detalhes ${icon("arrow-right")}</button>`;
 
       const result = stage.status === "completed"
@@ -2015,12 +2016,12 @@
       : `<p>As cartas desta etapa ainda não foram distribuídas. Garanta sua cadeira e escreva o próximo capítulo.</p>`;
 
     const actionMarkup = completed
-      ? `<a class="btn btn--primary btn--sm" href="${waUrl(stageInviteMessage(getStage(DATA.site.nextStageId)))}" target="_blank" rel="noopener">Reservar a próxima etapa ${icon("arrow-up-right")}</a>
+      ? `<a class="btn btn--primary btn--sm" href="#confirmar" data-confirm-open>Confirmar Inscrição ${icon("arrow-right")}</a>
          <button class="btn btn--ghost btn--sm" type="button" data-close-modal>Fechar</button>`
       : stage.status === "final"
         ? `<a class="btn btn--primary btn--sm" href="${waUrl("Olá! Quero saber mais sobre a Grande Final da Temporada 2027 e como funciona a classificação.")}" target="_blank" rel="noopener">Falar com a casa ${icon("whatsapp")}</a>
            <a class="btn btn--ghost btn--sm" href="#ranking" data-route-link="ranking">Ver ranking</a>`
-        : `<a class="btn btn--primary btn--sm" href="${waUrl(stageInviteMessage(stage))}" target="_blank" rel="noopener">Tenho interesse ${icon("whatsapp")}</a>
+        : `<a class="btn btn--primary btn--sm" href="#confirmar" data-confirm-open>Confirmar Inscrição ${icon("arrow-right")}</a>
            <a class="btn btn--ghost btn--sm" href="assets/poker-de-quinta-2027.ics" download>${icon("calendar")} Salvar calendário</a>`;
 
     openModal(`

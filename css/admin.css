@@ -185,6 +185,7 @@ body.admin-page {
 .admin-field select,
 .admin-field input[type="text"],
 .admin-field input[type="url"],
+.admin-field input[type="password"],
 .admin-field input[type="date"],
 .admin-field input[type="number"] {
   width: 100%;
@@ -538,7 +539,8 @@ body.admin-page {
 }
 
 .admin-players-table input[type="text"],
-.admin-players-table input[type="url"] {
+.admin-players-table input[type="url"],
+.admin-players-table input[type="number"] {
   width: 100%;
   min-height: 34px;
   padding: 0 9px;
@@ -681,3 +683,118 @@ body.admin-page {
     flex: 1 1 auto;
   }
 }
+
+/* ============================================================
+   TRAVA DE ENTRADA DO ADMIN
+   ============================================================ */
+[hidden],
+.is-hidden {
+  display: none !important;
+}
+
+.admin-gate {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: 28px 18px;
+}
+
+.admin-gate__card {
+  width: min(100%, 430px);
+  padding: 34px 28px 30px;
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-2xl);
+  background: linear-gradient(165deg, rgba(247, 231, 186, 0.07), rgba(17, 34, 23, 0.82));
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
+  text-align: center;
+}
+
+.admin-gate__card > img {
+  display: block;
+  margin: 0 auto;
+  width: 86px;
+  height: 86px;
+  object-fit: contain;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(245, 212, 114, 0.3), 0 14px 30px rgba(0, 0, 0, 0.3);
+}
+
+.admin-gate__card .eyebrow {
+  display: block;
+  margin-top: 20px;
+  color: var(--color-brand-light);
+  font-size: 0.6rem;
+  letter-spacing: 0.24em;
+}
+
+.admin-gate__card h1 {
+  margin: 12px 0 10px;
+  font-size: clamp(1.9rem, 6vw, 2.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.admin-gate__card > p {
+  color: var(--color-text-muted);
+  font-size: 0.83rem;
+  line-height: 1.65;
+}
+
+.admin-gate__card form {
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
+  text-align: left;
+}
+
+.admin-gate__card .admin-field > span {
+  color: #c7d5c9;
+}
+
+.admin-gate__card .admin-field input {
+  text-align: center;
+  font-size: 1.05rem;
+  letter-spacing: 0.16em;
+}
+
+.admin-gate__card .btn--primary {
+  width: 100%;
+  min-height: 48px;
+}
+
+.admin-gate__message {
+  min-height: 20px;
+  margin: 2px 0 0;
+  color: #ff9b9b;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.admin-gate__card .text-link {
+  margin-top: 18px;
+  font-size: 0.75rem;
+}
+
+.admin-gate__note {
+  margin-top: 24px !important;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border-soft);
+  color: #7f9382 !important;
+  font-size: 0.64rem !important;
+  line-height: 1.55 !important;
+}
+
+@media (max-width: 480px) {
+  .admin-gate {
+    padding: 16px;
+  }
+
+  .admin-gate__card {
+    padding: 26px 20px 24px;
+  }
+}
+
+
+
+
