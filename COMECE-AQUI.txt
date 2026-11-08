@@ -39,13 +39,14 @@ a pasta "css" ao lado.
    repositório é quem publica o ranking.
 
 5) Para gerenciar as confirmações de inscrição:
-   - Abra "index.html#confirmar" no site.
-   - No rodapé da página, clique em "Entrar" (área do organizador).
-   - Senha: poker2027
+   - Abra "admin.html" e entre com a senha poker2027.
+   - Clique no botão "Inscrições" no topo da página.
    - Lá você abre/fecha inscrições, remove inscrições, promove da
      lista de espera e exporta a lista em CSV.
    - A etapa das inscrições é a próxima do site (site.nextStageId
      em js/data.js). Ao avançar a temporada, atualize esse número.
+   - Para o jogador cancelar, ele seleciona o nome na página
+     "#confirmar" e clica em "Cancelar pelo WhatsApp".
 
 6) Publicação no GitHub Pages:
    - Envie a pasta inteira (index.html, admin.html, css/, js/, assets/).

@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/confirm.css">
   <link rel="stylesheet" href="css/admin.css">
   <style>
     /* Estilos críticos da trava: funcionam mesmo se css/admin.css estiver em cache antigo. */
@@ -96,6 +97,7 @@
     </a>
     <div class="admin-topbar__actions">
       <span class="admin-status" id="save-status" data-state="saved">Dados carregados</span>
+      <button class="btn btn--ghost btn--sm" type="button" id="admin-confirm-open">Inscrições</button>
       <a class="btn btn--ghost btn--sm" href="index.html#ranking">Ver site</a>
       <button class="btn btn--ghost btn--sm" type="button" id="admin-logout">Sair</button>
     </div>
@@ -280,8 +282,19 @@
   <div class="admin-toast" id="toast" role="status" aria-live="polite"></div>
   </div>
 
+  <div class="admin-confirm-modal" id="admin-confirm-modal" hidden>
+    <div class="admin-confirm-modal__backdrop" data-admin-confirm-close></div>
+    <div class="admin-confirm-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="admin-confirm-title">
+      <button class="admin-confirm-modal__close" type="button" data-admin-confirm-close aria-label="Fechar">×</button>
+      <div id="admin-confirm-root"></div>
+    </div>
+  </div>
+
+  <script src="js/firebase-config.js" defer></script>
+  <script src="js/data.js" defer></script>
   <script src="js/ranking-data.js" defer></script>
   <script src="js/admin-ranking.js" defer></script>
+  <script src="js/admin-confirm.js" defer></script>
   <script>
     (function () {
       var KEY = "pq-admin-auth-v1";

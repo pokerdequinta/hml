@@ -1,4 +1,4 @@
-# Poker de Quinta — Temporada 2027
+﻿# Poker de Quinta — Temporada 2027
 
 Site oficial do circuito amador **Poker de Quinta** (Curitiba · desde 2015), com calendário, ranking, regulamento, histórico, confirmação de presença, loja e PWA instalável.
 
@@ -12,7 +12,7 @@ O visual e o CSS são os do projeto **hml2**. O ranking agora tem uma fonte úni
 - **Ranking por temporada:** abas 2027/2026 na página de ranking; a temporada padrão pode ser trocada pelo admin.
 - **Tabela etapa por etapa:** cada coluna mostra os pontos do jogador naquela etapa, com troféu para o campeão, pontuação negativa em vermelho e total no fim.
 - **Histórico calculado:** o Hall da Fama e o resumo das temporadas encerradas saem do próprio `ranking-data.js`.
-- **Confirmação de inscrição integrada:** página `#confirmar` e modal em qualquer botão **Confirmar Inscrição**, com lista de confirmados, lista de espera, cancelamento e contador na tela inicial. Os dados ficam no Firebase em `confirmacao/2027/...`.
+- **Confirmação de inscrição integrada:** página `#confirmar` e modal em qualquer botão **Confirmar Inscrição**, com lista de confirmados, lista de espera, cancelamento por WhatsApp e contador na tela inicial. A gestão fica no `admin.html` (botão **Inscrições**). Os dados ficam no Firebase em `confirmacao/2027/...`.
 
 ## Se a página aparecer sem estilo
 
@@ -46,6 +46,7 @@ Acesse **http://127.0.0.1:8099/**. Também funciona em GitHub Pages, Netlify, Ve
 ├── js/
 │   ├── ranking-data.js         # FONTE ÚNICA DO RANKING (jogadores, temporadas, pontos)
 │   ├── admin-ranking.js        # lógica do controle do ranking
+│   ├── admin-confirm.js        # gerenciamento das inscrições no admin
 │   ├── confirm.js              # lógica da confirmação de inscrição + Firebase
 │   ├── data.js                 # conteúdo do site (etapas 2027, loja, textos de apoio)
 │   ├── app.js                  # renderização e interações do site
@@ -91,7 +92,8 @@ A fonte oficial é **`js/ranking-data.js`**. O jeito mais seguro de editar é ab
 - **Contador na home:** aparece no card da próxima etapa e no selo do hero (“X confirmados · Y vagas restantes”).
 - **Etapa:** é a próxima do site (`site.nextStageId` em `js/data.js`). Ao avançar a temporada, atualize esse número; as inscrições ficam salvas por etapa.
 - **Firebase:** `confirmacao/{temporada}/config`, `confirmacao/{temporada}/etapas/{etapa}/confirmados` e `.../listaEspera`.
-- **Organizador:** no rodapé da página de confirmação, clique em **Entrar** e use a senha `poker2027`. Lá é possível abrir/fechar inscrições, remover, promover da espera e exportar CSV.
+- **Cancelamento do jogador:** selecione o nome na lista; aparece **Cancelar pelo WhatsApp**, que abre uma mensagem para `41 98721-0685` solicitando a remoção. A organização remove pelo admin.
+- **Organizador:** entre em **`admin.html`** com a senha `poker2027`, clique em **Inscrições** no topo e gerencie a lista em um modal: abrir/fechar, remover, promover da espera e exportar CSV.
 - A senha é uma trava de tela; a proteção real é o acesso ao Firebase/GitHub.
 
 Para trocar a temporada da confirmação, edite `confirmation.season` e `confirmation.capacity` em `js/data.js`.
@@ -170,3 +172,5 @@ O `manifest.webmanifest` e o `service-worker.js` deixam o site instalável e com
 - `admin.html` é uma ferramenta **local**: ela não grava no servidor. As alterações ficam em rascunho no navegador até você baixar e publicar o arquivo.
 - O rascunho é salvo em `localStorage` com a chave `pq-ranking-draft-v1`.
 - Os dados de 2026 foram importados do ranking oficial publicado em `pokerdequinta.github.io/ranking`.
+
+

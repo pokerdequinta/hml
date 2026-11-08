@@ -1,10 +1,10 @@
-﻿/* ============================================================
+/* ============================================================
    POKER DE QUINTA — SERVICE WORKER
    Estratégia: app shell em cache, navegação network-first com
    fallback offline e fontes com stale-while-revalidate.
    ============================================================ */
 
-const VERSION = "pq-2027-v2.3.1";
+const VERSION = "pq-2027-v2.3.2";
 const STATIC_CACHE = `${VERSION}-static`;
 const FONT_CACHE = `${VERSION}-fonts`;
 const APP_ROOT = new URL("./", self.location.href).pathname;
@@ -26,6 +26,7 @@ const APP_SHELL = [
   "./js/confirm.js",
   "./admin.html",
   "./js/admin-ranking.js",
+  "./js/admin-confirm.js",
   "./logo%20pdq.png",
   "./assets/icons/favicon-32.png",
   "./assets/icons/icon-192.png",

@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    CONFIRMAÇÃO DE INSCRIÇÃO — POKER DE QUINTA
    Modal + página integrada, com dados no Firebase Realtime DB.
    ------------------------------------------------------------
@@ -20,8 +20,7 @@
   const DB_URL = window.PQ_FIREBASE && window.PQ_FIREBASE.config
     ? window.PQ_FIREBASE.config.databaseURL
     : "";
-  const ADMIN_KEY = "pq-confirm-admin-v1";
-  const ADMIN_PASSWORD = "poker2027";
+  const WHATSAPP = String(SITE.whatsapp || "5541987210685").replace(/\D/g, "");
   const params = new URLSearchParams(window.location.search);
   const TEST_MODE = params.get("confirm-test") === "1";
   const BASE_ROOT = TEST_MODE ? "confirmacaoTeste" : String(CONFIRMATION.dbRoot || "confirmacao");
@@ -33,7 +32,6 @@
     confirmed: [],
     waitlist: [],
     tab: "confirmed",
-    admin: false,
     busy: false,
     loading: false,
     error: "",
@@ -41,12 +39,6 @@
     lastFocus: null,
     modalReady: false,
   };
-
-  try {
-    state.admin = sessionStorage.getItem(ADMIN_KEY) === "1";
-  } catch (error) {
-    state.admin = false;
-  }
 
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
@@ -128,6 +120,14 @@
     return player && player.photo ? player.photo : "";
   }
 
+  function cancelUrl(name) {
+    const event = stage();
+    const etapa = event ? `${pad(state.stageId)}ª etapa — ${event.name}` : `etapa ${state.stageId}`;
+    const data = event ? formatDate(event.date) : "";
+    const message = `Olá! Gostaria de solicitar o cancelamento da minha inscrição no Poker de Quinta.\nNome: ${name}\nEtapa: ${etapa}\nData: ${data}`;
+    return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`;
+  }
+
   function playerOptions() {
     return DATA.players
       .slice()
@@ -164,22 +164,6 @@
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-    if (!response.ok) throw new Error(`Firebase ${path}: HTTP ${response.status}`);
-    return response.json();
-  }
-
-  async function dbPut(path, body) {
-    const response = await fetch(dbEndpoint(path), {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-    if (!response.ok) throw new Error(`Firebase ${path}: HTTP ${response.status}`);
-    return response.json();
-  }
-
-  async function dbDelete(path) {
-    const response = await fetch(dbEndpoint(path), { method: "DELETE" });
     if (!response.ok) throw new Error(`Firebase ${path}: HTTP ${response.status}`);
     return response.json();
   }
@@ -234,15 +218,6 @@
       ? `<span class="confirm-person__avatar"><img src="${escapeHTML(photo)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.innerHTML='${escapeHTML(initials(person.nome))}'"></span>`
       : `<span class="confirm-person__avatar">${escapeHTML(initials(person.nome))}</span>`;
     const guestInfo = guest && person.guestOf ? ` · convidado de ${escapeHTML(person.guestOf)}` : "";
-    const actions = [];
-
-    if (state.admin && mode === "page") {
-      if (person.__wait && state.confirmed.length < state.capacity) {
-        actions.push(`<button class="confirm-mini-btn confirm-mini-btn--promote" type="button" data-confirm-promote="${escapeHTML(person.id)}" title="Promover para confirmado">↗</button>`);
-      }
-      actions.push(`<button class="confirm-mini-btn" type="button" data-confirm-remove="${escapeHTML(person.id)}" data-confirm-kind="${person.__wait ? "waitlist" : "confirmed"}" title="Remover">✕</button>`);
-    }
-
     return `<li class="confirm-person">
       <span class="confirm-person__pos">${index + 1}º</span>
       ${avatar}
@@ -252,7 +227,6 @@
       </span>
       <span class="confirm-person__actions">
         <span class="confirm-chip ${guest ? "confirm-chip--guest" : person.__wait ? "confirm-chip--wait" : "confirm-chip--member"}">${guest ? "Convidado" : person.__wait ? "Espera" : "Membro"}</span>
-        ${actions.join("")}
       </span>
     </li>`;
   }
@@ -272,29 +246,6 @@
 
     const limit = mode === "modal" ? 8 : rows.length;
     return rows.slice(0, limit).map((person, index) => personMarkup(person, index, mode)).join("");
-  }
-
-  function adminMarkup() {
-    if (state.admin) {
-      return `<div class="confirm-admin-head">
-        <strong>Organizador</strong>
-        <div class="admin-actions" style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn btn--ghost btn--sm" type="button" data-confirm-toggle-open>${state.open ? "Fechar inscrições" : "Abrir inscrições"}</button>
-          <button class="btn btn--ghost btn--sm" type="button" data-confirm-export>Exportar CSV</button>
-          <button class="btn btn--ghost btn--sm" type="button" data-confirm-admin-logout>Sair</button>
-        </div>
-      </div>
-      <p class="confirm-admin-msg" data-confirm-admin-msg>Modo organizador ativo. Remova ou promova jogadores pela lista.</p>`;
-    }
-    return `<div class="confirm-admin-head">
-      <strong>Organizador</strong>
-      <button class="btn btn--ghost btn--sm" type="button" data-confirm-admin-toggle>Entrar</button>
-    </div>
-    <form class="confirm-admin-form" data-confirm-admin-form hidden>
-      <input type="password" data-confirm-admin-pass autocomplete="current-password" placeholder="Senha do organizador" aria-label="Senha do organizador">
-      <button class="btn btn--primary btn--sm" type="submit">Acessar</button>
-      <span class="confirm-admin-msg" data-confirm-admin-msg></span>
-    </form>`;
   }
 
   function markup(mode) {
@@ -359,7 +310,8 @@
 
           <div class="confirm-existing" data-confirm-existing hidden>
             <p><strong data-confirm-existing-name></strong>, você já está <span data-confirm-existing-status>inscrito</span> nesta etapa.</p>
-            <button class="btn btn--ghost btn--sm" type="button" data-confirm-cancel>Cancelar minha inscrição</button>
+            <a class="btn btn--ghost btn--sm" data-confirm-cancel-wa href="#" target="_blank" rel="noopener">Cancelar pelo WhatsApp</a>
+            <p class="confirm-note">O cancelamento é solicitado à organização pelo WhatsApp. Seu nome sai da lista após a confirmação.</p>
           </div>
         </section>
       </div>
@@ -382,7 +334,6 @@
         <p class="confirm-error" data-confirm-error ${state.error ? "" : "hidden"}></p>
       </aside>
 
-      ${mode === "page" ? `<section class="confirm-admin" data-confirm-admin aria-label="Área do organizador">${adminMarkup()}</section>` : ""}
     </div>`;
   }
 
@@ -461,18 +412,9 @@
         const statusText = $("[data-confirm-existing-status]", root);
         if (name) name.textContent = entry.nome;
         if (statusText) statusText.textContent = state.confirmed.some((person) => person.id === entry.id) ? "confirmado" : "na lista de espera";
+        const wa = $("[data-confirm-cancel-wa]", root);
+        if (wa) wa.href = cancelUrl(entry.nome);
       }
-    }
-
-    const admin = $("[data-confirm-admin]", root);
-    if (admin) {
-      const adminMode = state.admin ? "admin" : "guest";
-      if (admin.dataset.adminMode !== adminMode) {
-        admin.innerHTML = adminMarkup();
-        admin.dataset.adminMode = adminMode;
-      }
-      const toggle = $("[data-confirm-toggle-open]", admin);
-      if (toggle) toggle.textContent = state.open ? "Fechar inscrições" : "Abrir inscrições";
     }
   }
 
@@ -538,16 +480,6 @@
       updateAll();
       setBusy(false);
     }
-  }
-
-  async function saveConfig() {
-    await dbPut(configPath(), {
-      temporada: SEASON,
-      etapa: state.stageId,
-      aberta: state.open,
-      capacidade: state.capacity,
-      atualizadoEm: new Date().toISOString(),
-    });
   }
 
   /* ============================================================
@@ -621,112 +553,6 @@
       state.busy = false;
       setBusy(false);
     }
-  }
-
-  async function cancelRegistration() {
-    const entry = selectedEntry();
-    if (!entry) return;
-    if (!window.confirm(`Cancelar a inscrição de ${entry.nome} nesta etapa?`)) return;
-    state.busy = true;
-    try {
-      const kind = state.confirmed.some((person) => person.id === entry.id) ? "confirmados" : "listaEspera";
-      await dbDelete(`${stagePath()}/${kind}/${entry.id}`);
-      state.selected = "";
-      feedback("Inscrição cancelada. A vaga foi liberada.");
-      await refresh();
-    } catch (error) {
-      feedback("Não foi possível cancelar. Tente novamente.", "error");
-    } finally {
-      state.busy = false;
-      setBusy(false);
-    }
-  }
-
-  async function removeEntry(id, kind) {
-    if (!state.admin || !id) return;
-    if (!window.confirm("Remover esta inscrição?")) return;
-    try {
-      await dbDelete(`${stagePath()}/${kind}/${id}`);
-      await refresh();
-    } catch (error) {
-      feedback("Não foi possível remover.", "error");
-    }
-  }
-
-  async function promoteEntry(id) {
-    if (!state.admin || !id) return;
-    const person = state.waitlist.find((item) => item.id === id);
-    if (!person) return;
-    if (state.confirmed.length >= state.capacity) {
-      feedback("Não há vagas para promover esta pessoa.", "error");
-      return;
-    }
-    if (!window.confirm(`Promover ${person.nome} para os confirmados?`)) return;
-    try {
-      await dbPost(`${stagePath()}/confirmados`, {
-        ...person,
-        id: undefined,
-        timestamp: Date.now(),
-        data: new Date().toISOString(),
-        temporada: SEASON,
-        etapa: state.stageId,
-      });
-      await dbDelete(`${stagePath()}/listaEspera/${id}`);
-      await refresh();
-    } catch (error) {
-      feedback("Não foi possível promover.", "error");
-    }
-  }
-
-  async function toggleOpen() {
-    if (!state.admin) return;
-    state.open = !state.open;
-    try {
-      await saveConfig();
-      updateAll();
-    } catch (error) {
-      state.open = !state.open;
-      feedback("Não foi possível alterar o status das inscrições.", "error");
-    }
-  }
-
-  function exportCSV() {
-    if (!state.admin) return;
-    const rows = [
-      ["nome", "tipo", "convidado_de", "etapa", "data"],
-      ...state.confirmed.map((person) => [person.nome, person.isGuest ? "convidado" : "membro", person.guestOf || "", state.stageId, person.data || ""]),
-      ...state.waitlist.map((person) => [person.nome, person.isGuest ? "convidado" : "membro", person.guestOf || "", state.stageId, person.data || ""]),
-    ];
-    const csv = "\ufeff" + rows.map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(";")).join("\r\n");
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `inscricoes-etapa-${pad(state.stageId)}-${SEASON}.csv`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 2000);
-  }
-
-  function adminLogin(form) {
-    const input = $("[data-confirm-admin-pass]", form);
-    const message = $("[data-confirm-admin-msg]", form);
-    if (!input) return;
-    if (input.value.trim() !== ADMIN_PASSWORD) {
-      if (message) message.textContent = "Senha incorreta.";
-      input.select();
-      return;
-    }
-    try { sessionStorage.setItem(ADMIN_KEY, "1"); } catch (error) { /* ignora */ }
-    state.admin = true;
-    updateAll();
-  }
-
-  function adminLogout() {
-    try { sessionStorage.removeItem(ADMIN_KEY); } catch (error) { /* ignora */ }
-    state.admin = false;
-    updateAll();
   }
 
   /* ============================================================
@@ -821,43 +647,6 @@
       return;
     }
 
-    if (event.target.closest("[data-confirm-cancel]")) {
-      cancelRegistration();
-      return;
-    }
-
-    const remove = event.target.closest("[data-confirm-remove]");
-    if (remove) {
-      removeEntry(remove.dataset.confirmRemove, remove.dataset.confirmKind);
-      return;
-    }
-
-    const promote = event.target.closest("[data-confirm-promote]");
-    if (promote) {
-      promoteEntry(promote.dataset.confirmPromote);
-      return;
-    }
-
-    if (event.target.closest("[data-confirm-admin-toggle]")) {
-      const form = $("[data-confirm-admin-form]");
-      if (form) form.hidden = false;
-      $("[data-confirm-admin-pass]")?.focus();
-      return;
-    }
-
-    if (event.target.closest("[data-confirm-admin-logout]")) {
-      adminLogout();
-      return;
-    }
-
-    if (event.target.closest("[data-confirm-toggle-open]")) {
-      toggleOpen();
-      return;
-    }
-
-    if (event.target.closest("[data-confirm-export]")) {
-      exportCSV();
-    }
   });
 
   document.addEventListener("submit", (event) => {
@@ -866,10 +655,6 @@
       event.preventDefault();
       confirmRegistration(form);
       return;
-    }
-    if (form.matches("[data-confirm-admin-form]")) {
-      event.preventDefault();
-      adminLogin(form);
     }
   });
 
@@ -918,4 +703,6 @@
     init();
   }
 })();
+
+
 
