@@ -101,6 +101,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/styles.css" onerror="window.__pqCssFailed = true">
+  <link rel="stylesheet" href="css/confirm.css">
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       if (!window.__pqCssFailed) return;
@@ -290,7 +291,7 @@
             </div>
             <div class="hero__tag hero__tag--seats">
               <span class="hero__tag-dot"></span>
-              <span><strong>20 lugares</strong><br>por noite</span>
+              <span><strong data-confirm-home-confirmed>—</strong> confirmados<br><span data-confirm-home-remaining>—</span> vagas restantes</span>
             </div>
           </div>
         </section>
@@ -370,18 +371,24 @@
               </div>
             </dl>
             <div class="next-stage__actions">
-              <a class="btn btn--primary" id="next-stage-reserve" href="#" target="_blank" rel="noopener">
-                Reservar minha cadeira
-                <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+              <a class="btn btn--primary" id="next-stage-reserve" href="#confirmar" data-confirm-open>
+                Confirmar Inscrição
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
               </a>
               <a class="btn btn--ghost" href="assets/poker-de-quinta-2027.ics" download>
                 <svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>
                 Salvar calendário
               </a>
             </div>
+            <p class="next-stage__confirm-count" aria-live="polite">
+              <span class="live-pill__dot" aria-hidden="true"></span>
+              <span><strong data-confirm-home-confirmed>—</strong> confirmados</span>
+              <span class="dot" aria-hidden="true"></span>
+              <span><strong data-confirm-home-remaining>—</strong> vagas restantes</span>
+            </p>
             <a class="next-stage__confirm-link" href="#confirmar" data-route-link="confirmar">
               <span class="next-stage__confirm-icon"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg></span>
-              <span><strong>Já é membro?</strong> Confirme sua presença na lista oficial</span>
+              <span><strong>Já é membro?</strong> Confirme sua inscrição na lista oficial</span>
               <svg class="icon next-stage__confirm-arrow" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
             </a>
           </div>
@@ -401,7 +408,7 @@
             <div class="countdown-card__rule"></div>
             <p class="countdown-card__note">
               <svg class="icon" aria-hidden="true"><use href="#i-users"></use></svg>
-              Apenas 20 Lugares. Confirme sua presença.
+              <span data-confirm-home-note>Apenas 20 lugares. Confirme sua inscrição.</span>
             </p>
             <span class="countdown-card__suit" aria-hidden="true">♠</span>
           </aside>
@@ -696,7 +703,7 @@
                 <ul class="rule-list">
                   <li><strong>Stack inicial:</strong> 15.000 fichas, Rebuys Ilimitados até o 10 nível.</li>
                   <li><strong>Blinds:</strong> níveis de 15/12/10 minutos; big blind ante depois do intervalo.</li>
-                  <li><strong>Inscrições:</strong> Confirme sua presença na lista oficial.</li>
+                  <li><strong>Inscrições:</strong> Confirme sua inscrição na lista oficial.</li>
                   <li><strong>Bonus:</strong> Chegue antes das 20h e ganhe 3K em fichas.</li>
                   <li><strong>Start:</strong> 20h, com portas abertas a partir das 18h, Resenha Locurinha e Jogos de Azar!</li>
                 </ul>
@@ -826,111 +833,49 @@
     </section>
 
     <!-- =====================================================
-         CONFIRMAÇÃO DE PRESENÇA
+         CONFIRMAÇÃO DE INSCRIÇÃO
     ====================================================== -->
     <section class="page" id="page-confirmar" data-page="confirmar" aria-labelledby="confirmar-title" hidden>
       <div class="container">
         <header class="page-heading">
-          <p class="eyebrow"><span class="eyebrow__line" aria-hidden="true"></span>Presença · sistema oficial</p>
+          <p class="eyebrow"><span class="eyebrow__line" aria-hidden="true"></span>Inscrições · etapa atual</p>
           <div class="page-heading__row">
             <div>
-              <h1 id="confirmar-title">Confirme sua <span class="text-gold">presença.</span></h1>
-              <p class="page-deck">A lista oficial da próxima etapa é gerenciada no Firebase. Confirme somente se puder comparecer e acompanhe as vagas em tempo real.</p>
+              <h1 id="confirmar-title">Confirme sua <span class="text-gold">inscrição.</span></h1>
+              <p class="page-deck">A lista da próxima etapa agora é gerenciada aqui no site. Confirme somente se puder comparecer, acompanhe as vagas e cancele se surgir um imprevisto.</p>
             </div>
             <div class="confirm-heading-actions">
               <div class="confirm-system-pill">
                 <span class="live-pill__dot" aria-hidden="true"></span>
-                <span>Firebase · sistema da casa</span>
+                <span id="confirm-live-pill">Firebase · ao vivo</span>
               </div>
-              <a class="btn btn--primary btn--sm" id="confirm-open-top" href="https://pokerdequinta.github.io/confirma/" target="_blank" rel="noopener">
-                Confirmar agora
-                <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
-              </a>
+              <button class="btn btn--primary btn--sm" type="button" data-confirm-open>
+                Confirmar Inscrição
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+              </button>
             </div>
           </div>
         </header>
 
-        <div class="confirm-layout">
-          <aside class="confirm-status-card" aria-label="Status da etapa no Firebase">
-            <div class="confirm-status__top">
-              <span class="confirm-status__live"><i aria-hidden="true"></i> Sistema oficial</span>
-              <span class="confirm-source" id="confirm-source" data-source="">Firebase · verificando</span>
-            </div>
-            <p class="eyebrow">Etapa publicada</p>
-            <div class="confirm-status__stage">
-              <strong id="confirm-stage">Etapa 09</strong>
-              <span class="badge badge--upcoming" id="confirm-status">Status não informado</span>
-            </div>
-            <h2 class="confirm-status__date" id="confirm-date">07 OUT 2027</h2>
-            <dl class="confirm-facts">
-              <div>
-                <dt>Abertura das inscrições</dt>
-                <dd id="confirm-opening">Definida pela organização</dd>
-              </div>
-              <div>
-                <dt>Onde confirmar</dt>
-                <dd>Lista oficial do Poker de Quinta</dd>
-              </div>
-              <div>
-                <dt>Origem dos dados</dt>
-                <dd>Firebase Realtime Database</dd>
-              </div>
-            </dl>
-            <div class="confirm-actions">
-              <a class="btn btn--primary btn--block" id="confirm-open" href="https://pokerdequinta.github.io/confirma/" target="_blank" rel="noopener">
-                Confirmar no sistema oficial
-                <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
-              </a>
-              <a class="btn btn--ghost btn--block" href="#" data-whatsapp="Olá! Preciso de ajuda com a confirmação de presença no Poker de Quinta." target="_blank" rel="noopener">
-                Falar com a organização
-                <svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
-              </a>
-            </div>
-            <p class="confirm-note">A confirmação é registrada diretamente na lista oficial da casa. Se a etapa estiver cheia, o sistema encaminha para a lista de espera.</p>
-          </aside>
-
-          <div class="confirm-embed">
-            <div class="confirm-embed__bar">
-              <div class="confirm-embed__live">
-                <span class="live-pill__dot" aria-hidden="true"></span>
-                <span>Lista oficial de presença</span>
-              </div>
-              <a class="text-link" href="https://pokerdequinta.github.io/confirma/" target="_blank" rel="noopener">
-                Abrir em nova aba
-                <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
-              </a>
-            </div>
-            <iframe
-              id="confirm-frame"
-              data-src="https://pokerdequinta.github.io/confirma/"
-              title="Confirmação de presença oficial do Poker de Quinta"
-              loading="lazy"
-              referrerpolicy="no-referrer"
-            ></iframe>
-            <div class="confirm-offline" id="confirm-offline" hidden>
-              <span class="confirm-offline__icon"><svg class="icon" aria-hidden="true"><use href="#i-info"></use></svg></span>
-              <h2>Confirmação indisponível offline</h2>
-              <p>A lista oficial precisa de conexão com a internet. Reconecte e recarregue a página para confirmar sua presença.</p>
-              <a class="btn btn--primary btn--sm" href="https://pokerdequinta.github.io/confirma/" target="_blank" rel="noopener">Abrir quando estiver online</a>
-            </div>
-          </div>
+        <div id="confirm-page-root" class="confirm-page-root">
+          <div class="confirm-loading">Carregando inscrições...</div>
         </div>
 
         <div class="confirm-help-grid">
           <article class="confirm-help">
             <span class="confirm-help__number">01</span>
             <h2>Confirme só se puder ir</h2>
-            <p>A vaga é limitada. Se surgir um imprevisto, cancele pelo WhatsApp para liberar sua cadeira para a lista de espera.</p>
+            <p>A vaga é limitada. Se surgir um imprevisto, cancele pela própria lista para liberar sua cadeira para alguém da espera.</p>
           </article>
           <article class="confirm-help">
             <span class="confirm-help__number">02</span>
             <h2>Lista de espera</h2>
-            <p>Quando as vagas acabam, novas confirmações entram na lista de espera. Membros têm prioridade sobre convidados.</p>
+            <p>Quando as 20 vagas acabam, novas inscrições entram na lista de espera. Membros têm prioridade sobre convidados.</p>
           </article>
           <article class="confirm-help">
             <span class="confirm-help__number">03</span>
             <h2>Tudo em um só lugar</h2>
-            <p>O sistema oficial registra confirmados, espera, cancelamentos e a etapa vigente no Firebase do Poker de Quinta.</p>
+            <p>Confirmados, espera, cancelamentos e o número de vagas ficam sincronizados no Firebase e aparecem também na tela inicial.</p>
           </article>
         </div>
       </div>
@@ -1376,8 +1321,8 @@
               <p>Não. A casa recebe jogadores de todos os níveis, do iniciante ao experiente. O importante é conhecer as regras básicas e jogar com respeito. Antes da primeira mão, a organização faz um rápido alinhamento de etiqueta.</p>
             </details>
             <details class="faq-item">
-              <summary>Como faço para reservar uma cadeira?<span><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"></use></svg></span></summary>
-              <p>Envie uma mensagem pelo WhatsApp. A organização confirma a disponibilidade e registra seu nome. A cadeira fica garantida até as 20h15; depois disso, pode ser liberada para a lista de espera.</p>
+              <summary>Como faço para confirmar minha inscrição?<span><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"></use></svg></span></summary>
+              <p>Clique em <strong>Confirmar Inscrição</strong> em qualquer botão do site, escolha seu nome e confirme. A vaga é registrada na hora; se a mesa estiver cheia, você entra na lista de espera. A cadeira fica garantida até as 20h15.</p>
             </details>
             <details class="faq-item">
               <summary>Posso levar um convidado?<span><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"></use></svg></span></summary>
@@ -1433,8 +1378,8 @@
           </div>
           <div>
             <h2>Jogue com a gente</h2>
-            <a href="#confirmar" data-route-link="confirmar">Confirmar presença</a>
-            <a href="#" data-whatsapp="Olá! Quero reservar uma cadeira no Poker de Quinta." target="_blank" rel="noopener">Reservar cadeira</a>
+            <a href="#confirmar" data-route-link="confirmar">Confirmar inscrição</a>
+            <a href="#confirmar" data-confirm-open>Confirmar Inscrição</a>
             <a href="assets/poker-de-quinta-2027.ics" download>Calendário .ics</a>
             <button class="footer-install" type="button" data-install>Instalar o app</button>
             <button class="footer-install" type="button" data-modal="responsible">Jogo responsável</button>
@@ -1492,7 +1437,7 @@
       <p class="drawer__label">Sua cadeira</p>
       <nav class="menu-list" aria-label="Menu lateral">
         <a class="menu-list__feature" href="#confirmar" data-route-link="confirmar">
-          <span>Confirmar presença</span>
+          <span>Confirmar inscrição</span>
           <small>Lista oficial da próxima etapa</small>
           <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>
         </a>
@@ -1593,6 +1538,7 @@
   <script src="js/data.js" defer></script>
   <script src="js/ranking-data.js" defer></script>
   <script src="js/app.js" defer></script>
+  <script src="js/confirm.js" defer></script>
 </body>
 </html>
 

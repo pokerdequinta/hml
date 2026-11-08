@@ -30,6 +30,7 @@ a pasta "css" ao lado.
    - Abra "admin.html" na mesma pasta (ou no site publicado).
    - Digite a senha: poker2027
    - Lance os pontos e clique em "Baixar ranking-data.js".
+   - Na seção "Jogadores" você edita nome, foto, cidade, UF e desde.
    - Substitua js/ranking-data.js no repositório e faça commit.
    - A sessão termina ao fechar a aba. Use o botão "Sair" para sair antes.
 
@@ -37,9 +38,18 @@ a pasta "css" ao lado.
    sozinha e não substitui a segurança do GitHub: quem tem acesso ao
    repositório é quem publica o ranking.
 
-5) Publicação no GitHub Pages:
+5) Para gerenciar as confirmações de inscrição:
+   - Abra "index.html#confirmar" no site.
+   - No rodapé da página, clique em "Entrar" (área do organizador).
+   - Senha: poker2027
+   - Lá você abre/fecha inscrições, remove inscrições, promove da
+     lista de espera e exporta a lista em CSV.
+   - A etapa das inscrições é a próxima do site (site.nextStageId
+     em js/data.js). Ao avançar a temporada, atualize esse número.
+
+6) Publicação no GitHub Pages:
    - Envie a pasta inteira (index.html, admin.html, css/, js/, assets/).
-   - Confira se css/styles.css existe no repositório.
+   - Confira se css/styles.css e css/confirm.css existem no repositório.
    - Aguarde o deploy e force a atualização com Ctrl + F5.
 
 O site publicado em https://pokerdequinta.github.io/hml/ está no ar.

@@ -43,9 +43,9 @@
       "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
     },
     {
-      "name": "Confirmação de presença",
-      "short_name": "Confirmar",
-      "description": "Confirme sua presença na etapa oficial",
+      "name": "Confirmar inscrição",
+      "short_name": "Inscrição",
+      "description": "Confirme sua inscrição na próxima etapa",
       "url": "./#confirmar",
       "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
     },
@@ -81,3 +81,4 @@
     }
   ]
 }
+

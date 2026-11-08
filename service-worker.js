@@ -4,7 +4,7 @@
    fallback offline e fontes com stale-while-revalidate.
    ============================================================ */
 
-const VERSION = "pq-2027-v2.2.3";
+const VERSION = "pq-2027-v2.3.1";
 const STATIC_CACHE = `${VERSION}-static`;
 const FONT_CACHE = `${VERSION}-fonts`;
 const APP_ROOT = new URL("./", self.location.href).pathname;
@@ -16,12 +16,14 @@ const APP_SHELL = [
   "./offline.html",
   "./manifest.webmanifest",
   "./css/styles.css",
+  "./css/confirm.css",
   "./css/admin.css",
   "./js/data.js",
   "./js/ranking-data.js",
   "./js/firebase-config.js",
   "./js/firebase-data.js",
   "./js/app.js",
+  "./js/confirm.js",
   "./admin.html",
   "./js/admin-ranking.js",
   "./logo%20pdq.png",
@@ -168,6 +170,8 @@ self.addEventListener("fetch", (event) => {
 
   event.respondWith(cacheFirst(request));
 });
+
+
 
 
 

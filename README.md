@@ -12,6 +12,7 @@ O visual e o CSS são os do projeto **hml2**. O ranking agora tem uma fonte úni
 - **Ranking por temporada:** abas 2027/2026 na página de ranking; a temporada padrão pode ser trocada pelo admin.
 - **Tabela etapa por etapa:** cada coluna mostra os pontos do jogador naquela etapa, com troféu para o campeão, pontuação negativa em vermelho e total no fim.
 - **Histórico calculado:** o Hall da Fama e o resumo das temporadas encerradas saem do próprio `ranking-data.js`.
+- **Confirmação de inscrição integrada:** página `#confirmar` e modal em qualquer botão **Confirmar Inscrição**, com lista de confirmados, lista de espera, cancelamento e contador na tela inicial. Os dados ficam no Firebase em `confirmacao/2027/...`.
 
 ## Se a página aparecer sem estilo
 
@@ -40,10 +41,12 @@ Acesse **http://127.0.0.1:8099/**. Também funciona em GitHub Pages, Netlify, Ve
 ├── admin.html                  # controle do ranking (ferramenta da organização)
 ├── css/
 │   ├── styles.css              # design system + layout + ranking
+│   ├── confirm.css             # modal e página de confirmação de inscrição
 │   └── admin.css               # estilos da ferramenta de ranking
 ├── js/
 │   ├── ranking-data.js         # FONTE ÚNICA DO RANKING (jogadores, temporadas, pontos)
 │   ├── admin-ranking.js        # lógica do controle do ranking
+│   ├── confirm.js              # lógica da confirmação de inscrição + Firebase
 │   ├── data.js                 # conteúdo do site (etapas 2027, loja, textos de apoio)
 │   ├── app.js                  # renderização e interações do site
 │   ├── firebase-config.js      # configuração pública do Firebase
@@ -72,6 +75,26 @@ Se a tela do admin aparecer com a trava e o painel juntos, o navegador/repositó
 ### Ranking (jogadores, temporadas e pontos)
 
 A fonte oficial é **`js/ranking-data.js`**. O jeito mais seguro de editar é abrir **`admin.html`**, lançar os pontos e baixar o arquivo pronto. O passo a passo está em [COMO-ATUALIZAR-RANKING.md](COMO-ATUALIZAR-RANKING.md).
+
+### Card do jogador (modal do perfil)
+
+- **Nome, foto, cidade, UF e “na casa desde”:** no admin, seção **Jogadores** → colunas Nome, Foto, Cidade, UF e Desde.
+- **Posição, pontos, vitórias, etapas e barras:** calculados a partir dos pontos. No admin, **Lançar pontos** → escolha a temporada e a etapa → edite os pontos. Não existe um campo “total”: o total é a soma das etapas.
+- **“Poker de Quinta” abaixo do nome:** é o fallback quando Cidade/UF/Desde estão vazios. Preencha Cidade/UF para trocar.
+- **“Perfil · Temporada 2026”:** é a temporada selecionada nas abas do ranking.
+- **Bio e “Melhor resultado”:** campos `bio` e `melhor` em `js/ranking-data.js`; o site esconde a seção quando estão vazios.
+
+### Confirmação de inscrição
+
+- **Página completa:** `index.html#confirmar` (também acessível pelo menu).
+- **Modal:** qualquer botão **Confirmar Inscrição** abre o modal sem sair da tela.
+- **Contador na home:** aparece no card da próxima etapa e no selo do hero (“X confirmados · Y vagas restantes”).
+- **Etapa:** é a próxima do site (`site.nextStageId` em `js/data.js`). Ao avançar a temporada, atualize esse número; as inscrições ficam salvas por etapa.
+- **Firebase:** `confirmacao/{temporada}/config`, `confirmacao/{temporada}/etapas/{etapa}/confirmados` e `.../listaEspera`.
+- **Organizador:** no rodapé da página de confirmação, clique em **Entrar** e use a senha `poker2027`. Lá é possível abrir/fechar inscrições, remover, promover da espera e exportar CSV.
+- A senha é uma trava de tela; a proteção real é o acesso ao Firebase/GitHub.
+
+Para trocar a temporada da confirmação, edite `confirmation.season` e `confirmation.capacity` em `js/data.js`.
 
 Resumo da estrutura:
 
