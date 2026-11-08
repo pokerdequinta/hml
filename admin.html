@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1a2e1f">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Controle do ranking — Poker de Quinta</title>
+  <link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-page">
+  <header class="admin-topbar">
+    <a class="admin-brand" href="index.html#ranking">
+      <img src="logo%20pdq.png" alt="">
+      <span>
+        <strong>Poker de Quinta</strong>
+        <span>Controle do ranking</span>
+      </span>
+    </a>
+    <div class="admin-topbar__actions">
+      <span class="admin-status" id="save-status" data-state="saved">Dados carregados</span>
+      <a class="btn btn--ghost btn--sm" href="index.html#ranking">Ver site</a>
+    </div>
+  </header>
+
+  <main class="admin-main">
+    <section class="admin-hero">
+      <p class="eyebrow"><span class="eyebrow__line" aria-hidden="true"></span>Ferramenta da organização</p>
+      <h1>Controle do ranking.</h1>
+      <p>Escolha a temporada e a etapa, lance os pontos de cada jogador e confira a classificação em tempo real. No fim, baixe o arquivo <code>ranking-data.js</code> e substitua a versão publicada no GitHub.</p>
+      <div class="admin-steps">
+        <span>1 · Temporada</span>
+        <span>2 · Etapa</span>
+        <span>3 · Pontos</span>
+        <span>4 · Baixar arquivo</span>
+        <span>5 · Commit no GitHub</span>
+      </div>
+    </section>
+
+    <div class="admin-banner" id="draft-banner" hidden>
+      <span id="draft-banner-text">Existe um rascunho salvo neste navegador.</span>
+      <span class="admin-banner__actions">
+        <button class="btn btn--primary btn--sm" type="button" id="restore-draft">Restaurar rascunho</button>
+        <button class="btn btn--ghost btn--sm" type="button" id="discard-draft-banner">Descartar</button>
+      </span>
+    </div>
+
+    <section class="admin-card admin-toolbar" aria-label="Seleção de temporada e etapa">
+      <div class="admin-field">
+        <span>Temporada</span>
+        <div class="admin-field__row">
+          <select id="season-select" aria-label="Temporada"></select>
+          <button class="btn btn--ghost btn--sm" type="button" id="add-season">+ Temporada</button>
+        </div>
+      </div>
+      <div class="admin-field">
+        <span>Etapa</span>
+        <div class="admin-field__row">
+          <select id="stage-select" aria-label="Etapa"></select>
+          <button class="btn btn--ghost btn--sm" type="button" id="add-stage">+ Etapa</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="admin-grid">
+      <section class="admin-card" aria-labelledby="entry-title">
+        <div class="admin-card__head">
+          <div>
+            <h2 id="entry-title">Lançar pontos</h2>
+            <p id="entry-subtitle">Preencha somente quem jogou. Deixe em branco para quem não participou.</p>
+          </div>
+          <div class="admin-actions">
+            <div class="admin-segment" role="group" aria-label="Ordenar jogadores">
+              <button type="button" class="is-active" data-order="alpha">A–Z</button>
+              <button type="button" data-order="ranking">Ranking</button>
+            </div>
+            <button class="btn btn--ghost btn--sm" type="button" id="clear-stage">Limpar etapa</button>
+          </div>
+        </div>
+        <div class="admin-card__body" id="stage-settings">
+          <div class="admin-toolbar" style="margin-bottom:0">
+            <label class="admin-field">
+              <span>Nome da etapa</span>
+              <input type="text" id="stage-name" placeholder="Ex.: Mesa dos Tubarões">
+            </label>
+            <label class="admin-field">
+              <span>Data</span>
+              <input type="date" id="stage-date">
+            </label>
+          </div>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table" aria-describedby="entry-subtitle">
+            <thead>
+              <tr>
+                <th class="rank">#</th>
+                <th>Jogador</th>
+                <th class="num">Pontos</th>
+                <th class="num">KO</th>
+                <th class="num">Total</th>
+              </tr>
+            </thead>
+            <tbody id="entry-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <aside class="admin-card" aria-labelledby="summary-title">
+        <div class="admin-card__head">
+          <div>
+            <h2 id="summary-title">Resumo</h2>
+            <p id="summary-subtitle">Temporada selecionada</p>
+          </div>
+        </div>
+        <div class="admin-card__body admin-summary__season">
+          <div class="admin-kpis">
+            <div class="admin-kpi"><strong id="kpi-players">0</strong><span>jogadores</span></div>
+            <div class="admin-kpi"><strong id="kpi-stages">0</strong><span>etapas jogadas</span></div>
+          </div>
+          <div>
+            <label class="admin-check">
+              <input type="checkbox" id="season-closed">
+              Temporada encerrada
+            </label>
+            <button class="btn btn--ghost btn--sm" type="button" id="make-default" style="margin-top:10px">Usar como temporada padrão do site</button>
+          </div>
+          <div class="admin-divider"></div>
+          <div>
+            <h3 style="margin:0 0 8px;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;color:#9fb2a2">Ranking ao vivo</h3>
+            <ol class="admin-live-list" id="live-ranking"></ol>
+          </div>
+          <p class="admin-muted" id="summary-note"></p>
+        </div>
+      </aside>
+    </div>
+
+    <section class="admin-card admin-export" aria-labelledby="export-title">
+      <div class="admin-card__head">
+        <div>
+          <h2 id="export-title">Salvar e publicar</h2>
+          <p>O site lê <code>js/ranking-data.js</code>. Baixe o arquivo atualizado e substitua o antigo no repositório.</p>
+        </div>
+      </div>
+      <div class="admin-card__body admin-export__grid">
+        <div>
+          <div class="admin-export__actions">
+            <button class="btn btn--primary" type="button" id="download-js">Baixar ranking-data.js</button>
+            <button class="btn btn--ghost" type="button" id="download-json">Baixar JSON</button>
+            <label class="btn btn--ghost" for="import-file">
+              Importar arquivo
+              <input type="file" id="import-file" accept=".js,.json,application/json,text/javascript" hidden>
+            </label>
+            <button class="btn btn--ghost" type="button" id="discard-all">Descartar alterações</button>
+          </div>
+          <pre id="export-preview" aria-label="Prévia do arquivo"></pre>
+        </div>
+        <div>
+          <div class="admin-note">
+            <strong>Como publicar:</strong><br>
+            1. Baixe o <code>ranking-data.js</code>.<br>
+            2. No seu repositório, substitua <code>js/ranking-data.js</code>.<br>
+            3. Faça commit e envie para o GitHub Pages.<br>
+            4. Atualize o site com <strong>Ctrl + F5</strong>.
+          </div>
+          <p class="admin-muted" style="margin-top:14px">As alterações também ficam salvas como rascunho neste navegador. Se fechar a página antes de baixar, poderá restaurar o rascunho ao voltar.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="admin-card admin-export" aria-labelledby="players-title">
+      <div class="admin-card__head">
+        <div>
+          <h2 id="players-title">Jogadores</h2>
+          <p>Cadastre quem entra na temporada. O apelido é o nome exibido no ranking.</p>
+        </div>
+        <button class="btn btn--ghost btn--sm" type="button" id="toggle-players">Mostrar lista</button>
+      </div>
+      <div class="admin-card__body" id="players-panel" hidden>
+        <form class="admin-toolbar" id="add-player-form" style="align-items:end">
+          <label class="admin-field">
+            <span>Nome do jogador</span>
+            <input type="text" id="new-player-name" placeholder="Ex.: João Pedro" required>
+          </label>
+          <label class="admin-field">
+            <span>URL da foto (opcional)</span>
+            <input type="url" id="new-player-photo" placeholder="https://...">
+          </label>
+          <button class="btn btn--primary" type="submit" style="min-height:46px">Adicionar jogador</button>
+        </form>
+        <div class="admin-table-wrap" style="margin-top:18px;max-height:420px">
+          <table class="admin-table admin-players-table">
+            <thead>
+              <tr><th>Nome</th><th>Apelido</th><th>Foto</th><th></th></tr>
+            </thead>
+            <tbody id="players-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="admin-toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/ranking-data.js" defer></script>
+  <script src="js/admin-ranking.js" defer></script>
+</body>
+</html>
