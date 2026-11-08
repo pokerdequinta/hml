@@ -40,7 +40,7 @@ window.PQ_RANKING = {
       "uf": "",
       "desde": null,
       "bio": "",
-      "melhor": ""
+      "melhor": "Campeão da Temporada 2019 e 2025"
     },
     {
       "id": "cleversson",
