@@ -8,6 +8,7 @@
 
   const STORAGE_KEY = "pq-ranking-draft-v1";
   const SOURCE = window.PQ_RANKING;
+  let booted = false;
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -791,6 +792,9 @@ window.PQ_RANKING = `;
      BOOT
      ============================================================ */
   function boot() {
+    if (booted) return;
+    booted = true;
+
     const params = new URLSearchParams(window.location.search);
     const requestedYear = Number(params.get("temporada"));
     const requestedStage = Number(params.get("etapa"));

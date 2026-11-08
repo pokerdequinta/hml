@@ -42,7 +42,7 @@ a pasta "css" ao lado.
    - Confira se css/styles.css existe no repositório.
    - Aguarde o deploy e force a atualização com Ctrl + F5.
 
-O site publicado em https://pokerdequinta.github.io/hml2/ está no ar.
+O site publicado em https://pokerdequinta.github.io/hml/ está no ar.
 Se você estiver vendo a versão nova quebrada, provavelmente enviou só o
 index.html ou está abrindo o arquivo de dentro do ZIP.
 

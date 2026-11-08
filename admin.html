@@ -12,6 +12,58 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/admin.css">
+  <style>
+    /* Estilos críticos da trava: funcionam mesmo se css/admin.css estiver em cache antigo. */
+    #admin-app[hidden], .is-hidden { display: none !important; }
+    .admin-gate { display: grid; place-items: center; min-height: 100dvh; padding: 28px 18px; }
+    .admin-gate__card {
+      width: min(100%, 430px); padding: 34px 28px 30px;
+      border: 1px solid rgba(245, 212, 114, 0.16); border-radius: 24px;
+      background: linear-gradient(165deg, rgba(247, 231, 186, 0.07), rgba(17, 34, 23, 0.82));
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45); text-align: center;
+    }
+    .admin-gate__card > img {
+      display: block; margin: 0 auto; width: 86px; height: 86px;
+      object-fit: contain; border-radius: 50%;
+      box-shadow: 0 0 0 1px rgba(245, 212, 114, 0.3), 0 14px 30px rgba(0, 0, 0, 0.3);
+    }
+    .admin-gate__card .eyebrow {
+      display: block; margin-top: 20px; color: #f5d472;
+      font-size: 0.6rem; letter-spacing: 0.24em;
+    }
+    .admin-gate__card h1 {
+      margin: 12px 0 10px; font-size: clamp(1.9rem, 6vw, 2.5rem);
+      line-height: 1.05; letter-spacing: -0.04em;
+    }
+    .admin-gate__card > p { color: #b8c4b8; font-size: 0.83rem; line-height: 1.65; }
+    .admin-gate__card form { display: grid; gap: 12px; margin-top: 22px; text-align: left; }
+    .admin-gate__card .admin-field { display: flex; flex-direction: column; gap: 7px; }
+    .admin-gate__card .admin-field > span {
+      color: #c7d5c9; font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.13em; text-transform: uppercase;
+    }
+    .admin-gate__card .admin-field input {
+      width: 100%; min-height: 46px; padding: 0 14px; text-align: center;
+      border: 1px solid rgba(245, 212, 114, 0.18); border-radius: 12px;
+      background: rgba(17, 34, 23, 0.7); color: #f8faf8;
+      font: inherit; font-size: 1.05rem; letter-spacing: 0.16em;
+    }
+    .admin-gate__card .btn--primary { width: 100%; min-height: 48px; }
+    .admin-gate__message {
+      min-height: 20px; margin: 2px 0 0; color: #ff9b9b;
+      font-size: 0.75rem; line-height: 1.45; text-align: center;
+    }
+    .admin-gate__card .text-link { display: inline-block; margin-top: 18px; font-size: 0.75rem; }
+    .admin-gate__note {
+      margin-top: 24px !important; padding-top: 16px;
+      border-top: 1px solid rgba(245, 212, 114, 0.16);
+      color: #7f9382 !important; font-size: 0.64rem !important; line-height: 1.55 !important;
+    }
+    @media (max-width: 480px) {
+      .admin-gate { padding: 16px; }
+      .admin-gate__card { padding: 26px 20px 24px; }
+    }
+  </style>
 </head>
 <body class="admin-page">
   <section class="admin-gate" id="admin-gate" aria-labelledby="admin-gate-title">
@@ -33,7 +85,7 @@
     </div>
   </section>
 
-  <div id="admin-app" class="is-hidden">
+  <div id="admin-app" class="is-hidden" hidden>
   <header class="admin-topbar">
     <a class="admin-brand" href="index.html#ranking">
       <img src="logo%20pdq.png" alt="">
@@ -230,5 +282,63 @@
 
   <script src="js/ranking-data.js" defer></script>
   <script src="js/admin-ranking.js" defer></script>
+  <script>
+    (function () {
+      var KEY = "pq-admin-auth-v1";
+      var PASSWORD = "poker2027";
+      var gate = document.getElementById("admin-gate");
+      var app = document.getElementById("admin-app");
+      var form = document.getElementById("admin-gate-form");
+      var input = document.getElementById("admin-gate-password");
+      var message = document.getElementById("admin-gate-message");
+
+      function showApp() {
+        if (gate) gate.hidden = true;
+        if (app) {
+          app.hidden = false;
+          app.classList.remove("is-hidden");
+        }
+      }
+
+      function showGate() {
+        if (app) {
+          app.hidden = true;
+          app.classList.add("is-hidden");
+        }
+        if (gate) gate.hidden = false;
+        setTimeout(function () { if (input) input.focus(); }, 60);
+      }
+
+      if (form) {
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+          if (!input || input.value.trim() !== PASSWORD) {
+            if (message) message.textContent = "Senha incorreta. Tente novamente.";
+            if (input) input.select();
+            return;
+          }
+          if (message) message.textContent = "";
+          input.value = "";
+          try { sessionStorage.setItem(KEY, "1"); } catch (error) { /* ignora */ }
+          showApp();
+        });
+      }
+
+      var logout = document.getElementById("admin-logout");
+      if (logout) {
+        logout.addEventListener("click", function () {
+          try { sessionStorage.removeItem(KEY); } catch (error) { /* ignora */ }
+          window.location.reload();
+        });
+      }
+
+      try {
+        if (sessionStorage.getItem(KEY) === "1") showApp();
+        else showGate();
+      } catch (error) {
+        showGate();
+      }
+    })();
+  </script>
 </body>
 </html>
