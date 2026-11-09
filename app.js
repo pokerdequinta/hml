@@ -2018,7 +2018,7 @@
       ? `<a class="btn btn--primary btn--sm" href="${waUrl(stageInviteMessage(getStage(DATA.site.nextStageId)))}" target="_blank" rel="noopener">Reservar a próxima etapa ${icon("arrow-up-right")}</a>
          <button class="btn btn--ghost btn--sm" type="button" data-close-modal>Fechar</button>`
       : stage.status === "final"
-        ? `<a class="btn btn--primary btn--sm" href="${waUrl("Olá! Quero saber mais sobre a Grande Final da Temporada 2027 e como funciona a classificação.")}" target="_blank" rel="noopener">Falar com a casa ${icon("whatsapp")}</a>
+        ? `<a class="btn btn--primary btn--sm" href="${waUrl("Olá! Quero saber mais sobre a Grande Final da Temporada 2027 e como funciona a classificação.")}" target="_blank" rel="noopener">Falar com o Presida ${icon("whatsapp")}</a>
            <a class="btn btn--ghost btn--sm" href="#ranking" data-route-link="ranking">Ver ranking</a>`
         : `<a class="btn btn--primary btn--sm" href="${waUrl(stageInviteMessage(stage))}" target="_blank" rel="noopener">Tenho interesse ${icon("whatsapp")}</a>
            <a class="btn btn--ghost btn--sm" href="assets/poker-de-quinta-2027.ics" download>${icon("calendar")} Salvar calendário</a>`;
@@ -2034,7 +2034,7 @@
       <div class="modal__facts">
         <div class="modal__fact"><span>Buy-in</span><strong>${escapeHTML(DATA.site.buyIn)}</strong></div>
         <div class="modal__fact"><span>Formato</span><strong>${stage.status === "final" ? "Top 20 · Final" : "NL Hold'em"}</strong></div>
-        <div class="modal__fact"><span>${completed ? "Campeão" : "Lugares"}</span><strong>${completed && winner ? escapeHTML(winner.name) : stage.status === "final" ? "20 finalistas" : "20 cadeiras"}</strong></div>
+        <div class="modal__fact"><span>${completed ? "Campeão" : "Lugares"}</span><strong>${completed && winner ? escapeHTML(winner.name) : stage.status === "final" ? "20 finalistas" : "20 vagas"}</strong></div>
       </div>
       <div class="modal__section">
         <h3>${completed ? "Mesa final" : "Sobre a etapa"}</h3>
@@ -2120,10 +2120,10 @@
         <div class="modal__section">
           <p>O Poker de Quinta é um evento social e recreativo para maiores de 18 anos. Nenhuma das informações deste site é incentivo ao jogo como fonte de renda.</p>
           <p>Defina um limite antes de jogar, não aposte o que você não pode perder e faça pausas. Se o jogo deixou de ser diversão, procure apoio profissional e converse com alguém de confiança.</p>
-          <p>Se você precisa falar com a organização sobre uma situação relacionada ao jogo, escreva para <a href="mailto:${DATA.site.email}">${DATA.site.email}</a>. A casa está disponível para ouvir com discrição.</p>
+          <p>Se você precisa falar com a organização sobre uma situação relacionada ao jogo, escreva para <a href="mailto:${DATA.site.email}">${DATA.site.email}</a>. Estou disponível para ouvir com discrição.</p>
         </div>
         <div class="modal__actions">
-          <a class="btn btn--primary btn--sm" href="mailto:${DATA.site.email}">${icon("mail")} Falar com a casa</a>
+          <a class="btn btn--primary btn--sm" href="mailto:${DATA.site.email}">${icon("mail")} Falar com o Presida.</a>
           <button class="btn btn--ghost btn--sm" type="button" data-close-modal>Fechar</button>
         </div>
       `);
