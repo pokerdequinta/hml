@@ -3,265 +3,95 @@ VERSION:2.0
 PRODID:-//Poker de Quinta//Temporada 2027//PT-BR
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-X-WR-CALNAME:Poker de Quinta — Temporada 2027
-X-WR-TIMEZONE:America/Sao_Paulo
-BEGIN:VTIMEZONE
-TZID:America/Sao_Paulo
-BEGIN:STANDARD
-DTSTART:19700101T000000
-TZOFFSETFROM:-0300
-TZOFFSETTO:-0300
-TZNAME:BRT
-END:STANDARD
-END:VTIMEZONE
 BEGIN:VEVENT
-UID:etapa-01-2027@pokerdequinta.com.br
-DTSTAMP:20261107T210000Z
+UID:pq2027-1@pokerdequinta.github.io
 DTSTART;TZID=America/Sao_Paulo:20270128T200000
-DTEND;TZID=America/Sao_Paulo:20270129T020000
-SUMMARY:Poker de Quinta · Etapa 01 — A Mesa da Abertura
-DESCRIPTION:Abertura da temporada 2027 do Poker de Quinta. 20 lugares\, 1
- 5.000 fichas\, níveis de 15/12/10 minutos. Buy-in: R$ 120 (pote + janta
-  + taxa). Luck BAR\, Rua Prof. Sebastião Paraná\, 765 — Vila Izabel\
- , Curitiba/PR.
-LOCATION:Luck BAR — Rua Prof. Sebastião Paraná\, 765\, Vila Izabel\, 
- Curitiba/PR
-STATUS:CONFIRMED
-TRANSP:OPAQUE
-BEGIN:VALARM
-TRIGGER:-P1D
-ACTION:DISPLAY
-DESCRIPTION:Amanhã tem A Mesa da Abertura no Poker de Quinta.
-END:VALARM
+DTEND;TZID=America/Sao_Paulo:20270128T235900
+SUMMARY:Etapa 01 — A Mesa da Abertura
+LOCATION:Luck BAR\, Rua Prof. Sebastião Paraná 765\, Curitiba
 END:VEVENT
 BEGIN:VEVENT
-UID:etapa-02-2027@pokerdequinta.com.br
-DTSTAMP:20261107T210000Z
+UID:pq2027-2@pokerdequinta.github.io
 DTSTART;TZID=America/Sao_Paulo:20270225T200000
-DTEND;TZID=America/Sao_Paulo:20270226T020000
-SUMMARY:Poker de Quinta · Etapa 02 — Noite dos Ases
-DESCRIPTION:Etapa 02 da temporada 2027. Uma noite dedicada aos ases\, com
-  rebuys e addon. Buy-in: R$ 120 (pote + janta + taxa). Luck BAR\, Rua Pr
- of. Sebastião Paraná\, 765 — Vila Izabel\, Curitiba/PR.
-LOCATION:Luck BAR — Rua Prof. Sebastião Paraná\, 765\, Vila Izabel\, 
- Curitiba/PR
-STATUS:CONFIRMED
-TRANSP:OPAQUE
-BEGIN:VALARM
-TRIGGER:-P1D
-ACTION:DISPLAY
-DESCRIPTION:Amanhã tem Noite dos Ases no Poker de Quinta.
-END:VALARM
+DTEND;TZID=America/Sao_Paulo:20270225T235900
+SUMMARY:Etapa 02 — Noite dos Ases
+LOCATION:Luck BAR\, Rua Prof. Sebastião Paraná 765\, Curitiba
 END:VEVENT
 BEGIN:VEVENT
-UID:etapa-03-2027@pokerdequinta.com.br
-DTSTAMP:20261107T210000Z
+UID:pq2027-3@pokerdequinta.github.io
 DTSTART;TZID=America/Sao_Paulo:20270325T200000
-DTEND;TZID=America/Sao_Paulo:20270326T020000
-SUMMARY:Poker de Quinta · Etapa 03 — O Clássico
-DESCRIPTION:Etapa 03 da temporada 2027. O clássico da casa: campo profun
- do e blinds cadenciados. Buy-in: R$ 120 (pote + janta + taxa). Luck BAR\
- , Rua Prof. Sebastião Paraná\, 765 — Vila Izabel\, Curitiba/PR.
-LOCATION:Luck BAR — Rua Prof. Sebastião Paraná\, 765\, Vila Izabel\, 
- Curitiba/PR
-STATUS:CONFIRMED
-TRANSP:OPAQUE
-BEGIN:VALARM
-TRIGGER:-P1D
-ACTION:DISPLAY
-DESCRIPTION:Amanhã tem O Clássico no Poker de Quinta.
-END:VALARM
+DTEND;TZID=America/Sao_Paulo:20270325T235900
+SUMMARY:Etapa 03 — O Clássico
+LOCATION:Luck BAR\, Rua Prof. Sebastião Paraná 765\, Curitiba
 END:VEVENT
 BEGIN:VEVENT
-UID:etapa-04-2027@pokerdequinta.com.br
-DTSTAMP:20261107T210000Z
+UID:pq2027-4@pokerdequinta.github.io
 DTSTART;TZID=America/Sao_Paulo:20270429T200000
-DTEND;TZID=America/Sao_Paulo:20270430T020000
-SUMMARY:Poker de Quinta · Etapa 04 — A Virada
-DESCRIPTION:Etapa 04 da temporada 2027. A noite das viradas: ninguém des
- iste até a última ficha. Buy-in: R$ 120 (pote + janta + taxa). Luck BA
- R\, Rua Prof. Sebastião Paraná\, 765 — Vila Izabel\, Curitiba/PR.
-LOCATION:Luck BAR — Rua Prof. Sebastião Paraná\, 765\, Vila Izabel\, 
- Curitiba/PR
-STATUS:CONFIRMED
-TRANSP:OPAQUE
-BEGIN:VALARM
-TRIGGER:-P1D
-ACTION:DISPLAY
-DESCRIPTION:Amanhã tem A Virada no Poker de Quinta.
-END:VALARM
+DTEND;TZID=America/Sao_Paulo:20270429T235900
+SUMMARY:Etapa 04 — A Virada
+LOCATION:Luck BAR\, Rua Prof. Sebastião Paraná 765\, Curitiba
 END:VEVENT
 BEGIN:VEVENT
-UID:etapa-05-2027@pokerdequinta.com.br
-DTSTAMP:20261107T210000Z
+UID:pq2027-5@pokerdequinta.github.io
 DTSTART;TZID=America/Sao_Paulo:20270520T200000
-DTEND;TZID=America/Sao_Paulo:20270521T020000
-SUMMARY:Poker de Quinta · Etapa 05 — Batida de Ouro
-DESCRIPTION:Etapa 05 da temporada 2027. Edição especial com premiação
-  extra para o melhor bluff. Buy-in: R$ 120 (pote + janta + taxa). Luck B
- AR\, Rua Prof. Sebastião Paraná\, 765 — Vila Izabel\, Curitiba/PR.
-LOCATION:Luck BAR — Rua Prof. Sebastião Paraná\, 765\, Vila Izabel\, 
- Curitiba/PR
-STATUS:CONFIRMED
-TRANSP:OPAQUE
-BEGIN:VALARM
-TRIGGER:-P1D
-ACTION:DISPLAY
-DESCRIPTION:Amanhã tem Batida de Ouro no Poker de Quinta.
-END:VALARM
+DTEND;TZID=America/Sao_Paulo:20270520T235900
+SUMMARY:Etapa 05 — Batida de Ouro
+LOCATION:Luck BAR\, Rua Prof. Sebastião Paraná 765\, Curitiba
 END:VEVENT
 BEGIN:VEVENT
-UID:etapa-06-2027@pokerdequinta.com.br
-DTSTAMP:20261107T210000Z
+UID:pq2027-6@pokerdequinta.github.io
 DTSTART;TZID=America/Sao_Paulo:20270624T200000
-DTEND;TZID=America/Sao_Paulo:20270625T020000
-SUMMARY:Poker de Quinta · Etapa 06 — Meia Temporada
-DESCRIPTION:Etapa 06 da temporada 2027. Metade do caminho\, ranking apert
- ado. Buy-in: R$ 120 (pote + janta + taxa). Luck BAR\, Rua Prof. Sebasti
- ão Paraná\, 765 — Vila Izabel\, Curitiba/PR.
-LOCATION:Luck BAR — Rua Prof. Sebastião Paraná\, 765\, Vila Izabel\, 
- Curitiba/PR
-STATUS:CONFIRMED
-TRANSP:OPAQUE
-BEGIN:VALARM
-TRIGGER:-P1D
-ACTION:DISPLAY
-DESCRIPTION:Amanhã tem Meia Temporada no Poker de Quinta.
-END:VALARM
+DTEND;TZID=America/Sao_Paulo:20270624T235900
+SUMMARY:Etapa 06 — Meia Temporada
+LOCATION:Luck BAR\, Rua Prof. Sebastião Paraná 765\, Curitiba
 END:VEVENT
 BEGIN:VEVENT
-UID:etapa-07-2027@pokerdequinta.com.br
-DTSTAMP:20261107T210000Z
+UID:pq2027-7@pokerdequinta.github.io
 DTSTART;TZID=America/Sao_Paulo:20270729T200000
-DTEND;TZID=America/Sao_Paulo:20270730T020000
-SUMMARY:Poker de Quinta · Etapa 07 — Repique de Reis
-DESCRIPTION:Etapa 07 da temporada 2027. Noite dos campeões\, com bounty 
- em dobro. Buy-in: R$ 120 (pote + janta + taxa). Luck BAR\, Rua Prof. Seb
- astião Paraná\, 765 — Vila Izabel\, Curitiba/PR.
-LOCATION:Luck BAR — Rua Prof. Sebastião Paraná\, 765\, Vila Izabel\, 
- Curitiba/PR
-STATUS:CONFIRMED
-TRANSP:OPAQUE
-BEGIN:VALARM
-TRIGGER:-P1D
-ACTION:DISPLAY
-DESCRIPTION:Amanhã tem Repique de Reis no Poker de Quinta.
-END:VALARM
+DTEND;TZID=America/Sao_Paulo:20270729T235900
+SUMMARY:Etapa 07 — Repique de Reis
+LOCATION:Luck BAR\, Rua Prof. Sebastião Paraná 765\, Curitiba
 END:VEVENT
 BEGIN:VEVENT
-UID:etapa-08-2027@pokerdequinta.com.br
-DTSTAMP:20261107T210000Z
+UID:pq2027-8@pokerdequinta.github.io
 DTSTART;TZID=America/Sao_Paulo:20270826T200000
-DTEND;TZID=America/Sao_Paulo:20270827T020000
-SUMMARY:Poker de Quinta · Etapa 08 — Noite de Instinto
-DESCRIPTION:Etapa 08 da temporada 2027. Fichas voando\, decisões em segu
- ndos e o teste definitivo de instinto. Buy-in: R$ 120 (pote + janta + ta
- xa). Luck BAR\, Rua Prof. Sebastião Paraná\, 765 — Vila Izabel\, Cur
- itiba/PR.
-LOCATION:Luck BAR — Rua Prof. Sebastião Paraná\, 765\, Vila Izabel\, 
- Curitiba/PR
-STATUS:CONFIRMED
-TRANSP:OPAQUE
-BEGIN:VALARM
-TRIGGER:-P1D
-ACTION:DISPLAY
-DESCRIPTION:Amanhã tem Noite de Instinto no Poker de Quinta.
-END:VALARM
+DTEND;TZID=America/Sao_Paulo:20270826T235900
+SUMMARY:Etapa 08 — Noite de Instinto
+LOCATION:Luck BAR\, Rua Prof. Sebastião Paraná 765\, Curitiba
 END:VEVENT
 BEGIN:VEVENT
-UID:etapa-09-2027@pokerdequinta.com.br
-DTSTAMP:20261107T210000Z
+UID:pq2027-9@pokerdequinta.github.io
 DTSTART;TZID=America/Sao_Paulo:20270930T200000
-DTEND;TZID=America/Sao_Paulo:20271001T020000
-SUMMARY:Poker de Quinta · Etapa 09 — Mesa dos Tubarões
-DESCRIPTION:Etapa 09 da temporada 2027. A etapa mais seletiva do calendá
- rio: leitura afiada e cada decisão cobra o preço. Buy-in: R$ 120 (pote
-  + janta + taxa). Luck BAR\, Rua Prof. Sebastião Paraná\, 765 — Vila
-  Izabel\, Curitiba/PR.
-LOCATION:Luck BAR — Rua Prof. Sebastião Paraná\, 765\, Vila Izabel\, 
- Curitiba/PR
-STATUS:CONFIRMED
-TRANSP:OPAQUE
-BEGIN:VALARM
-TRIGGER:-P1D
-ACTION:DISPLAY
-DESCRIPTION:Amanhã tem Mesa dos Tubarões no Poker de Quinta.
-END:VALARM
+DTEND;TZID=America/Sao_Paulo:20270930T235900
+SUMMARY:Etapa 09 — Mesa dos Tubarões
+LOCATION:Luck BAR\, Rua Prof. Sebastião Paraná 765\, Curitiba
 END:VEVENT
 BEGIN:VEVENT
-UID:etapa-10-2027@pokerdequinta.com.br
-DTSTAMP:20261107T210000Z
+UID:pq2027-10@pokerdequinta.github.io
 DTSTART;TZID=America/Sao_Paulo:20271014T200000
-DTEND;TZID=America/Sao_Paulo:20271015T020000
-SUMMARY:Poker de Quinta · Etapa 10 — Clássico de Outono
-DESCRIPTION:Etapa 10 da temporada 2027. Estrutura deepstack e jantar da c
- asa para todos os jogadores. Buy-in: R$ 120 (pote + janta + taxa). Luck 
- BAR\, Rua Prof. Sebastião Paraná\, 765 — Vila Izabel\, Curitiba/PR.
-LOCATION:Luck BAR — Rua Prof. Sebastião Paraná\, 765\, Vila Izabel\, 
- Curitiba/PR
-STATUS:CONFIRMED
-TRANSP:OPAQUE
-BEGIN:VALARM
-TRIGGER:-P1D
-ACTION:DISPLAY
-DESCRIPTION:Amanhã tem Clássico de Outono no Poker de Quinta.
-END:VALARM
+DTEND;TZID=America/Sao_Paulo:20271014T235900
+SUMMARY:Etapa 10 — Clássico de Outono
+LOCATION:Luck BAR\, Rua Prof. Sebastião Paraná 765\, Curitiba
 END:VEVENT
 BEGIN:VEVENT
-UID:etapa-11-2027@pokerdequinta.com.br
-DTSTAMP:20261107T210000Z
+UID:pq2027-11@pokerdequinta.github.io
 DTSTART;TZID=America/Sao_Paulo:20271028T200000
-DTEND;TZID=America/Sao_Paulo:20271029T020000
-SUMMARY:Poker de Quinta · Etapa 11 — Última Cartada
-DESCRIPTION:Etapa 11 da temporada 2027. A penúltima chance de mudar o ra
- nking antes da final. Buy-in: R$ 120 (pote + janta + taxa). Luck BAR\, R
- ua Prof. Sebastião Paraná\, 765 — Vila Izabel\, Curitiba/PR.
-LOCATION:Luck BAR — Rua Prof. Sebastião Paraná\, 765\, Vila Izabel\, 
- Curitiba/PR
-STATUS:CONFIRMED
-TRANSP:OPAQUE
-BEGIN:VALARM
-TRIGGER:-P1D
-ACTION:DISPLAY
-DESCRIPTION:Amanhã tem Última Cartada no Poker de Quinta.
-END:VALARM
+DTEND;TZID=America/Sao_Paulo:20271028T235900
+SUMMARY:Etapa 11 — Última Cartada
+LOCATION:Luck BAR\, Rua Prof. Sebastião Paraná 765\, Curitiba
 END:VEVENT
 BEGIN:VEVENT
-UID:etapa-12-2027@pokerdequinta.com.br
-DTSTAMP:20261107T210000Z
+UID:pq2027-12@pokerdequinta.github.io
 DTSTART;TZID=America/Sao_Paulo:20271125T200000
-DTEND;TZID=America/Sao_Paulo:20271126T020000
-SUMMARY:Poker de Quinta · Etapa 12 — Penúltima Etapa
-DESCRIPTION:Etapa 12 da temporada 2027. Última noite de pontos antes da 
- Grande Final. Buy-in: R$ 120 (pote + janta + taxa). Luck BAR\, Rua Prof.
-  Sebastião Paraná\, 765 — Vila Izabel\, Curitiba/PR.
-LOCATION:Luck BAR — Rua Prof. Sebastião Paraná\, 765\, Vila Izabel\, 
- Curitiba/PR
-STATUS:CONFIRMED
-TRANSP:OPAQUE
-BEGIN:VALARM
-TRIGGER:-P1D
-ACTION:DISPLAY
-DESCRIPTION:Amanhã tem Penúltima Etapa no Poker de Quinta.
-END:VALARM
+DTEND;TZID=America/Sao_Paulo:20271125T235900
+SUMMARY:Etapa 12 — Penúltima Etapa
+LOCATION:Luck BAR\, Rua Prof. Sebastião Paraná 765\, Curitiba
 END:VEVENT
 BEGIN:VEVENT
-UID:etapa-13-2027@pokerdequinta.com.br
-DTSTAMP:20261107T210000Z
+UID:pq2027-13@pokerdequinta.github.io
 DTSTART;TZID=America/Sao_Paulo:20271209T200000
-DTEND;TZID=America/Sao_Paulo:20271210T020000
-SUMMARY:Poker de Quinta · Etapa 13 — Grande Final
-DESCRIPTION:Grande Final da temporada 2027. Os 20 melhores da temporada d
- isputam o título. Buy-in: R$ 120 (pote + janta + taxa). Luck BAR\, Rua 
- Prof. Sebastião Paraná\, 765 — Vila Izabel\, Curitiba/PR.
-LOCATION:Luck BAR — Rua Prof. Sebastião Paraná\, 765\, Vila Izabel\, 
- Curitiba/PR
-STATUS:CONFIRMED
-TRANSP:OPAQUE
-BEGIN:VALARM
-TRIGGER:-P1D
-ACTION:DISPLAY
-DESCRIPTION:Amanhã tem Grande Final no Poker de Quinta.
-END:VALARM
+DTEND;TZID=America/Sao_Paulo:20271209T235900
+SUMMARY:Etapa 13 — Grande Final
+LOCATION:Luck BAR\, Rua Prof. Sebastião Paraná 765\, Curitiba
 END:VEVENT
 END:VCALENDAR

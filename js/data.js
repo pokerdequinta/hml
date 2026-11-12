@@ -17,7 +17,7 @@ window.PQ_DATA = {
     instagramHandle: "@pokerdequinta",
     instagramUrl: "https://www.instagram.com/",
     logo: "logo%20pdq.png",
-    confirmUrl: "#confirmar",
+    confirmUrl: "https://pokerdequinta.github.io/confirma/",
     address: "Rua Prof. Sebastião Paraná, 765",
     city: "Curitiba — PR",
     venue: "Luck Bar", // confirmar nome do local
@@ -35,17 +35,6 @@ window.PQ_DATA = {
     nextStageId: 1,
     seasonStart: "2027-01-28T20:00:00-03:00",
     seasonEnd: "2027-12-09T20:00:00-03:00",
-  },
-
-  /* Inscrições: a etapa é a próxima do calendário (nextStageId).
-     O admin da confirmação pode abrir/fechar as inscrições no Firebase. */
-  confirmation: {
-    enabled: true,
-    season: "2027",
-    stageId: 0,
-    capacity: 20,
-    open: true,
-    dbRoot: "confirmacao",
   },
 
   /* Tabela de apoio para telas de etapa (o ranking oficial usa os pontos de ranking-data.js). */
@@ -70,11 +59,11 @@ window.PQ_DATA = {
   stages: [
     {
       id: 1,
-      slug: "A MESA DA ABERTURA",
-      name: "A MESA DA ABERTURA",
+      slug: "mesa-da-abertura",
+      name: "A Mesa da Abertura",
       kicker: "Temporada 2027",
       theme: "Abertura",
-      description: "Chega de promessa! É hora de tirar a poeira das fichas, afiar o blefe e descobrir quem veio para jogar e quem veio só para perder o buy-in!",
+      description: "Chega de promessa! É hora de tirar a poeira das fichas, afiar o blefe e descobrir quem veio para jogar e quem veio só para perder o buy-in",
       date: "2027-01-28T20:00:00-03:00",
       status: "next",
       motif: "spade",
@@ -88,11 +77,11 @@ window.PQ_DATA = {
     },
     {
       id: 2,
-      slug: "BLEFE, SUOR E LÁGRIMAS",
-      name: "BLEFE, SUOR E LÁGRIMAS",
+      slug: "noite-dos-ases",
+      name: "Noite dos Ases",
       kicker: "Temporada 2027",
-      theme: "Noite dos Ases",
-      description: "Pode preparar a cara de paisagem! Nessa etapa tem blefe, tem pressão e aquele jogador jurando que tinha tudo sob controle!",
+      theme: "BLEFE, SUOR E LÁGRIMAS",
+      description: "Pode preparar a cara de paisagem! Hoje tem blefe, tem pressão e aquele jogador jurando que tinha tudo sob controle!.",
       date: "2027-02-25T20:00:00-03:00",
       status: "upcoming",
       motif: "heart",
