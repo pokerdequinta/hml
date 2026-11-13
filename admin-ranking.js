@@ -44,7 +44,7 @@
       id: String(player.id || slugify(player.nome || player.name || "jogador")),
       nome: String(player.nome || player.name || player.id),
       apelido: String(player.apelido || player.nome || player.name || player.id),
-      foto: String(player.foto || player.photo || ""),
+      foto: "",
       cidade: String(player.cidade || ""),
       uf: String(player.uf || ""),
       desde: player.desde || null,

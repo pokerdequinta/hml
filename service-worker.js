@@ -4,7 +4,7 @@
    fallback offline e fontes com stale-while-revalidate.
    ============================================================ */
 
-const VERSION = "pq-2027-v2.3.2";
+const VERSION = "pq-2027-v2.3.3";
 const STATIC_CACHE = `${VERSION}-static`;
 const FONT_CACHE = `${VERSION}-fonts`;
 const APP_ROOT = new URL("./", self.location.href).pathname;
@@ -24,9 +24,12 @@ const APP_SHELL = [
   "./js/firebase-data.js",
   "./js/app.js",
   "./js/confirm.js",
+  "./js/pdq-updates.js",
   "./admin.html",
   "./js/admin-ranking.js",
   "./js/admin-confirm.js",
+  "./assets/img/ovos-codorna-conserva.png",
+  "./assets/img/camiseta-pdq.webp",
   "./logo%20pdq.png",
   "./assets/icons/favicon-32.png",
   "./assets/icons/icon-192.png",
